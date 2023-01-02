@@ -300,6 +300,148 @@ const _nav = [
     href: 'https://coreui.io/react/docs/templates/installation/',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
+  {
+    component: CNavTitle,
+    name: '시작',
+  },
+  {
+    component: CNavItem,
+    name: '메인',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: '발송',
+  },
+  {
+    component: CNavGroup,
+    name: 'SMS/MMS',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '발송하기',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '예제',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '카카오톡',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '발송하기',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '예제',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '팩스',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '발송하기',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '예제',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '템플릿 관리',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '템플릿 리스트',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '템플릿 생성',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavTitle,
+    name: '주소록 관리',
+  },
+  {
+    component: CNavGroup,
+    name: '그룹 관리',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '그룹 리스트',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '그룹 생성',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '발신번호 관리',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '발신번호 리스트',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '발신번호 추가',
+        to: '/register',
+      },
+    ],
+  },
+  {
+    component: CNavTitle,
+    name: '발송 결과 확인',
+  },
+  {
+    component: CNavItem,
+    name: 'SMS/MMS',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: '카카오톡',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: '팩스',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
 ]
 
 export default _nav
