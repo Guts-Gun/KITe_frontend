@@ -1,6 +1,16 @@
 import React from 'react'
-import { CFormInput, CFormLabel, CRow, CFormSelect,CButton } from '@coreui/react'
+import { CFormInput, CFormLabel, CRow, CFormSelect,CButton,CInputGroup,CInputGroupText } from '@coreui/react'
 function SenderMake() {
+  return (
+    <div>
+      <SingleSenderMake/>
+      <MultiSenderMake/>
+    </div>
+  )
+}
+export default SenderMake
+
+function SingleSenderMake(){
   return (
     <div>
       <CRow className="mb-3">
@@ -37,4 +47,28 @@ function SenderMake() {
     </div>
   )
 }
-export default SenderMake
+
+
+function MultiSenderMake(){
+  return (
+    <div>
+      <CInputGroup>
+        <CFormInput
+          type="file"
+          id="inputGroupFile04"
+          aria-describedby="inputGroupFileAddon04"
+          aria-label="Upload"
+        />
+        <CButton
+          type="button"
+          color="secondary"
+          variant="outline"
+          id="inputGroupFileAddon04"
+        >
+          엑셀확인
+        </CButton>
+      </CInputGroup>
+    </div>
+  )
+}
+
