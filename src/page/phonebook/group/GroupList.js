@@ -1,6 +1,7 @@
 import React,{ useState } from 'react'
 import {
   CCard,
+  CCardHeader,
   CCardBody,
   CCardLink,
   CCardSubtitle,
@@ -15,14 +16,27 @@ import {
   CModalHeader,
   CModalBody,
   CModalFooter,
-  CModalTitle
+  CModalTitle,
+  CInputGroup,
+  CFormSelect,
+  CFormCheck,
+  CForm,
 } from '@coreui/react'
+import PhoneBookList from 'src/component/sender/PhoneBookList'
 
 function GroupList() {
   return (
   <div>
-    <Filter/>
-    <List/>
+    <CCard className="m-4">
+      <CCardHeader>
+        <strong>그룹 검색</strong>
+      </CCardHeader>
+      <CCardBody>
+        <Filter/>
+        <PhoneBookList/>
+      </CCardBody>
+    </CCard>
+
   </div>
 )}
 
@@ -31,20 +45,34 @@ export default GroupList
 function Filter(){
   return(
     <div>
-      <CButton color="warning" key="delete" active={true} disabled={false}>
-          이름 바꾸기
-      </CButton>
-      <CButton key="delete" active={true} disabled={false}>
-          희원 복사
-      </CButton>
-      <CButton color="danger" key="delete" active={true} disabled={false}>
-          그룹 삭제
-      </CButton>
-        <CFormLabel htmlFor="inputPassword2" className="visually-hidden">
-          검색 
-        </CFormLabel>
-      <CFormInput id="inputPassword2" placeholder="발신번호 검색" />
-      <MakeGroupModal/>
+      <CCol className='mt-3 mb-3'>
+        <CForm className="row">
+          <CCol md={4}>
+            <CButton color='warning' variant='outline'>
+              이름 바꾸기
+            </CButton>
+          </CCol>
+          <CCol md={4}>
+            <CButton color="info" variant="outline">
+                그룹 복사
+            </CButton>
+          </CCol>
+          <CCol md={4}>
+            <CButton color="danger" variant="outline">
+                그룹 삭제
+            </CButton>
+          </CCol>
+          <CCol md={4}>
+            <MakeGroupModal/>
+          </CCol>
+          <CCol md={4}>
+            <CInputGroup>
+              <CFormInput type="text"/>
+              <CButton variant="outline" >검색</CButton>
+            </CInputGroup>
+          </CCol>
+        </CForm>
+      </CCol>
     </div>
   )
 }
@@ -52,7 +80,7 @@ function MakeGroupModal(){
   const [visible, setVisible] = useState(false)
   return (
     <>
-      <CButton color="success" onClick={() => setVisible(!visible)}>그룹 생성</CButton>
+      <CButton color="success" variant="outline" onClick={() => setVisible(!visible)}>그룹 생성</CButton>
       <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
           <CModalTitle>그룹 생성</CModalTitle>
@@ -84,57 +112,4 @@ function MakeGroupModal(){
       </CModal>
     </>
   )
-}
-function List(){
-  return(
-    <div> 
-      <CRow>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-        </CRow>
-      </div>
-  );
 }
