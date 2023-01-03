@@ -55,6 +55,12 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
 const SenderList = React.lazy(() => import('./page/phonebook/sender/SenderList'))
 const SenderMake = React.lazy(() => import('./page/phonebook/sender/SenderMake'))
+
+
+//send
+const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'))
+
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -100,9 +106,13 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
+
   { path: '/groupList', name: 'GroupList', element: GroupList },
   { path: '/senderList', name: 'SenderList', element: SenderList },
   { path: '/senderMake', name: 'SenderMake', element: SenderMake },
+
+  //발송(send)
+  { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },
 ]
 
 export default routes

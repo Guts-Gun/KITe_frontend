@@ -1,1 +1,139 @@
 // Here you can add other styles
+
+// Here you can add other styles
+
+// 카카오 컬러
+.kyellow {
+    background-color: #ffff00;
+}
+
+.main_logo {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.main_logo:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.main_logo_mobile {
+    color:rgb(44, 44, 44);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.main_logo_mobile:hover {
+    color: rgb(60, 60, 60);
+    text-decoration: none;
+}
+
+
+// _______________________________________________________________________________________________
+.custom_height {
+    max-height: 170px;
+    overflow-y: scroll;
+}
+
+// _______________________________________________________________________________________________
+// 1라인 줄바꿈
+.text-ellipsis{
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+// 2라인 줄바꿈
+.twoline-ellipsis{
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+// _______________________________________________________________________________________________
+// 슬라이드 이미지 높이 고정
+.slider_img_wrap {
+    display: block;
+    width: 100%;
+    height: 350px;
+}
+
+.slider_img {
+    position: absolute; top:0; left: 0;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    filter: blur(1px) brightness(60%);
+    // -webkit-filter: blur(3px);
+}
+
+.con_img {
+  position: absolute; top:0; left: 0;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+
+
+// _______________________________________________________________________________________________
+// 페이징
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul.pagination li {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  ul.pagination li:first-child{
+    border-radius: 5px 0 0 5px;
+  }
+
+  ul.pagination li:last-child{
+    border-radius: 0 5px 5px 0;
+  }
+  
+  ul.pagination li a {
+    text-decoration: none;
+    color: #337ab7;
+    font-size: 1rem;
+  }
+  
+  ul.pagination li.active a {
+    color: #222;
+  }
+
+  ul.pagination li.active {
+    background-color: #ffb700;
+  }
+  
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+    color: blue;
+  }
+  
+  .page-selection {
+    width: 48px;
+    height: 30px;
+    color: #337ab7;
+  }
