@@ -394,12 +394,12 @@ const _nav = [
       {
         component: CNavItem,
         name: '그룹 리스트',
-        to: '/login',
+        to: '/groupList',
       },
       {
         component: CNavItem,
         name: '그룹 생성',
-        to: '/register',
+        to: '/groupMake',
       },
     ],
   },
@@ -411,12 +411,12 @@ const _nav = [
       {
         component: CNavItem,
         name: '발신번호 리스트',
-        to: '/login',
+        to: '/senderList',
       },
       {
         component: CNavItem,
         name: '발신번호 추가',
-        to: '/register',
+        to: '/senderMake',
       },
     ],
   },

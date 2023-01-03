@@ -50,6 +50,12 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+//phonebook
+//group
+const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
+const GroupMake = React.lazy(() => import('./page/phonebook/group/GroupMake'))
+const SenderList = React.lazy(() => import('./page/phonebook/sender/SenderList'))
+const SenderMake = React.lazy(() => import('./page/phonebook/sender/SenderMake'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -95,6 +101,10 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
+  { path: '/groupList', name: 'GroupList', element: GroupList },
+  { path: '/groupMake', name: 'GroupMake', element: GroupMake },
+  { path: '/senderList', name: 'SenderList', element: SenderList },
+  { path: '/senderMake', name: 'SenderMake', element: SenderMake },
 ]
 
 export default routes
