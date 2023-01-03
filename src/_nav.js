@@ -28,7 +28,7 @@ const _nav = [
       {
         component: CNavItem,
         name: '발송하기',
-        to: '/login',
+        to: '/sendSms',
       },
       {
         component: CNavItem,
