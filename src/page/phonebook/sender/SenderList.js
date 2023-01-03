@@ -1,17 +1,16 @@
 import React from 'react'
 import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
   CTable,
   CTableBody,
-  CTableCaption,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CButton,
+  CFormSelect,
+  CFormLabel,
+  CFormInput,
+  CForm
 } from '@coreui/react'
 
 function SenderList() {
@@ -27,18 +26,34 @@ export default SenderList
 function Filter() {
   return (
     <div>
-      <button>희원삭제</button>
-      <select name="job">
-        <option value="">그룹선택</option>
-        <option value="학생">학생</option>
-        <option value="회사원">회사원</option>
-        <option value="기타">기타</option>
-      </select>
-      <input placeholder="이름/전화번호 검색"></input>
+      <CForm className="row g-3">
+        <div className="col-auto">
+        <CButton color="danger" key="delete" active={true} disabled={false}>
+          희원 삭제
+        </CButton>
+        </div>
+        <div className="col-auto">
+          <p>그룹선택</p>
+        </div>
+        <div className="col-auto">
+          <CFormSelect aria-label="Default select example">
+            <option value="1">호</option>
+            <option value="2">잇</option>
+            <option value="3">잇</option>
+          </CFormSelect>
+        </div>
+        <div className="col-auto">
+          <CFormLabel htmlFor="inputPassword2" className="visually-hidden">
+            검색 
+          </CFormLabel>
+          <CFormInput id="inputPassword2" placeholder="발신번호 검색" />
+        </div>
+      </CForm>
     </div>
+
+    
   )
 }
-
 function List() {
   return (
     <CTable striped>

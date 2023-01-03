@@ -1,5 +1,5 @@
 import React from 'react'
-import { CFormInput, CFormLabel, CRow, CFormSelect } from '@coreui/react'
+import { CFormInput, CFormLabel, CRow, CFormSelect,CButton } from '@coreui/react'
 function SenderMake() {
   return (
     <div>
@@ -30,7 +30,10 @@ function SenderMake() {
             <option value="3">잇</option>
           </CFormSelect>
         </div>
-      </CRow>
+      </CRow> 
+      <CButton color="success" key="success" active={true} disabled={false}>
+          희원 추가
+      </CButton>
     </div>
   )
 }
