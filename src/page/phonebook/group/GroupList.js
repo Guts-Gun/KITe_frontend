@@ -22,7 +22,6 @@ import {
   CFormCheck,
   CForm,
 } from '@coreui/react'
-import PhoneBookList from 'src/component/sender/PhoneBookList'
 
 function GroupList() {
   return (
@@ -33,7 +32,7 @@ function GroupList() {
       </CCardHeader>
       <CCardBody>
         <Filter/>
-        <PhoneBookList/>
+        <List/>
       </CCardBody>
     </CCard>
 
@@ -112,4 +111,58 @@ function MakeGroupModal(){
       </CModal>
     </>
   )
+}
+
+function List(){
+  return(
+    <div> 
+      <CRow>
+          <CCard style={{ width: '18rem' }}>
+            <CCardBody>
+              <CCardTitle>학생</CCardTitle>
+              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+              <CCardLink href="#">전화번호 내역 확인</CCardLink>
+              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CCardText>200명</CCardText>
+            </CCardBody>
+          </CCard>
+          <CCard style={{ width: '18rem' }}>
+            <CCardBody>
+              <CCardTitle>학생</CCardTitle>
+              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+              <CCardLink href="#">전화번호 내역 확인</CCardLink>
+              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CCardText>200명</CCardText>
+            </CCardBody>
+          </CCard>
+          <CCard style={{ width: '18rem' }}>
+            <CCardBody>
+              <CCardTitle>학생</CCardTitle>
+              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+              <CCardLink href="#">전화번호 내역 확인</CCardLink>
+              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CCardText>200명</CCardText>
+            </CCardBody>
+          </CCard>
+          <CCard style={{ width: '18rem' }}>
+            <CCardBody>
+              <CCardTitle>학생</CCardTitle>
+              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+              <CCardLink href="#">전화번호 내역 확인</CCardLink>
+              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CCardText>200명</CCardText>
+            </CCardBody>
+          </CCard>
+          <CCard style={{ width: '18rem' }}>
+            <CCardBody>
+              <CCardTitle>학생</CCardTitle>
+              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+              <CCardLink href="#">전화번호 내역 확인</CCardLink>
+              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CCardText>200명</CCardText>
+            </CCardBody>
+          </CCard>
+        </CRow>
+      </div>
+  );
 }
