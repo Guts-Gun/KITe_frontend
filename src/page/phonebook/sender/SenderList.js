@@ -25,8 +25,12 @@ function SenderList() {
           <strong>발신번호 리스트</strong>
         </CCardHeader>
         <CCardBody>
-          <Filter />
-          <List/>
+          <CRow className="mt-3 mb-3">
+            <Filter />
+          </CRow>
+          <CRow className="mt-3 mb-3">
+            <List/>
+          </CRow>
         </CCardBody>
     </CCard>
     </div>
@@ -38,31 +42,31 @@ function Filter() {
   return (
     <div>
       <CRow>
-        <CCol lg={12} className="text-end">
-          <CButton color="danger" variant="outline">삭제</CButton>
-        </CCol>
         <CCol>
           <CForm className="row g-3">
-            <div className="col-auto">
-            <CInputGroup className="mb-1">
-              <CFormSelect>
-                <option value="Phone">그룹1</option>
-                <option value="Phone">그룹2</option>
-              </CFormSelect>
-            </CInputGroup>
-            </div>
-            <div className="col-auto">
-            <CInputGroup className="mb-1">
+            <CCol className="col-sm-3">
+              <CInputGroup className="mb-1">
                 <CFormSelect>
-                  <option value="Phone">번호 검색</option>
-                  <option value="Name">이름 검색</option>
+                  <option value="Phone">그룹1</option>
+                  <option value="Phone">그룹2</option>
                 </CFormSelect>
-              <CFormInput type="text"/>        
-            </CInputGroup>
-            </div>
-            <div className="col-auto">
-              <CButton variant="outline" >검색</CButton>
-            </div>
+              </CInputGroup>
+              </CCol>
+              <CCol className="col-sm-5">
+                <CInputGroup className="mb-1">
+                    <CFormSelect>
+                      <option value="Phone">번호 검색</option>
+                      <option value="Name">이름 검색</option>
+                    </CFormSelect>
+                  <CFormInput type="text"/>        
+                </CInputGroup>
+              </CCol>
+              <CCol className="col-sm-2">
+                <CButton variant="outline" >검색</CButton>
+              </CCol>
+              <CCol className="col-sm-2">
+                <CButton color="danger" variant="outline">삭제</CButton>
+              </CCol>
           </CForm>
         </CCol>
       </CRow>

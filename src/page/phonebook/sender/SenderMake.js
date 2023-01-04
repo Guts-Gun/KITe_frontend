@@ -1,7 +1,10 @@
 import React ,{useState} from 'react'
 import { CFormCheck,CFormInput, CFormLabel, CRow, CFormSelect,CButton,CInputGroup,
   CCard,CCardHeader,CCardBody,CCardFooter,CCol,
-  CTable,CTableHead,CTableBody,CTableRow,CTableHeaderCell,CTableDataCell } from '@coreui/react'
+  CTable,CTableHead,CTableBody,CTableRow,CTableHeaderCell,CTableDataCell,
+CListGroup,CListGroupItem} from '@coreui/react'
+import CIcon from '@coreui/icons-react';
+import { cilPlus, cilMinus } from '@coreui/icons';
 import PhoneBookList from 'src/component/sender/PhoneBookList';
 function SenderMake() {
   // 발신번호 추가 - 단일/엑셀업로드 
@@ -18,11 +21,12 @@ function SenderMake() {
         </CCardHeader>
         <CCardBody>
           <CRow className="mb-3">
-            <div className="col-sm-9">
+            <CFormLabel className="col-sm-3">추가 방식</CFormLabel>
+            <CCol className="col-sm-9">
               <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="single" label="단일" checked={sendPlus === "single"}onChange={radioChange} defaultChecked />
               <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="multi" label="다중" checked={sendPlus === "multi"}onChange={radioChange}/>
               <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="excel" label="Excel"checked={sendPlus === "excel"}onChange={radioChange}/>
-            </div>
+            </CCol>
           </CRow>
           <CRow className="mb-3">
           {sendPlus === "single" ? <SingleSenderMake/>:null}
@@ -82,25 +86,33 @@ function SingleSenderMake(){
 function MutiSenderMake(){
   return(
     <div>
-      <CInputGroup className="mb-1">
+      <CRow>
+        <CCol className='col-sm-6'>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>그룹</CFormLabel>
+            <CInputGroup>
               <CFormSelect>
                 <option value="Phone">그룹1</option>
                 <option value="Phone">그룹2</option>
               </CFormSelect>
             </CInputGroup>
-      <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
-          이름
-      </CFormLabel>
-      <CFormInput id="inputPassword" />
-      <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
-          전화번호
-      </CFormLabel>
-      <CFormInput id="inputPassword" />
-      <CButton variant="outline">추가</CButton>
-      <CRow>
-        <CButton color="danger" variant="outline">삭제</CButton>
+          </CRow>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>이름</CFormLabel>
+            <CFormInput id="inputPassword" />
+          </CRow>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>전화번호</CFormLabel>
+            <CFormInput id="inputPassword" />
+          </CRow>
+          <CCol lg={12} className="text-end">
+            <CButton variant="outline">추가</CButton>
+          </CCol>
+        </CCol>
+        <CCol className='col-sm-6'>
+          <AppendList/>
+        </CCol>
       </CRow>
-      <PhoneBookList/>
     </div>
   )
 }
@@ -132,6 +144,156 @@ function ExcelSenderMake(){
       </CInputGroup>
       <PhoneBookList/>
     </div>
+  )
+}
+
+
+function AppendList(){
+  return(
+    <CListGroup className="mb-1">
+      <CListGroupItem active className="d-flex">
+          발신번호 추가 대상 (총 10명) 
+          <div className="ms-auto">
+          <CButton
+                color="light"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                초기화
+              </CButton>
+          </div>
+      </CListGroupItem>
+      <div className='custom_height'>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        <CListGroupItem  className="d-flex">
+          <span>고솔비 (010-4010-9537)</span>
+          <div className="ms-auto">
+          <CButton
+                color="danger"
+                size="sm"
+                variant="outline"
+                shape="rounded-pill"
+                // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+              >
+                <CIcon className="CButton" icon={cilMinus} size="sm"/>
+              </CButton>
+          </div>
+        </CListGroupItem>
+        </div>
+    </CListGroup>
   )
 }
 
