@@ -37,6 +37,21 @@
     overflow-y: scroll;
 }
 
+.custom_div {
+  background-image: url(../../src/assets/images/phone.png);
+  background-repeat : no-repeat;
+  background-size : 100% 100%;
+  height: 100%; 
+  width: 100%;
+  padding : 10px 20px;
+}
+
+.custom_msg {
+  position: relative;
+  padding : 50px 10px;
+  border :rgb(44, 44, 44);
+}
+
 // _______________________________________________________________________________________________
 // 1라인 줄바꿈
 .text-ellipsis{
@@ -137,3 +152,8 @@
     height: 30px;
     color: #337ab7;
   }
+
+
+
+
+  

@@ -26,9 +26,17 @@ import {
   CNavLink,
   CTabContent, 
   CTabPane,
+  CAccordion,
+  CAccordionBody,
+  CAccordionButton,
+  CAccordionCollapse,
+  CAccordionHeader,
+  CAccordionItem,
+  CImage
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilPlus, cilMinus } from '@coreui/icons';
+import phoneImg from 'src/assets/images/phone.png';
 
 
 const SendSms = () => {
@@ -48,11 +56,16 @@ const SendSms = () => {
   // 전송시간 - 예약발송여부
   const [sendReserv, setSendReserv] = useState(false);
 
+  // 템플릿
+  const [template, setTemplate] = useState(null);
+  const [description, setDescription] = useState('');
+
   // 예약발송 스위치
   function changeSwitch(e){ 
     const checked = e.target.checked;
     setSendReserv(checked);
 };
+
 
 
 
@@ -318,32 +331,13 @@ const SendSms = () => {
                                   </CButton>
                               </div>
                             </CListGroupItem>
-                            <CListGroupItem  className="d-flex">
-                              <span>고솔비 (010-4010-9537)</span>
-                              <div className="ms-auto">
-                              <CButton
-                                    color="danger"
-                                    size="sm"
-                                    variant="outline"
-                                    shape="rounded-pill"
-                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
-                                  >
-                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
-                                  </CButton>
-                              </div>
-                            </CListGroupItem>
                             </div>
                         </CListGroup>
                       </CCol>
-                  </CRow>
+                    </CRow>
                   </CCol>
-                  
                 </CRow>
-
-             
-                
-              
-
+            
             <CRow className="mb-3">
               <CFormLabel className="col-sm-3">전송시간</CFormLabel>
               <CCol xs={9}>
@@ -364,8 +358,10 @@ const SendSms = () => {
               <CFormLabel className="col-sm-3">발신 번호</CFormLabel>
               <CCol xs={9}>
                  <CInputGroup className="mb-1">
-                    <CFormInput type="text" onChange={(e) => setKeyword(e.target.value)}/>
-                    <CButton variant="outline" >추가</CButton>
+                  <CFormSelect onChange={(e) => setGroupId(e.target.value)}>
+                        <option value="0101111111">010-1111-1111</option>
+                        <option value="01040109537">010-4010-9537</option>
+                      </CFormSelect>
                 </CInputGroup>
               </CCol>
             </CRow>
@@ -383,16 +379,46 @@ const SendSms = () => {
             <CRow className="mb-3">
               <CFormLabel className="col-sm-3">전송 내용</CFormLabel>
               <CCol className="col-sm-9">
-                <CFormTextarea
-                  rows="3"
-                  // onChange={(e)=>{setGroupDescription(e.target.value)}}
-                ></CFormTextarea>
+                <CRow>
+                  <CCol xxs={12} xs={7} md={7}>
+                    <p>전송상태 / <code>단문메세지</code></p>
+                    <CRow className="mb-1">
+                      <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
+                        <option value="" disabled>내용 템플릿 선택</option>
+                        <option value="0101111111">템플릿1</option>
+                        <option value="01040109537">템플릿2</option>
+                      </CFormSelect>
+                    </CRow>
+                    <CRow>
+                      <CFormTextarea
+                        rows="10"
+                        text="140byte 초과 및 이미지나 동영상 첨부 시 MMS"
+                        onChange={(e)=>{setDescription(e.target.value)}}
+                        />
+                    </CRow>
+                    <CRow>
+                      <CAccordion>
+                        <CAccordionItem itemKey={1}>
+                          <CAccordionHeader>문자열 치환하기 (고객명 자동삽입기능)</CAccordionHeader>
+                          <CAccordionBody>
+                            <strong><code>%고객명%</code>을 입력하시면 고객명 항목에 있는 내용이 변환되어 입력됩니다.</strong>
+                            <p>주소록 성명(이름)항목에 있는 내용이 입력되며 단문은 한글기준 3자(6byte), 장문은 제한 없습니다.</p>
+                          </CAccordionBody>
+                        </CAccordionItem>
+                      </CAccordion>
+                    </CRow>
+                  </CCol>
+                  <CCol xxs={12} xs={5} md={5}>
+                    <div className='custom_div'>
+                      <div className='custom_msg'>[미리보기]<br/>{description}</div>
+                    </div>
+                </CCol>
+                </CRow>
               </CCol>
             </CRow>
-
-  
           </CForm>
         </CCardBody>
+
         <CCardFooter>
           <CCol lg={12} className="text-end">
             <CButton color="success" variant="outline">
