@@ -17,6 +17,16 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
+    component: CNavItem,
+    name: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
+  },
+  {
     component: CNavTitle,
     name: '발송',
   },
@@ -72,25 +82,8 @@ const _nav = [
     ],
   },
   {
-    component: CNavGroup,
-    name: '템플릿 관리',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: '템플릿 리스트',
-        to: '/login',
-      },
-      {
-        component: CNavItem,
-        name: '템플릿 생성',
-        to: '/register',
-      },
-    ],
-  },
-  {
     component: CNavTitle,
-    name: '주소록 관리',
+    name: '설정',
   },
   {
     component: CNavGroup,
@@ -101,6 +94,23 @@ const _nav = [
         component: CNavItem,
         name: '그룹 리스트',
         to: '/groupList',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '주소록 관리',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '주소록 리스트',
+        to: '/senderList',
+      },
+      {
+        component: CNavItem,
+        name: '주소록 추가',
+        to: '/senderMake',
       },
     ],
   },
@@ -118,6 +128,23 @@ const _nav = [
         component: CNavItem,
         name: '발신번호 추가',
         to: '/senderMake',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: '템플릿 관리',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: '템플릿 리스트',
+        to: '/login',
+      },
+      {
+        component: CNavItem,
+        name: '템플릿 생성',
+        to: '/register',
       },
     ],
   },
@@ -144,20 +171,8 @@ const _nav = [
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
 
-  {
-    component: CNavTitle,
-    name: '컴포넌트',
-  },
-  {
-    component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
+  
+
   {
     component: CNavTitle,
     name: 'Theme',
