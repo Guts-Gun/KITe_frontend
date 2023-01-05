@@ -32,7 +32,8 @@ import {
   CAccordionCollapse,
   CAccordionHeader,
   CAccordionItem,
-  CImage
+  CImage,
+  CCallout
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilPlus, cilMinus } from '@coreui/icons';
@@ -83,11 +84,12 @@ const SendSms = () => {
                 <CFormLabel className="col-sm-3">수신자 선택</CFormLabel>
                   <CCol className="col-sm-9">
                     <CRow>
-                    <CCol xs={6}>
+                    <CCol sm={12} md={6}>
                       <CNav role="tablist" variant="tabs">
-                        <CNavItem><CNavLink active={activeKey === 1} onClick={() => setActiveKey(1)}> 직접입력 </CNavLink> </CNavItem>
-                        <CNavItem><CNavLink active={activeKey === 2} onClick={() => setActiveKey(2)}> 그룹 검색 </CNavLink></CNavItem>
-                        <CNavItem><CNavLink active={activeKey === 3} onClick={() => setActiveKey(3)}> 주소록 검색 </CNavLink></CNavItem>
+                        <CNavItem><CNavLink active={activeKey === 1} onClick={() => setActiveKey(1)}> 입력 </CNavLink> </CNavItem>
+                        <CNavItem><CNavLink active={activeKey === 2} onClick={() => setActiveKey(2)}> 그룹 </CNavLink></CNavItem>
+                        <CNavItem><CNavLink active={activeKey === 3} onClick={() => setActiveKey(3)}> 주소록 </CNavLink></CNavItem>
+                        <CNavItem><CNavLink active={activeKey === 4} onClick={() => setActiveKey(4)}> 엑셀 업로드 </CNavLink></CNavItem>
                       </CNav>
 
                       <CTabContent>
@@ -186,9 +188,22 @@ const SendSms = () => {
                               </CTable>
                             </CRow>
                           </CTabPane>
+                          <CTabPane role="tabpanel" aria-labelledby="home-tab" visible={activeKey === 4}>
+                            <CCallout color="primary">
+                            <CButton component="input" type="button" color="primary" value="샘플파일 다운로드"/><br/>
+                              * 등록할 파일을 선택해 주세요. <br/>
+                              * 반드시 위에 샘플 엑셀파일을 다운로드 하신 후 작성해서 등록해 주세요.
+                            </CCallout>
+                            <CInputGroup>
+                              <CFormInput type="file" accept=".xls,.xlsx" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+                              <CButton type="button" color="secondary" variant="outline" id="inputGroupFileAddon04">업로드</CButton>
+                            </CInputGroup>
+                          </CTabPane>
                       </CTabContent>
+
+
                     </CCol>
-                    <CCol xs={6}>
+                    <CCol sm={12} md={6}>
                       <CListGroup className="mb-1">
                           <CListGroupItem active className="d-flex">
                               전송 대상 (총 10명) 
@@ -339,7 +354,7 @@ const SendSms = () => {
                 </CRow>
             
             <CRow className="mb-3">
-              <CFormLabel className="col-sm-3">전송시간</CFormLabel>
+              <CFormLabel className="col-sm-3">전송 시간</CFormLabel>
               <CCol xs={9}>
                   <CFormSwitch label="예약 발송" id="formSwitchCheckChecked" onChange={changeSwitch}/>
                   {sendReserv? (<> <CRow>
@@ -380,7 +395,7 @@ const SendSms = () => {
               <CFormLabel className="col-sm-3">전송 내용</CFormLabel>
               <CCol className="col-sm-9">
                 <CRow>
-                  <CCol xxs={12} xs={7} md={7}>
+                  <CCol sm={12} md={7}>
                     <p>전송상태 / <code>단문메세지</code></p>
                     <CRow className="mb-1">
                       <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
@@ -396,7 +411,15 @@ const SendSms = () => {
                         onChange={(e)=>{setDescription(e.target.value)}}
                         />
                     </CRow>
-                    <CRow>
+                
+                  </CCol>
+                  <CCol  sm={12} md={5} className="mt-3">
+                    <div className='custom_div'>
+                      <div className='custom_msg'>[미리보기]<br/>{description}</div>
+                    </div>
+                </CCol>
+                </CRow>
+                <CRow className='mt-3'>
                       <CAccordion>
                         <CAccordionItem itemKey={1}>
                           <CAccordionHeader>문자열 치환하기 (고객명 자동삽입기능)</CAccordionHeader>
@@ -407,13 +430,6 @@ const SendSms = () => {
                         </CAccordionItem>
                       </CAccordion>
                     </CRow>
-                  </CCol>
-                  <CCol xxs={12} xs={5} md={5}>
-                    <div className='custom_div'>
-                      <div className='custom_msg'>[미리보기]<br/>{description}</div>
-                    </div>
-                </CCol>
-                </CRow>
               </CCol>
             </CRow>
           </CForm>
