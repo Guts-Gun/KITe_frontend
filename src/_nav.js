@@ -40,11 +40,11 @@ const _nav = [
         name: '발송하기',
         to: '/sendSms',
       },
-      {
-        component: CNavItem,
-        name: '예제',
-        to: '/register',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: '예제',
+      //   to: '/register',
+      // },
     ],
   },
   {
@@ -139,13 +139,13 @@ const _nav = [
       {
         component: CNavItem,
         name: '템플릿 리스트',
-        to: '/login',
+        to: '/templateList',
       },
-      {
-        component: CNavItem,
-        name: '템플릿 생성',
-        to: '/register',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: '템플릿 생성',
+      //   to: '/register',
+      // },
     ],
   },
   {

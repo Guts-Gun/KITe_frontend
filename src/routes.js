@@ -60,8 +60,21 @@ const SenderMake = React.lazy(() => import('./page/phonebook/sender/SenderMake')
 //send
 const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'))
 
+//setting
+const templateList = React.lazy(() => import('./page/setting/template/TemplateList'))
 
 const routes = [
+  { path: '/groupList', name: 'GroupList', element: GroupList },
+  { path: '/senderList', name: 'SenderList', element: SenderList },
+  { path: '/senderMake', name: 'SenderMake', element: SenderMake },
+
+  //발송(send)
+  { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },
+
+  // 설정(setting)
+  { path: '/templateList', name: 'Template List', element: templateList },
+
+
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
@@ -106,13 +119,6 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
-
-  { path: '/groupList', name: 'GroupList', element: GroupList },
-  { path: '/senderList', name: 'SenderList', element: SenderList },
-  { path: '/senderMake', name: 'SenderMake', element: SenderMake },
-
-  //발송(send)
-  { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },
 ]
 
 export default routes
