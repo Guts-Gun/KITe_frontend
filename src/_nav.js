@@ -105,12 +105,12 @@ const _nav = [
       {
         component: CNavItem,
         name: '주소록 리스트',
-        to: '/senderList',
+        to: '/receiverList',
       },
       {
         component: CNavItem,
         name: '주소록 추가',
-        to: '/senderMake',
+        to: '/receiverMake',
       },
     ],
   },

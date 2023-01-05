@@ -53,9 +53,12 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 //phonebook
 //group
 const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
-const SenderList = React.lazy(() => import('./page/phonebook/sender/SenderList'))
-const SenderMake = React.lazy(() => import('./page/phonebook/sender/SenderMake'))
+const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/ReceiverList'))
+const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/ReceiverMake'))
 
+//발신번호(sender)
+const SenderList = React.lazy(() => import('./page/sender/SenderList'));
+const SenderMake = React.lazy(() => import('./page/sender/SenderMake'));
 
 //send
 const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'))
@@ -64,7 +67,12 @@ const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'))
 const templateList = React.lazy(() => import('./page/setting/template/TemplateList'))
 
 const routes = [
+  //그룹
   { path: '/groupList', name: 'GroupList', element: GroupList },
+  //주소록(receiver)
+  { path: '/receiverList', name: 'ReceiverList', element: ReceiverList },
+  { path: '/receiverMake', name: 'ReceiverMake', element: ReceiverMake },
+  //발신번호(sender)
   { path: '/senderList', name: 'SenderList', element: SenderList },
   { path: '/senderMake', name: 'SenderMake', element: SenderMake },
 

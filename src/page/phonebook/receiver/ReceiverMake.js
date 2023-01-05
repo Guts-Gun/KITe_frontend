@@ -2,11 +2,11 @@ import React ,{useState} from 'react'
 import { CFormCheck,CFormInput, CFormLabel, CRow, CFormSelect,CButton,CInputGroup,
   CCard,CCardHeader,CCardBody,CCardFooter,CCol,
   CTable,CTableHead,CTableBody,CTableRow,CTableHeaderCell,CTableDataCell,
-CListGroup,CListGroupItem} from '@coreui/react'
+CListGroup,CListGroupItem,
+CCallout} from '@coreui/react'
 import CIcon from '@coreui/icons-react';
 import { cilPlus, cilMinus } from '@coreui/icons';
-import PhoneBookList from 'src/component/sender/PhoneBookList';
-function SenderMake() {
+function ReceiverMake() {
   // 발신번호 추가 - 단일/엑셀업로드 
   // single/excel/form
   const [sendPlus,setSendPlus] = useState("single");
@@ -17,7 +17,7 @@ function SenderMake() {
     <div>
       <CCard className="m-4">
         <CCardHeader>
-          <strong>발신번호 추가</strong>
+          <strong>주소록 추가</strong>
         </CCardHeader>
         <CCardBody>
           <CRow className="mb-3">
@@ -29,9 +29,9 @@ function SenderMake() {
             </CCol>
           </CRow>
           <CRow className="mb-3">
-          {sendPlus === "single" ? <SingleSenderMake/>:null}
-          {sendPlus === "multi" ? <MutiSenderMake/> :null}
-          {sendPlus === "excel" ? <ExcelSenderMake/> :null}
+            {sendPlus === "single" ? <SingleReceiverMake/>:null}
+            {sendPlus === "multi" ? <MutiReceiverMake/> :null}
+            {sendPlus === "excel" ? <ExcelReceiverMake/> :null}
           </CRow>
         </CCardBody>
       <CCardFooter>
@@ -46,9 +46,9 @@ function SenderMake() {
     </div>
   )
 }
-export default SenderMake
+export default ReceiverMake
 
-function SingleSenderMake(){
+function SingleReceiverMake(){
   return (
     <div>
       <CRow className="mb-3">
@@ -83,7 +83,7 @@ function SingleSenderMake(){
   )
 }
 
-function MutiSenderMake(){
+function MutiReceiverMake(){
   return(
     <div>
       <CRow>
@@ -99,11 +99,15 @@ function MutiSenderMake(){
           </CRow>
           <CRow className="mb-3 m-1">
             <CFormLabel>이름</CFormLabel>
-            <CFormInput id="inputPassword" />
+            <CInputGroup>
+              <CFormInput id="inputPassword" />
+            </CInputGroup>
           </CRow>
           <CRow className="mb-3 m-1">
             <CFormLabel>전화번호</CFormLabel>
-            <CFormInput id="inputPassword" />
+            <CInputGroup>
+              <CFormInput id="inputPassword" />
+            </CInputGroup>
           </CRow>
           <CCol lg={12} className="text-end">
             <CButton variant="outline">추가</CButton>
@@ -118,31 +122,39 @@ function MutiSenderMake(){
 }
 
 
-function ExcelSenderMake(){
+function ExcelReceiverMake(){
   return (
     <div>
-      <CInputGroup className="mb-1">
+      <CRow>
+        <CCol className='col-sm-6'>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>그룹</CFormLabel>
+            <CInputGroup>
               <CFormSelect>
                 <option value="Phone">그룹1</option>
                 <option value="Phone">그룹2</option>
               </CFormSelect>
             </CInputGroup>
-      <CInputGroup>
-        <CFormInput
-          type="file"
-          id="inputGroupFile04"
-          aria-describedby="inputGroupFileAddon04"
-          aria-label="Upload"
-        />
-        <CButton
-          type="button"
-          variant="outline"
-          id="inputGroupFileAddon04"
-        >
-          엑셀확인
-        </CButton>
-      </CInputGroup>
-      <PhoneBookList/>
+          </CRow>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>엑셀 파일 입력</CFormLabel>
+            <CCallout color="primary">
+              <CButton component="input" type="button" color="primary" value="샘플파일 다운로드"/><br/>
+                * 등록할 파일을 선택해 주세요. <br/>
+                * 반드시 위에 샘플 엑셀파일을 다운로드 하신 후 작성해서 등록해 주세요.
+              </CCallout>
+              <CInputGroup>
+                <CFormInput type="file" accept=".xls,.xlsx" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+              </CInputGroup>
+          </CRow>
+          <CCol lg={12} className="text-end">
+            <CButton variant="outline">추가</CButton>
+          </CCol>
+        </CCol>
+        <CCol className='col-sm-6'>
+          <AppendList/>
+        </CCol>
+      </CRow>
     </div>
   )
 }
@@ -152,7 +164,7 @@ function AppendList(){
   return(
     <CListGroup className="mb-1">
       <CListGroupItem active className="d-flex">
-          발신번호 추가 대상 (총 10명) 
+          주소록 추가 대상 (총 10명) 
           <div className="ms-auto">
           <CButton
                 color="light"

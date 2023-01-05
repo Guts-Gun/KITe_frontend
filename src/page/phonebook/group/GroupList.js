@@ -46,25 +46,25 @@ function Filter(){
     <div>
       <CCol className='mt-3 mb-3'>
         <CForm className="row">
-          <CCol md={4}>
-            <CButton color='warning' variant='outline'>
-              이름 바꾸기
-            </CButton>
+          <CCol className="col-sm-2">
+            <MakeGroupModal/>
           </CCol>
-          <CCol md={4}>
+          <CCol className="col-sm-2">
             <CButton color="info" variant="outline">
                 그룹 복사
             </CButton>
           </CCol>
-          <CCol md={4}>
+          <CCol className="col-sm-2">
+            <CButton color='warning' variant='outline'>
+              이름 바꾸기
+            </CButton>
+          </CCol>
+          <CCol className="col-sm-2">
             <CButton color="danger" variant="outline">
                 그룹 삭제
             </CButton>
           </CCol>
-          <CCol md={4}>
-            <MakeGroupModal/>
-          </CCol>
-          <CCol md={4}>
+          <CCol className="col-sm-4">
             <CInputGroup>
               <CFormInput type="text"/>
               <CButton variant="outline" >검색</CButton>
@@ -116,49 +116,64 @@ function MakeGroupModal(){
 function List(){
   return(
     <div> 
-      <CRow>
+      <CRow className="justify-content-center">
           <CCard style={{ width: '18rem' }}>
             <CCardBody>
+              <CFormCheck id="flexCheckDefault"/>
               <CCardTitle>학생</CCardTitle>
               <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CRow>
+                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <CCardLink href="#">전송 내역 확인</CCardLink>
+              </CRow>
               <CCardText>200명</CCardText>
             </CCardBody>
           </CCard>
           <CCard style={{ width: '18rem' }}>
             <CCardBody>
+              <CFormCheck id="flexCheckDefault"/>
               <CCardTitle>학생</CCardTitle>
               <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CRow>
+                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <CCardLink href="#">전송 내역 확인</CCardLink>
+              </CRow>
               <CCardText>200명</CCardText>
             </CCardBody>
           </CCard>
           <CCard style={{ width: '18rem' }}>
             <CCardBody>
+              <CFormCheck id="flexCheckDefault"/>
               <CCardTitle>학생</CCardTitle>
               <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CRow>
+                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <CCardLink href="#">전송 내역 확인</CCardLink>
+              </CRow>
               <CCardText>200명</CCardText>
             </CCardBody>
           </CCard>
           <CCard style={{ width: '18rem' }}>
             <CCardBody>
+              <CFormCheck id="flexCheckDefault"/>
               <CCardTitle>학생</CCardTitle>
               <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CRow>
+                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <CCardLink href="#">전송 내역 확인</CCardLink>
+              </CRow>
               <CCardText>200명</CCardText>
             </CCardBody>
           </CCard>
           <CCard style={{ width: '18rem' }}>
             <CCardBody>
+            <CFormCheck id="flexCheckDefault"/>
               <CCardTitle>학생</CCardTitle>
               <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CCardLink href="#">전화번호 내역 확인</CCardLink>
-              <CCardLink href="#">전송 내역 확인</CCardLink>
+              <CRow>
+                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <CCardLink href="#">전송 내역 확인</CCardLink>
+              </CRow>
               <CCardText>200명</CCardText>
             </CCardBody>
           </CCard>
