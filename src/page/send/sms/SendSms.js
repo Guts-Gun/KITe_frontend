@@ -33,7 +33,12 @@ import {
   CAccordionHeader,
   CAccordionItem,
   CImage,
-  CCallout
+  CCallout,
+  COffcanvas,
+  COffcanvasHeader,
+  COffcanvasTitle,
+  CCloseButton,
+  COffcanvasBody
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilPlus, cilMinus } from '@coreui/icons';
@@ -41,6 +46,9 @@ import phoneImg from 'src/assets/images/phone.png';
 
 
 const SendSms = () => {
+
+  const [visible, setVisible] = useState(false)
+
 
   // 수신자선택 - 탭
   const [activeKey, setActiveKey] = useState(1);
@@ -72,10 +80,22 @@ const SendSms = () => {
 
   return (
     <>
+  
+
       <CCard className="m-4">
         <CCardHeader>
           <strong>SMS/MMS 발송 </strong>
-          {/* <small></small> */}
+            <small><CButton sm onClick={() => setVisible(true)}>예시보기</CButton></small>
+            <COffcanvas placement="end" visible={visible} onHide={() => setVisible(false)}>
+              <COffcanvasHeader>
+                <COffcanvasTitle>SMS/MMS 발송 매뉴얼</COffcanvasTitle>
+                <CCloseButton className="text-reset" onClick={() => setVisible(false)} />
+              </COffcanvasHeader>
+              <COffcanvasBody>
+                <p>SMS/MMS 발송 매뉴얼</p>
+                <CImage src={phoneImg} width={100}/>
+              </COffcanvasBody>
+            </COffcanvas>
         </CCardHeader>
         <CCardBody>
 
