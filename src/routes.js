@@ -50,6 +50,9 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+
+//userconsole
+const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
 //phonebook
 //group
 const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
@@ -61,12 +64,14 @@ const SenderList = React.lazy(() => import('./page/sender/SenderList'));
 const SenderMake = React.lazy(() => import('./page/sender/SenderMake'));
 
 //send
-const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'))
+const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
 
 //setting
-const templateList = React.lazy(() => import('./page/setting/template/TemplateList'))
+const templateList = React.lazy(() => import('./page/setting/template/TemplateList'));
 
 const routes = [
+  //user console
+  { path: '/userConsole', name: 'UserConsole', element: UserConsole },
   //그룹
   { path: '/groupList', name: 'GroupList', element: GroupList },
   //주소록(receiver)
