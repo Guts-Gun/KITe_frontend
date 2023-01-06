@@ -53,9 +53,11 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 //userconsole
 const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
-//phonebook
+
 //group
 const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
+
+//phonebook
 const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/ReceiverList'))
 const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/ReceiverMake'))
 
@@ -69,6 +71,8 @@ const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
 //setting
 const templateList = React.lazy(() => import('./page/setting/template/TemplateList'));
 
+//result
+const ResultDetail = React.lazy(() => import('./page/result/ResultDetail'));
 const routes = [
   //user console
   { path: '/userConsole', name: 'UserConsole', element: UserConsole },
@@ -86,6 +90,9 @@ const routes = [
 
   // 설정(setting)
   { path: '/templateList', name: 'Template List', element: templateList },
+
+  //결과(result)
+  { path: '/resultdetail', name: 'ResultDetail', element: ResultDetail },
 
 
   { path: '/', exact: true, name: 'Home' },

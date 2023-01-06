@@ -165,7 +165,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'SMS/MMS',
-    to: '/theme/colors',
+    to: '/resultdetail', //잠시 detail페이지로 만들어놓기
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
   {
