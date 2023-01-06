@@ -28,8 +28,6 @@ import {
   CTabPane,
   CAccordion,
   CAccordionBody,
-  CAccordionButton,
-  CAccordionCollapse,
   CAccordionHeader,
   CAccordionItem,
   CImage,
@@ -38,8 +36,9 @@ import {
   COffcanvasHeader,
   COffcanvasTitle,
   CCloseButton,
-  COffcanvasBody
+  COffcanvasBody,
 } from '@coreui/react';
+import { CChart } from '@coreui/react-chartjs';
 import CIcon from '@coreui/icons-react';
 import { cilPlus, cilMinus } from '@coreui/icons';
 import phoneImg from 'src/assets/images/phone.png';
@@ -64,24 +63,25 @@ const SendSms = () => {
 
   // 전송시간 - 예약발송여부
   const [sendReserv, setSendReserv] = useState(false);
-
+  
   // 템플릿
   const [template, setTemplate] = useState(null);
   const [description, setDescription] = useState('');
-
+  
   // 예약발송 스위치
   function changeSwitch(e){ 
     const checked = e.target.checked;
     setSendReserv(checked);
-};
-
+  };
+  
+  const [brokerRatio1, setBrokerRatio1] = useState(40);
+  const [brokerRatio2, setBrokerRatio2] = useState(40);
+  const [brokerRatio3, setBrokerRatio3] = useState(20);
 
 
 
   return (
     <>
-  
-
       <CCard className="m-4">
         <CCardHeader>
           <strong>SMS/MMS 발송 </strong>
@@ -415,7 +415,7 @@ const SendSms = () => {
               <CFormLabel className="col-sm-3">전송 내용</CFormLabel>
               <CCol className="col-sm-9">
                 <CRow>
-                  <CCol sm={12} md={7}>
+                  <CCol sm={12} md={8}>
                     <p>전송상태 / <code>단문메세지</code></p>
                     <CRow className="mb-1">
                       <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
@@ -433,7 +433,7 @@ const SendSms = () => {
                     </CRow>
                 
                   </CCol>
-                  <CCol  sm={12} md={5} className="mt-3">
+                  <CCol  sm={12} md={4} className="mt-3">
                     <div className='custom_div'>
                       <div className='custom_msg'>[미리보기]<br/>{description}</div>
                     </div>
@@ -451,6 +451,56 @@ const SendSms = () => {
                       </CAccordion>
                     </CRow>
               </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+                <CFormLabel className="col-sm-3">중계사 비율</CFormLabel>
+                <CCol className="col-sm-9">
+                <CRow>
+                  <CCol sm={12} md={8}>
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">중계사 이름</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">비율(%)</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                        <CTableRow>
+                          <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                          <CTableDataCell>KT</CTableDataCell>
+                          <CTableDataCell><CFormInput type="number" value={brokerRatio1} onChange={(e) => setBrokerRatio1(e.target.value)} /></CTableDataCell>
+                        </CTableRow>
+                        <CTableRow>
+                          <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                          <CTableDataCell>LG</CTableDataCell>
+                          <CTableDataCell><CFormInput type="number" value={brokerRatio2} onChange={(e) => setBrokerRatio2(e.target.value)}/></CTableDataCell>
+                        </CTableRow>
+                        <CTableRow>
+                          <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                          <CTableDataCell>SKT</CTableDataCell>
+                          <CTableDataCell><CFormInput type="number" value={brokerRatio3} onChange={(e) => setBrokerRatio3(e.target.value)} /></CTableDataCell>
+                        </CTableRow>
+
+                    </CTableBody>
+                  </CTable>
+                  </CCol>
+                  <CCol sm={12} md={4}>
+                    <CChart
+                      type="doughnut"
+                      data={{
+                        labels: ['KT', 'LG', 'SKT'],
+                        datasets: [
+                          {
+                            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                            data: [brokerRatio1, brokerRatio2, brokerRatio3],
+                          },
+                        ],
+                      }}/>
+                    </CCol>
+                  </CRow>
+                </CCol>
             </CRow>
           </CForm>
         </CCardBody>
