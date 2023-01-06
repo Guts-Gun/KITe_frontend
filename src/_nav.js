@@ -16,16 +16,7 @@ import {
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
-  {
-    component: CNavItem,
-    name: 'Dashboard예제',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
+
   {
     component: CNavItem,
     name: 'Dashboard',
@@ -181,7 +172,7 @@ const _nav = [
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
 
-  
+
 
   {
     component: CNavTitle,
@@ -456,6 +447,16 @@ const _nav = [
     name: 'Docs',
     href: 'https://coreui.io/react/docs/templates/installation/',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
+  },
+    {
+    component: CNavItem,
+    name: 'Dashboard예제',
+    to: '/dashboard',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
   },
 ]
 
