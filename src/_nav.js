@@ -12,6 +12,16 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilBarChart,
+  cilGroup,
+  cilEnvelopeOpen,
+  cilAddressBook,
+  cilScreenSmartphone,
+  cilPhone,
+  cilBookmark,
+  cilChatBubble,
+  cilChart,
+  cilChartLine
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -21,7 +31,7 @@ const _nav = [
     component: CNavItem,
     name: 'User Console',
     to: '/userConsole',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBarChart} customClassName="nav-icon" />,
     badge: {
       color: 'info',
       text: 'NEW',
@@ -31,57 +41,42 @@ const _nav = [
     component: CNavTitle,
     name: '발송',
   },
+
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: 'SMS/MMS',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: '발송하기',
-        to: '/sendSms',
-      },
-      // {
-      //   component: CNavItem,
-      //   name: '예제',
-      //   to: '/register',
-      // },
-    ],
+    to: '/sendSms',
+    icon: <CIcon icon={cilScreenSmartphone} customClassName="nav-icon" />,
   },
   {
-    component: CNavGroup,
+    component: CNavItem,
+    name: 'e-mail',
+    to: '/',
+    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: '카카오톡',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: '발송하기',
-        to: '/login',
-      },
-      {
-        component: CNavItem,
-        name: '예제',
-        to: '/register',
-      },
-    ],
+    to: '/',
+    icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
   },
-  {
-    component: CNavGroup,
-    name: '팩스',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: '발송하기',
-        to: '/login',
-      },
-      {
-        component: CNavItem,
-        name: '예제',
-        to: '/register',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: '팩스',
+  //   icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: '발송하기',
+  //       to: '/login',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: '예제',
+  //       to: '/register',
+  //     },
+  //   ],
+  // },
   {
     component: CNavTitle,
     name: '설정',
@@ -89,7 +84,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '그룹 관리',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -101,7 +96,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '주소록 관리',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -118,7 +113,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '발신번호 관리',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPhone} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -135,7 +130,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '템플릿 관리',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBookmark} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -157,20 +152,21 @@ const _nav = [
     component: CNavItem,
     name: 'SMS/MMS',
     to: '/resultdetail', //잠시 detail페이지로 만들어놓기
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilChart} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'e-mail',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: '카카오톡',
     to: '/theme/colors',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: '팩스',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-  },
+
 
 
 
