@@ -22,17 +22,120 @@ import {
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
 import CIcon from "@coreui/icons-react";
-import {cilCloudDownload} from "@coreui/icons";
+import {cibFacebook, cibGoogle, cibLinkedin, cibTwitter, cilCloudDownload} from "@coreui/icons";
 import {CChartLine} from "@coreui/react-chartjs";
 import {getStyle, hexToRgba} from "@coreui/utils";
 import { CChart } from '@coreui/react-chartjs';
 import { cilSend } from "@coreui/icons";
+import { cilEnvelopeClosed } from "@coreui/icons";
+
+import { CCarousel } from '@coreui/react';
+import { CCarouselItem } from '@coreui/react';
+import { CImage } from '@coreui/react';
+
 
 function UserConsole() {
+
   return (
     <div>
       <CRow>
+        <CCard className="mb-4">
+          <CCardBody>
+            <CRow>
+              <CCol sm={5}>
+                <h4 className="card-title mb-0">
 
+                </h4>
+              </CCol>
+            </CRow>
+
+
+            <CRow className = 'mt-3'>
+              <CCol sm = {4}>
+                <CCarousel controls indicators dark>
+                  <CCarouselItem>
+                    <CCard>
+                      <CCardBody>
+                        <CCardTitle>
+                          <span>메시지 사용량 </span>
+                        </CCardTitle>
+                        <CListGroup flush>
+                          <CListGroupItem>타입 : sms</CListGroupItem>
+                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
+                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
+                        </CListGroup>
+                      </CCardBody>
+
+                    </CCard>
+                  </CCarouselItem>
+
+                  <CCarouselItem>
+                    <CCard>
+                      <CCardBody>
+                        <CCardTitle>
+                          <span>email 사용량 </span>
+                        </CCardTitle>
+                        <CListGroup flush>
+                          <CListGroupItem>타입 : email</CListGroupItem>
+                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
+                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
+                        </CListGroup>
+                      </CCardBody>
+
+                    </CCard>
+                  </CCarouselItem>
+
+                  <CCarouselItem>
+                    <CCard>
+                      <CCardBody>
+                        <CCardTitle>
+                          <span>카카오 사용량 </span>
+                        </CCardTitle>
+                        <CListGroup flush>
+                          <CListGroupItem>타입 : kakao</CListGroupItem>
+                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
+                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
+                        </CListGroup>
+                      </CCardBody>
+
+                    </CCard>
+                  </CCarouselItem>
+
+                </CCarousel>
+              </CCol>
+
+
+              <CCol sm = {8}>
+                <CCardGroup>
+                  <CCard>
+                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
+                    <CCardBody>
+                      <CCardTitle>sms</CCardTitle>
+                    </CCardBody>
+                  </CCard>
+                  <CCard>
+                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
+                    <CCardBody>
+                      <CCardTitle>e mail</CCardTitle>
+                    </CCardBody>
+                  </CCard>
+                  <CCard>
+                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
+                    <CCardBody>
+                      <CCardTitle>kakao</CCardTitle>
+                    </CCardBody>
+                  </CCard>
+
+                </CCardGroup>
+
+              </CCol>
+
+
+            </CRow>
+
+
+          </CCardBody>
+        </CCard>
       </CRow>
 
       <CRow>
@@ -89,6 +192,8 @@ function UserConsole() {
                   </CCardBody>
                 </CCard>
               </CCol>
+
+
               <CCol sm = {4}>
                 <CCard>
                   <CCardBody>
