@@ -48,12 +48,12 @@ function Menu() {
   return (
     <div>
       <CRow className="mb-3">
-        <CRow>
           <CCol className="col-sm-2"> 
             <SenderMakeModal/>
+            <CButton color="info" variant="outline">수정</CButton> 
+            <CButton color="danger" variant="outline">삭제</CButton> 
           </CCol>
           <CCol className="col-sm-2"> 
-            <CButton color="danger" variant="outline">검색</CButton> 
           </CCol>
           <CCol className="col-sm-8"> 
           <CInputGroup>
@@ -65,7 +65,6 @@ function Menu() {
             <CButton variant="outline" >검색</CButton>      
             </CInputGroup>
           </CCol>
-        </CRow>
       </CRow>
     </div>
   )
@@ -115,7 +114,7 @@ function List() {
         <CTable>
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">이름</CTableHeaderCell>
               <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
             </CTableRow>

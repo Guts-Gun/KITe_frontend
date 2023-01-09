@@ -21,7 +21,19 @@ import {
   CFormSelect,
   CFormCheck,
   CForm,
+  CListGroup,
+  CListGroupItem,
+  CBadge,
+  CProgress,
+  CProgressBar,
+  CButtonGroup,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilSend } from "@coreui/icons";
 
 function GroupList() {
   return (
@@ -50,19 +62,11 @@ function Filter(){
             <MakeGroupModal/>
           </CCol>
           <CCol className="col-sm-2">
-            <CButton color="info" variant="outline">
-                그룹 복사
-            </CButton>
-          </CCol>
-          <CCol className="col-sm-2">
-            <CButton color='warning' variant='outline'>
-              이름 바꾸기
-            </CButton>
-          </CCol>
-          <CCol className="col-sm-2">
             <CButton color="danger" variant="outline">
                 그룹 삭제
             </CButton>
+          </CCol>
+          <CCol className="col-sm-4">
           </CCol>
           <CCol className="col-sm-4">
             <CInputGroup>
@@ -75,6 +79,8 @@ function Filter(){
     </div>
   )
 }
+
+
 function MakeGroupModal(){
   const [visible, setVisible] = useState(false)
   return (
@@ -115,69 +121,123 @@ function MakeGroupModal(){
 
 function List(){
   return(
-    <div> 
-      <CRow className="justify-content-center">
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CFormCheck id="flexCheckDefault"/>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CRow>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                <CCardLink href="#">전송 내역 확인</CCardLink>
-              </CRow>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CFormCheck id="flexCheckDefault"/>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CRow>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                <CCardLink href="#">전송 내역 확인</CCardLink>
-              </CRow>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CFormCheck id="flexCheckDefault"/>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CRow>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                <CCardLink href="#">전송 내역 확인</CCardLink>
-              </CRow>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-              <CFormCheck id="flexCheckDefault"/>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CRow>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                <CCardLink href="#">전송 내역 확인</CCardLink>
-              </CRow>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-          <CCard style={{ width: '18rem' }}>
-            <CCardBody>
-            <CFormCheck id="flexCheckDefault"/>
-              <CCardTitle>학생</CCardTitle>
-              <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-              <CRow>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                <CCardLink href="#">전송 내역 확인</CCardLink>
-              </CRow>
-              <CCardText>200명</CCardText>
-            </CCardBody>
-          </CCard>
-        </CRow>
-      </div>
-  );
+    <div>
+      <CRow>
+        <CCard className="mb-4">
+          <CCardBody>
+            <CRow className = 'mt-3'>
+            <CCol xs={12} sm = {6} md = {4} className="mb-3">
+                <CCard>
+                  <CCardBody>
+                    <CCardTitle>
+                      <CFormCheck id="flexCheckDefault"/>
+                      <span className="ms-2">학생3</span>
+                      <p></p>
+                      <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+                    </CCardTitle>
+                  </CCardBody>
+                  <CListGroup flush>
+                    <CListGroupItem>인원 수 : 2000</CListGroupItem>
+                    <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
+                    <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
+                  </CListGroup>
+                  <CCardBody>
+                    <CRow>
+                    <CCol>
+                    <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                    </CCol>
+                    <CCol>
+                      <CDropdown>
+                      <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
+                      <CDropdownMenu>
+                        <CDropdownItem href="#">그룹 복사</CDropdownItem>
+                        <CDropdownItem href="#">수정</CDropdownItem>
+                        <CDropdownItem href="#">삭제</CDropdownItem>
+                      </CDropdownMenu>
+                      </CDropdown>
+                    </CCol>
+                    </CRow>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+
+              <CCol xs={12} sm = {6} md = {4}>
+                <CCard>
+                  <CCardBody>
+                    <CCardTitle>
+                      <CFormCheck id="flexCheckDefault"/>
+                      <span className="ms-2">학생3</span>
+                      <p></p>
+                      <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+                    </CCardTitle>
+                  </CCardBody>
+                  <CListGroup flush>
+                    <CListGroupItem>인원 수 : 2000</CListGroupItem>
+                    <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
+                    <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
+                  </CListGroup>
+                  <CCardBody>
+                    <CRow>
+                    <CCol>
+                    <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                    </CCol>
+                    <CCol>
+                      <CDropdown>
+                        <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
+                        <CDropdownMenu>
+                          <CDropdownItem href="#">그룹 복사</CDropdownItem>
+                          <CDropdownItem href="#">수정</CDropdownItem>
+                          <CDropdownItem href="#">삭제</CDropdownItem>
+                        </CDropdownMenu>
+                      </CDropdown>
+                    </CCol>
+                    </CRow>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+
+              <CCol xs={12} sm = {6} md = {4}>
+                <CCard>
+                  <CCardBody>
+                    <CCardTitle>
+                      <CFormCheck id="flexCheckDefault"/>
+                      <span className="ms-2">학생3</span>
+                      <p></p>
+                      <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+                    </CCardTitle>
+                  </CCardBody>
+                  <CListGroup flush>
+                    <CListGroupItem>인원 수 : 2000</CListGroupItem>
+                    <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
+                    <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
+                  </CListGroup>
+                  <CCardBody>
+                    <CRow>
+                    <CCol>
+                    <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                    </CCol>
+                    <CCol>
+                      <CDropdown>
+                      <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
+                      <CDropdownMenu>
+                        <CDropdownItem href="#">그룹 복사</CDropdownItem>
+                        <CDropdownItem href="#">수정</CDropdownItem>
+                        <CDropdownItem href="#">삭제</CDropdownItem>
+                      </CDropdownMenu>
+                      </CDropdown>
+                    </CCol>
+                    </CRow>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+            </CRow>
+          </CCardBody>
+        </CCard>
+      </CRow>
+    </div>
+        
+)
 }
+
+
+

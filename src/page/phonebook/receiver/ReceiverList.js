@@ -126,7 +126,7 @@ function GroupMoveModal(){
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Close
           </CButton>
-          <CButton color="success">그룹 생성</CButton>
+          <CButton color="info">그룹 이동</CButton>
         </CModalFooter>
       </CModal>
     </>

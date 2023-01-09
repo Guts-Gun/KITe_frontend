@@ -120,11 +120,6 @@ const _nav = [
         name: '발신번호 리스트',
         to: '/senderList',
       },
-      {
-        component: CNavItem,
-        name: '발신번호 추가',
-        to: '/senderMake',
-      },
     ],
   },
   {

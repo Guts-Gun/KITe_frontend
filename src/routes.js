@@ -63,7 +63,6 @@ const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/Receiver
 
 //발신번호(sender)
 const SenderList = React.lazy(() => import('./page/sender/SenderList'));
-const SenderMake = React.lazy(() => import('./page/sender/SenderMake'));
 
 //send
 const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
@@ -83,7 +82,7 @@ const routes = [
   { path: '/receiverMake', name: 'ReceiverMake', element: ReceiverMake },
   //발신번호(sender)
   { path: '/senderList', name: 'SenderList', element: SenderList },
-  { path: '/senderMake', name: 'SenderMake', element: SenderMake },
+
 
   //발송(send)
   { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },
