@@ -111,23 +111,28 @@ function UserConsole() {
 
 
               <CCol sm = {6}>
-                <CCardGroup>
-                  <CCard style={{ width: '18rem' }}>
-                  <CCardBody>
-                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />sms</CCardTitle>
-                    <CCardSubtitle className="mb-2 text-medium-emphasis">sms</CCardSubtitle>
-                    <CCardLink href="#">발송하기</CCardLink>
-                  </CCardBody>
-                </CCard>
-                <CCard style={{ width: '18rem' }}>
-                  <CCardBody>
-                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />email</CCardTitle>
-                    <CCardSubtitle className="mb-2 text-medium-emphasis">email</CCardSubtitle>
-                    <CCardLink href="#">발송하기</CCardLink>
-                  </CCardBody>
-                </CCard>
-                </CCardGroup>
-
+                <CRow>
+                <CButtonGroup role="group">
+                  <CButton href="#" color="light" sm={6}>
+                    <CCard >
+                      <CCardBody>
+                        <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />sms</CCardTitle>
+                        <CCardSubtitle className="mb-2 text-medium-emphasis">sms</CCardSubtitle>
+                        <CCardLink href="#">발송하기</CCardLink>
+                      </CCardBody>
+                    </CCard>
+                  </CButton>
+                  <CButton href="#" color="light">
+                    <CCard>
+                      <CCardBody>
+                        <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />email</CCardTitle>
+                        <CCardSubtitle className="mb-2 text-medium-emphasis">email</CCardSubtitle>
+                        <CCardLink href="#">발송하기</CCardLink>
+                      </CCardBody>
+                    </CCard>
+                  </CButton>
+                </CButtonGroup>
+                </CRow>
               </CCol>
 
 
