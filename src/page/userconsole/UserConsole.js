@@ -51,7 +51,12 @@ function UserConsole() {
 
 
             <CRow className = 'mt-3'>
-              <CCol sm = {4}>
+              <CCol sm={12}>
+                <h4 id="traffic" className="card-title mb-0">
+                  요약
+                </h4>
+              </CCol>
+              <CCol sm = {6}>
                 <CCarousel controls indicators dark>
                   <CCarouselItem>
                     <CCard>
@@ -105,7 +110,7 @@ function UserConsole() {
               </CCol>
 
 
-              <CCol sm = {8}>
+              <CCol sm = {6}>
                 <CCardGroup>
                   <CCard style={{ width: '18rem' }}>
                   <CCardBody>
@@ -118,13 +123,6 @@ function UserConsole() {
                   <CCardBody>
                     <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />email</CCardTitle>
                     <CCardSubtitle className="mb-2 text-medium-emphasis">email</CCardSubtitle>
-                    <CCardLink href="#">발송하기</CCardLink>
-                  </CCardBody>
-                </CCard>
-                <CCard style={{ width: '18rem' }}>
-                  <CCardBody>
-                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />kakao</CCardTitle>
-                    <CCardSubtitle className="mb-2 text-medium-emphasis">kakao</CCardSubtitle>
                     <CCardLink href="#">발송하기</CCardLink>
                   </CCardBody>
                 </CCard>
