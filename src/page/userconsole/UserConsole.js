@@ -107,25 +107,27 @@ function UserConsole() {
 
               <CCol sm = {8}>
                 <CCardGroup>
-                  <CCard>
-                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
-                    <CCardBody>
-                      <CCardTitle>sms</CCardTitle>
-                    </CCardBody>
-                  </CCard>
-                  <CCard>
-                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
-                    <CCardBody>
-                      <CCardTitle>e mail</CCardTitle>
-                    </CCardBody>
-                  </CCard>
-                  <CCard>
-                    <CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />
-                    <CCardBody>
-                      <CCardTitle>kakao</CCardTitle>
-                    </CCardBody>
-                  </CCard>
-
+                  <CCard style={{ width: '18rem' }}>
+                  <CCardBody>
+                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />sms</CCardTitle>
+                    <CCardSubtitle className="mb-2 text-medium-emphasis">sms</CCardSubtitle>
+                    <CCardLink href="#">발송하기</CCardLink>
+                  </CCardBody>
+                </CCard>
+                <CCard style={{ width: '18rem' }}>
+                  <CCardBody>
+                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />email</CCardTitle>
+                    <CCardSubtitle className="mb-2 text-medium-emphasis">email</CCardSubtitle>
+                    <CCardLink href="#">발송하기</CCardLink>
+                  </CCardBody>
+                </CCard>
+                <CCard style={{ width: '18rem' }}>
+                  <CCardBody>
+                    <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />kakao</CCardTitle>
+                    <CCardSubtitle className="mb-2 text-medium-emphasis">kakao</CCardSubtitle>
+                    <CCardLink href="#">발송하기</CCardLink>
+                  </CCardBody>
+                </CCard>
                 </CCardGroup>
 
               </CCol>
