@@ -33,7 +33,9 @@ import {
   CDropdownItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilSend } from "@coreui/icons";
+import { cilSend,cilOptions,cilHamburgerMenu } from "@coreui/icons";
+
+
 
 function GroupList() {
   return (
@@ -126,17 +128,32 @@ function List(){
         <CCard className="mb-4">
           <CCardBody>
             <CRow className = 'mt-3'>
-            <CCol xs={12} sm = {6} md = {4} className="mb-3">
+            <CCol xs={12} sm = {6} md = {4}>
                 <CCard>
                   <CCardBody>
                     <CCardTitle>
-                      <CFormCheck id="flexCheckDefault"/>
-                      <span className="ms-2">학생3</span>
-                      <p></p>
+                      <CRow className="mb-3">
+                        <CCol lg={10}>
+                          <CFormCheck id="flexCheckDefault"/>
+                          <span className="ms-2">학생1</span>
+                        </CCol>
+                        <CCol lg={2} className="text-end">
+                          <CDropdown alignment="end">
+                            <CDropdownToggle color="transparent" caret={false} className="p-0">
+                              <CIcon icon={cilHamburgerMenu}/>
+                            </CDropdownToggle>
+                            <CDropdownMenu>
+                              <CDropdownItem>그룹 복사</CDropdownItem>
+                              <CDropdownItem>수정</CDropdownItem>
+                              <CDropdownItem>삭제</CDropdownItem>
+                            </CDropdownMenu>
+                          </CDropdown>
+                        </CCol>
+                      </CRow>
                       <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
                     </CCardTitle>
                   </CCardBody>
-                  <CListGroup flush>
+                  <CListGroup flush>  
                     <CListGroupItem>인원 수 : 2000</CListGroupItem>
                     <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
                     <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
@@ -146,15 +163,44 @@ function List(){
                     <CCol>
                     <CCardLink href="#">전화번호 내역 확인</CCardLink>
                     </CCol>
+                    </CRow>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+              <CCol xs={12} sm = {6} md = {4}>
+                <CCard>
+                  <CCardBody>
+                    <CCardTitle>
+                      <CRow className="mb-3">
+                        <CCol lg={10}>
+                          <CFormCheck id="flexCheckDefault"/>
+                          <span className="ms-2">학생2</span>
+                        </CCol>
+                        <CCol lg={2} className="text-end">
+                          <CDropdown alignment="end">
+                            <CDropdownToggle color="transparent" caret={false} className="p-0">
+                              <CIcon icon={cilHamburgerMenu}/>
+                            </CDropdownToggle>
+                            <CDropdownMenu>
+                              <CDropdownItem>그룹 복사</CDropdownItem>
+                              <CDropdownItem>수정</CDropdownItem>
+                              <CDropdownItem>삭제</CDropdownItem>
+                            </CDropdownMenu>
+                          </CDropdown>
+                        </CCol>
+                      </CRow>
+                      <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
+                    </CCardTitle>
+                  </CCardBody>
+                  <CListGroup flush>  
+                    <CListGroupItem>인원 수 : 2000</CListGroupItem>
+                    <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
+                    <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
+                  </CListGroup>
+                  <CCardBody>
+                    <CRow>
                     <CCol>
-                      <CDropdown>
-                      <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
-                      <CDropdownMenu>
-                        <CDropdownItem href="#">그룹 복사</CDropdownItem>
-                        <CDropdownItem href="#">수정</CDropdownItem>
-                        <CDropdownItem href="#">삭제</CDropdownItem>
-                      </CDropdownMenu>
-                      </CDropdown>
+                    <CCardLink href="#">전화번호 내역 확인</CCardLink>
                     </CCol>
                     </CRow>
                   </CCardBody>
@@ -165,13 +211,28 @@ function List(){
                 <CCard>
                   <CCardBody>
                     <CCardTitle>
-                      <CFormCheck id="flexCheckDefault"/>
-                      <span className="ms-2">학생3</span>
-                      <p></p>
+                      <CRow className="mb-3">
+                        <CCol lg={10}>
+                          <CFormCheck id="flexCheckDefault"/>
+                          <span className="ms-2">학생3</span>
+                        </CCol>
+                        <CCol lg={2} className="text-end">
+                          <CDropdown alignment="end">
+                            <CDropdownToggle color="transparent" caret={false} className="p-0">
+                              <CIcon icon={cilHamburgerMenu}/>
+                            </CDropdownToggle>
+                            <CDropdownMenu>
+                              <CDropdownItem>그룹 복사</CDropdownItem>
+                              <CDropdownItem>수정</CDropdownItem>
+                              <CDropdownItem>삭제</CDropdownItem>
+                            </CDropdownMenu>
+                          </CDropdown>
+                        </CCol>
+                      </CRow>
                       <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
                     </CCardTitle>
                   </CCardBody>
-                  <CListGroup flush>
+                  <CListGroup flush>  
                     <CListGroupItem>인원 수 : 2000</CListGroupItem>
                     <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
                     <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
@@ -180,51 +241,6 @@ function List(){
                     <CRow>
                     <CCol>
                     <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                    </CCol>
-                    <CCol>
-                      <CDropdown>
-                        <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
-                        <CDropdownMenu>
-                          <CDropdownItem href="#">그룹 복사</CDropdownItem>
-                          <CDropdownItem href="#">수정</CDropdownItem>
-                          <CDropdownItem href="#">삭제</CDropdownItem>
-                        </CDropdownMenu>
-                      </CDropdown>
-                    </CCol>
-                    </CRow>
-                  </CCardBody>
-                </CCard>
-              </CCol>
-
-              <CCol xs={12} sm = {6} md = {4}>
-                <CCard>
-                  <CCardBody>
-                    <CCardTitle>
-                      <CFormCheck id="flexCheckDefault"/>
-                      <span className="ms-2">학생3</span>
-                      <p></p>
-                      <CCardSubtitle className="mb-2 text-medium-emphasis">설명맨</CCardSubtitle>
-                    </CCardTitle>
-                  </CCardBody>
-                  <CListGroup flush>
-                    <CListGroupItem>인원 수 : 2000</CListGroupItem>
-                    <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
-                    <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
-                  </CListGroup>
-                  <CCardBody>
-                    <CRow>
-                    <CCol>
-                    <CCardLink href="#">전화번호 내역 확인</CCardLink>
-                    </CCol>
-                    <CCol>
-                      <CDropdown>
-                      <CDropdownToggle variant="outline" color="info">설정</CDropdownToggle>
-                      <CDropdownMenu>
-                        <CDropdownItem href="#">그룹 복사</CDropdownItem>
-                        <CDropdownItem href="#">수정</CDropdownItem>
-                        <CDropdownItem href="#">삭제</CDropdownItem>
-                      </CDropdownMenu>
-                      </CDropdown>
                     </CCol>
                     </CRow>
                   </CCardBody>
@@ -239,5 +255,44 @@ function List(){
 )
 }
 
+
+
+function CopyGroupModal(){
+  const [visible, setVisible] = useState(false);
+  return (
+    <>
+      <CDropdownItem  visible="false" color="success" variant="outline" onClick={() => setVisible(!visible)}>그룹 생성</CDropdownItem>
+      <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+        <CModalHeader>
+          <CModalTitle>그룹 생성</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CRow className="mb-3">
+            <CFormLabel htmlFor="staticEmail">
+              그룹 이름
+            </CFormLabel>
+            <div className="col-sm-10">
+              <CFormInput id="inputPassword" />
+            </div>
+          </CRow>
+          <CRow className="mb-3">
+            <CFormLabel htmlFor="inputPassword">
+              그룹 설명
+            </CFormLabel>
+            <div className="col-sm-10">
+              <CFormInput id="inputPassword" />
+            </div>
+          </CRow>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setVisible(false)}>
+            Close
+          </CButton>
+          <CButton color="success">그룹 생성</CButton>
+        </CModalFooter>
+      </CModal>
+    </>
+  )
+}
 
 

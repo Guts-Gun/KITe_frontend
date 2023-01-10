@@ -23,12 +23,12 @@ import {
   CModalFooter
 } from '@coreui/react'
 
-function SenderList() {
+function SenderPhoneList() {
   return (
     <div>
       <CCard className="m-4">
         <CCardHeader>
-          <strong>발신번호 리스트</strong>
+          <strong>발신 번호 리스트</strong>
         </CCardHeader>
         <CCardBody>
           <CRow className="mt-3 mb-3">
@@ -42,7 +42,7 @@ function SenderList() {
     </div>
   )
 }
-export default SenderList
+export default SenderPhoneList
 
 function Menu() {
   return (

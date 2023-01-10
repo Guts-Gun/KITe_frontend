@@ -23,19 +23,18 @@ import {
   CModalFooter
 } from '@coreui/react'
 
-function ReceiverList() {
+function SenderEmailList() {
   return (
     <div>
       <CCard className="m-4">
         <CCardHeader>
-          <strong>주소록 리스트</strong>
+          <strong>발신 이메일 리스트</strong>
         </CCardHeader>
         <CCardBody>
           <CRow className="mt-3 mb-3">
             <Menu />
           </CRow>
           <CRow className="mt-3 mb-3">
-            <CFormLabel className="mt-3 mb-3">주소록</CFormLabel>
             <List/>
           </CRow>
         </CCardBody>
@@ -43,81 +42,57 @@ function ReceiverList() {
     </div>
   )
 }
-export default ReceiverList
+export default SenderEmailList
 
 function Menu() {
   return (
     <div>
       <CRow className="mb-3">
-        <CRow>
           <CCol className="col-sm-2"> 
-            <CFormLabel >필터</CFormLabel>
+            <SenderMakeModal/>
+            <CButton color="info" variant="outline">수정</CButton> 
+            <CButton color="danger" variant="outline">삭제</CButton> 
           </CCol>
-          <CCol className="col-sm-3"> 
-            <CInputGroup>
-              <CFormSelect>
-                <option value="Phone">그룹1</option>
-                <option value="Phone">그룹2</option>
-              </CFormSelect>
-            </CInputGroup>
+          <CCol className="col-sm-2"> 
           </CCol>
-          <CCol className="col-sm-7"> 
+          <CCol className="col-sm-8"> 
           <CInputGroup>
               <CFormSelect>
-                <option value="Phone">번호</option>
-                <option value="Name">이름</option>
-                <option value="Name">이메일</option>
+                <option value="Phone">이메일 검색</option>
+                <option value="Name">이름 검색</option>
                 </CFormSelect>
-              <CFormInput type="text"/>
-              <CButton variant="outline" >검색</CButton>
+              <CFormInput type="text"/> 
+            <CButton variant="outline" >검색</CButton>      
             </CInputGroup>
           </CCol>
-        </CRow>
-      </CRow>
-      <CRow>
-        <CCol className="col-sm-2"> 
-          <CFormLabel>변경</CFormLabel>
-        </CCol>
-        <CCol className="col-sm-2"> 
-        <GroupMoveModal/>
-        </CCol>
-        <CCol className="col-sm-2"> 
-        <CButton color="danger" variant="outline">삭제</CButton>
-        </CCol>
       </CRow>
     </div>
   )
 }
-function GroupMoveModal(){
+function SenderMakeModal(){
   const [visible, setVisible] = useState(false)
   return (
     <>
-      <CButton color="info" variant="outline" onClick={() => setVisible(!visible)}>그룹 이동</CButton>
+      <CButton color="success" variant="outline" onClick={() => setVisible(!visible)}>생성</CButton>
       <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
-          <CModalTitle>그룹 이동</CModalTitle>
+          <CModalTitle>발신 이메일 추가</CModalTitle>
         </CModalHeader>
         <CModalBody>
           <CRow className="mb-3">
             <CFormLabel htmlFor="inputPassword">
-              이전 그룹
+              이름
             </CFormLabel>
             <CInputGroup>
-              <CFormInput 
-                placeholder="그룹1"
-                disabled/>
+              <CFormInput/>
             </CInputGroup>
           </CRow>
           <CRow className="mb-3">
             <CFormLabel htmlFor="staticEmail">
-              이동할 그룹
+              이메일
             </CFormLabel>
             <CInputGroup>
-              <CFormSelect>
-                <option value="Phone">안</option>
-                <option value="Phone">뇽</option>
-                <option value="Phone">뇽</option>
-              </CFormSelect>
+              <CFormInput/>
             </CInputGroup>
           </CRow>
         </CModalBody>
@@ -125,7 +100,7 @@ function GroupMoveModal(){
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Close
           </CButton>
-          <CButton color="info">그룹 이동</CButton>
+          <CButton color="success">생성</CButton>
         </CModalFooter>
       </CModal>
     </>
@@ -139,11 +114,9 @@ function List() {
         <CTable>
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-              <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
               <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
-              <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -152,36 +125,28 @@ function List() {
                 <CFormCheck id="flexCheckDefault"/>
               </CTableHeaderCell>
               <CTableDataCell>김세빈</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
+              <CTableDataCell>sbscsue@gmail.com</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell scope="row">
                 <CFormCheck id="flexCheckDefault"/>
               </CTableHeaderCell>
               <CTableDataCell>고솔비</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
+              <CTableDataCell>sbscsue@gmail.com</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell scope="row">
                 <CFormCheck id="flexCheckDefault"/>
               </CTableHeaderCell>
               <CTableDataCell>이지용</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
+              <CTableDataCell>sbscsue@gmail.com</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell scope="row">
                 <CFormCheck id="flexCheckDefault"/>
               </CTableHeaderCell>
               <CTableDataCell>박윤재</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
+              <CTableDataCell>sbscsue@gmail.com</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>
