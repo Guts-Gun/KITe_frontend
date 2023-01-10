@@ -16,7 +16,8 @@ import {
     CNavLink,
     CTabContent, 
     CTabPane,
-    CWidgetStatsF
+    CWidgetStatsF,
+    CFormCheck
 } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs';
 import CIcon from '@coreui/icons-react';
@@ -25,27 +26,29 @@ import { cilMediaSkipForward, cilDollar } from '@coreui/icons';
 
 const SelectBroker = () => {
 
-      // 중계사 비율 - 탭
-  const [activeKey2, setActiveKey2] = useState(1);
-  const [brokerType, setBrokerType] = useState(1);
+      // 중계사
+  const [brokerType, setBrokerType] = useState("1");
 
-  const [brokerRatio1, setBrokerRatio1] = useState(40);
-  const [brokerRatio2, setBrokerRatio2] = useState(40);
+  const [brokerRatio1, setBrokerRatio1] = useState(20);
+  const [brokerRatio2, setBrokerRatio2] = useState(15);
   const [brokerRatio3, setBrokerRatio3] = useState(20);
+  const [brokerRatio4, setBrokerRatio4] = useState(15);
+  const [brokerRatio5, setBrokerRatio5] = useState(30);
+
+  function changeBrokerType(e){
+    setBrokerType(e.target.value);
+  };
+
 
 return (
     <>
     <CRow className="mb-3">
     <CFormLabel className="col-sm-1">중계사 비율</CFormLabel>
     <CCol className="col-sm-11">
-        <CRow>
-        <CNav role="tablist" variant="tabs">
-            <CNavItem><CNavLink active={activeKey2 === 1} onClick={() => setActiveKey2(1)}> 중계사 비율 입력 </CNavLink> </CNavItem>
-            <CNavItem><CNavLink active={activeKey2 === 2} onClick={() => setActiveKey2(2)}> 추천 리스트 </CNavLink></CNavItem>
-        </CNav>
-            
-        <CTabContent>
-            <CTabPane role="tabpanel" aria-labelledby="home-tab" visible={activeKey2 === 1}>
+            <CFormCheck inline type="radio" name="brokerType" id="brokerType1" value="1" label="중계사 비율 선택" defaultChecked onChange={(event)=>{changeBrokerType(event)}}/>
+            <CFormCheck inline type="radio" name="brokerType" id="brokerType2" value="2" label="추천 리스트" onChange={(event)=>{changeBrokerType(event)}}/>
+      
+      {brokerType === "1"? (<>
             <CRow>
                 <CCol sm={12} md={8}>
                 <CTable>
@@ -60,29 +63,44 @@ return (
                     </CTableHead>
                     <CTableBody>
                         <CTableRow>
-                        <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                        <CTableDataCell>KT</CTableDataCell>
-                        <CTableDataCell>120</CTableDataCell>
-                        {/* <CTableDataCell>KT</CTableDataCell> */}
-                        <CTableDataCell><CFormInput type="number" value={brokerRatio1} onChange={(e) => setBrokerRatio1(e.target.value)} /></CTableDataCell>
+                            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                            <CTableDataCell>KT</CTableDataCell>
+                            <CTableDataCell>120</CTableDataCell>
+                            {/* <CTableDataCell>KT</CTableDataCell> */}
+                            <CTableDataCell><CFormInput type="number" value={brokerRatio1} onChange={(e) => setBrokerRatio1(e.target.value)} /></CTableDataCell>
                         </CTableRow>
                         <CTableRow>
-                        <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                        <CTableDataCell>LG</CTableDataCell>
-                        <CTableDataCell>80</CTableDataCell>
-                        {/* <CTableDataCell>LG</CTableDataCell> */}
-                        <CTableDataCell><CFormInput type="number" value={brokerRatio2} onChange={(e) => setBrokerRatio2(e.target.value)}/></CTableDataCell>
+                            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                            <CTableDataCell>LG</CTableDataCell>
+                            <CTableDataCell>80</CTableDataCell>
+                            {/* <CTableDataCell>LG</CTableDataCell> */}
+                            <CTableDataCell><CFormInput type="number" value={brokerRatio2} onChange={(e) => setBrokerRatio2(e.target.value)}/></CTableDataCell>
                         </CTableRow>
                         <CTableRow>
-                        <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                        <CTableDataCell>SKT</CTableDataCell>
-                        <CTableDataCell>70</CTableDataCell>
-                        {/* <CTableDataCell>SKT</CTableDataCell> */}
-                        <CTableDataCell><CFormInput type="number" value={brokerRatio3} onChange={(e) => setBrokerRatio3(e.target.value)} /></CTableDataCell>
+                            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                            <CTableDataCell>SKT</CTableDataCell>
+                            <CTableDataCell>70</CTableDataCell>
+                            {/* <CTableDataCell>SKT</CTableDataCell> */}
+                            <CTableDataCell><CFormInput type="number" value={brokerRatio3} onChange={(e) => setBrokerRatio3(e.target.value)} /></CTableDataCell>
+                        </CTableRow>
+                        <CTableRow>
+                            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                            <CTableDataCell>broker4</CTableDataCell>
+                            <CTableDataCell>150</CTableDataCell>
+                            {/* <CTableDataCell>SKT</CTableDataCell> */}
+                            <CTableDataCell><CFormInput type="number" value={brokerRatio4} onChange={(e) => setBrokerRatio4(e.target.value)} /></CTableDataCell>
+                        </CTableRow>
+                        <CTableRow>
+                            <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                            <CTableDataCell>broker5</CTableDataCell>
+                            <CTableDataCell>150</CTableDataCell>
+                            {/* <CTableDataCell>SKT</CTableDataCell> */}
+                            <CTableDataCell><CFormInput type="number" value={brokerRatio5} onChange={(e) => setBrokerRatio5(e.target.value)} /></CTableDataCell>
                         </CTableRow>
                     </CTableBody>
                     </CTable>
                 </CCol>
+
 
                 <CCol sm={12} md={4}>
                     <CChart
@@ -91,17 +109,17 @@ return (
                         labels: ['KT', 'LG', 'SKT'],
                         datasets: [
                         {
-                            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                            data: [brokerRatio1, brokerRatio2, brokerRatio3],
+                            backgroundColor: ['red', 'green', 'blue', 'pink', 'yellow'],
+                            data: [brokerRatio1, brokerRatio2, brokerRatio3,  brokerRatio4, brokerRatio5],
                         },
                         ],
                     }}/>
-                    </CCol>
-                </CRow>
-            </CTabPane>
+                </CCol>
+            </CRow>
+        </>):null}
 
-            <CTabPane role="tabpanel" aria-labelledby="profile-tab" visible={activeKey2 === 2}>
-                <CRow className='mt-3'>
+        { brokerType === "2"? (<>
+            <CRow className='mt-3'>
                 <CCol xs={6}>
                     <CWidgetStatsF
                     onClick={() => setBrokerType(1)}
@@ -120,11 +138,9 @@ return (
                     // title="Widget title"
                     value="가격 우선"/>
                 </CCol>
-                </CRow>
-            </CTabPane>
-            </CTabContent>
-          
             </CRow>
+            </>):null}
+
         </CCol>
     </CRow>
 
