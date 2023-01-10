@@ -4,7 +4,6 @@ import {
     CFormInput,
     CFormLabel,
     CRow,
-  
     CTable,
     CTableHeaderCell,
     CTableBody,
@@ -43,8 +42,8 @@ const SelectBroker = () => {
 return (
     <>
     <CRow className="mb-3">
-    <CFormLabel className="col-sm-1">중계사 비율</CFormLabel>
-    <CCol className="col-sm-11">
+    <CFormLabel className="col-sm-2">중계사 비율</CFormLabel>
+    <CCol className="col-sm-10">
             <CFormCheck inline type="radio" name="brokerType" id="brokerType1" value="1" label="중계사 비율 선택" defaultChecked onChange={(event)=>{changeBrokerType(event)}}/>
             <CFormCheck inline type="radio" name="brokerType" id="brokerType2" value="2" label="추천 리스트" onChange={(event)=>{changeBrokerType(event)}}/>
       
