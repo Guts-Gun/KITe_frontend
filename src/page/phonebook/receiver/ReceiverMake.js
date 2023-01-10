@@ -52,6 +52,18 @@ function SingleReceiverMake(){
   return (
     <div>
       <CRow className="mb-3">
+        <CFormLabel htmlFor="inputPassword" className="col-sm-2 col-form-label">
+          그룹
+        </CFormLabel>
+        <div className="col-sm-10">
+          <CFormSelect aria-label="Default select example">
+            <option value="1">호</option>
+            <option value="2">잇</option>
+            <option value="3">잇</option>
+          </CFormSelect>
+        </div>
+      </CRow> 
+      <CRow className="mb-3">
         <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
           이름
         </CFormLabel>
@@ -69,16 +81,12 @@ function SingleReceiverMake(){
       </CRow>
       <CRow className="mb-3">
         <CFormLabel htmlFor="inputPassword" className="col-sm-2 col-form-label">
-          그룹
+          이메일
         </CFormLabel>
         <div className="col-sm-10">
-          <CFormSelect aria-label="Default select example">
-            <option value="1">호</option>
-            <option value="2">잇</option>
-            <option value="3">잇</option>
-          </CFormSelect>
+          <CFormInput id="inputPassword" />
         </div>
-      </CRow> 
+      </CRow>
     </div>
   )
 }
@@ -105,6 +113,12 @@ function MutiReceiverMake(){
           </CRow>
           <CRow className="mb-3 m-1">
             <CFormLabel>전화번호</CFormLabel>
+            <CInputGroup>
+              <CFormInput id="inputPassword" />
+            </CInputGroup>
+          </CRow>
+          <CRow className="mb-3 m-1">
+            <CFormLabel>이메일</CFormLabel>
             <CInputGroup>
               <CFormInput id="inputPassword" />
             </CInputGroup>

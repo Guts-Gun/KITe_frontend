@@ -100,13 +100,13 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: '주소록 리스트',
-        to: '/receiverList',
+        name: '주소록 추가',
+        to: '/receiverMake',
       },
       {
         component: CNavItem,
-        name: '주소록 추가',
-        to: '/receiverMake',
+        name: '주소록 리스트',
+        to: '/receiverList',
       },
     ],
   },
@@ -117,8 +117,13 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: '발신번호 리스트',
-        to: '/senderList',
+        name: '번호 리스트',
+        to: '/senderPhoneList',
+      },
+      {
+        component: CNavItem,
+        name: '이메일 리스트',
+        to: '/senderEmailList',
       },
     ],
   },
