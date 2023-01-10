@@ -220,7 +220,7 @@ const SendSms = () => {
                                 </CTableRow>
                               </CTableHead>
                               <CTableBody>
-                                  <CTableRow>
+                                <CTableRow>
                                   <CTableHeaderCell scope="row">
                                       <CIcon
                                         className="CButton"
@@ -234,7 +234,21 @@ const SendSms = () => {
                                     <CTableDataCell>고솔비</CTableDataCell>
                                     <CTableDataCell>010-4010-9537</CTableDataCell>
                                     <CTableDataCell>gsb0904@hanmail.net</CTableDataCell>
-                                  
+                                </CTableRow>
+                                <CTableRow>
+                                  <CTableHeaderCell scope="row">
+                                      <CIcon
+                                        className="CButton"
+                                        icon={cilPlus}
+                                        size="sm"
+                                        // onClick={(e) => {
+                                        //   addSendItemHandler(e, member)
+                                        // }}
+                                      ></CIcon>
+                                    </CTableHeaderCell>
+                                    <CTableDataCell>고솔비</CTableDataCell>
+                                    <CTableDataCell>010-4010-9537</CTableDataCell>
+                                    <CTableDataCell>gsb0904@hanmail.net</CTableDataCell>
                                   </CTableRow>
                               </CTableBody>
                             </CTable>
@@ -273,7 +287,6 @@ const SendSms = () => {
                         </CListGroupItem>
                         <div className='custom_height'>
                           <CListGroupItem  className="d-flex">
-
                             <CCol sm={11}>
                               <span className='me-3'>고솔비</span>
                               <span className='me-3'>010-4010-9537</span> 
@@ -291,7 +304,168 @@ const SendSms = () => {
                                   </CButton>
                             </CCol>
                           </CListGroupItem>
-                      
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
+                          <CListGroupItem  className="d-flex">
+                            <CCol sm={11}>
+                              <span className='me-3'>고솔비</span>
+                              <span className='me-3'>010-4010-9537</span> 
+                              <span className='me-3'>gsb0904@hanmail.net</span>
+                            </CCol>
+                            <CCol sm={1}>
+                                <CButton
+                                    color="danger"
+                                    size="sm"
+                                    variant="outline"
+                                    shape="rounded-pill"
+                                    // onClick= {setGroupUserList(groupUserList.filter((groupUserList) => groupUserList.userId !== user.userId))}
+                                  >
+                                    <CIcon className="CButton" icon={cilMinus} size="sm"/>
+                                  </CButton>
+                            </CCol>
+                          </CListGroupItem>
                           </div>
                       </CListGroup>
                     </CCol>
