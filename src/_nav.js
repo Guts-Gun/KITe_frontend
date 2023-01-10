@@ -150,26 +150,10 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'SMS/MMS',
-    to: '/resultdetail', //잠시 detail페이지로 만들어놓기
+    name: '발송 리스트',
+    to: '/resultList',
     icon: <CIcon icon={cilChart} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'e-mail',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: '카카오톡',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
-  },
-
-
-
-
   {
     component: CNavTitle,
     name: 'Theme',

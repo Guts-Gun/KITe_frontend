@@ -72,7 +72,9 @@ const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
 const templateList = React.lazy(() => import('./page/setting/template/TemplateList'));
 
 //result
+const ResultList = React.lazy(() => import('./page/result/ResultList'));
 const ResultDetail = React.lazy(() => import('./page/result/ResultDetail'));
+
 const routes = [
   //user console
   { path: '/userConsole', name: 'UserConsole', element: UserConsole },
@@ -93,6 +95,7 @@ const routes = [
   { path: '/templateList', name: 'Template List', element: templateList },
 
   //결과(result)
+  { path: '/resultList', name: 'Result List', element: ResultList },
   { path: '/resultdetail', name: 'ResultDetail', element: ResultDetail },
 
 
