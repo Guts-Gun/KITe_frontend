@@ -34,6 +34,8 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilSend,cilOptions,cilHamburgerMenu } from "@coreui/icons";
+import axios from 'axios';
+import apiConfig from 'src/lib/apiConfig';
 
 
 
@@ -84,7 +86,10 @@ function Filter(){
 
 
 function MakeGroupModal(){
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
+  console.log(apiConfig.group);
+  const data = axios.get(apiConfig.group);
+  console.log(data);
   return (
     <>
       <CButton color="success" variant="outline" onClick={() => setVisible(!visible)}>그룹 생성</CButton>
