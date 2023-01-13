@@ -9,44 +9,42 @@ import {
   CFormTextarea,
   CRow,
   CInputGroup,
-  CListGroup,
-  CListGroupItem,
   CFormSelect, 
   CFormSwitch,
   CFormCheck,
-  CTable,
-  CTableHeaderCell,
-  CTableBody,
-  CTableRow,
-  CTableHead,
-  CTableDataCell,
-  CNav, 
-  CNavItem, 
-  CNavLink,
-  CTabContent, 
-  CTabPane,
   CAccordion,
   CAccordionBody,
   CAccordionHeader,
   CAccordionItem,
   CImage,
-  CCallout,
   COffcanvas,
   COffcanvasHeader,
   COffcanvasTitle,
   CCloseButton,
   COffcanvasBody,
-  CInputGroupText
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
 import SelectBroker from './module/SelectBroker';
 import SelectReceiver from './module/SelectReceiver';
 
+import { useSelector, useDispatch } from 'react-redux';
+import * as smsAction from "../../../modules/sms";
+import axios from 'axios';
+import apiConfig from 'src/lib/apiConfig';
+import usePromise from 'src/lib/usePromise';
+
+
 const SendSms = () => {
 
-
+  // 메뉴얼 보기
   const [visible, setVisible] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(smsAction.initializeForm());
+  }, []);
 
   // 전송시간 - 예약발송여부
   const [sendReserv, setSendReserv] = useState(false);
@@ -61,7 +59,7 @@ const SendSms = () => {
   const [sendReplace, setSendReplace] = useState(false);
 
   // 대체발송 스위치
-  function changeSwitch2(e){ 
+  function changeSendReplaceSwitch(e){ 
     const checked = e.target.checked;
     setSendReplace(checked);
   };
@@ -159,7 +157,7 @@ const SendSms = () => {
                     </CRow>
                     <CRow>
                       <CCol xs={12}>
-                        <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSwitch2}/>
+                        <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSendReplaceSwitch}/>
                       </CCol>
                     </CRow>
 
