@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 function ShortCut({title, link, icon}) {
   return (
-    <CButton href="#" color="light" sm={6}>
+    <CButton href={link} color="light" sm={6}>
       <CCard >
         <CCardBody>
           <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />{title}</CCardTitle>

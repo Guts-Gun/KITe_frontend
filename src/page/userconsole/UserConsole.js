@@ -53,8 +53,8 @@ function UserConsole() {
               <CCol sm = {6}>
                 <CRow>
                   <CButtonGroup role="group">
-                    <ShortCut title={"sms"} link={'#'}/>
-                    <ShortCut title={"email"} link={'#'}/>
+                    <ShortCut title={"sms"} link={'/#/sendSms'}/>
+                    <ShortCut title={"email"} link={'#/sendEmail'}/>
                   </CButtonGroup>
                 </CRow>
               </CCol>
