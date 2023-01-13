@@ -12,38 +12,44 @@ import {
 import CIcon from '@coreui/icons-react';
 import HomeHeader from './HomeHeader';
 import "./home.scss";
-import mainImg from "../../assets/images/KITe.png";
+import mainImg from "../../assets/images/home/KITe.png";
+import teamInfo from "../../assets/images/home/team.png";
+
 const Home = () => {
   return (
     <>
     <HomeHeader></HomeHeader>
     <div className="home-wrapper">
-      {/* <div className="home-title"> */}
-        {/* <span>K:ITe</span>에 오신걸 환영합니다! */}
-      {/* </div> */}
-      <div className="home-contents">
-        <CRow>
-          <CImage className='main_img' src={mainImg}></CImage>
-        </CRow>
-        <CRow>
-          <CCol>
-          {/* 중계사 */}
-          </CCol>
-          <CCol>
-          {/* 개발자 */}
-          </CCol>
-          <CCol>
-            {/* 시작하기 */}
-          </CCol>
-        </CRow>
+
+      {/* 메인이미지 */}
+      <div className="home-title">
+          <CImage className='main_img' src={mainImg}/>
       </div>
+
+      {/* 중계사 */}
+      <div className="home-contents"> 
+          test<br/>
+          test<br/>
+          test<br/>
+          test<br/>
+          test<br/>
+          test<br/>
+          test<br/>
+      </div>
+    
+      
       <div className="about-project">
-      테스트<br/>
         <span>테스트</span>테스트
         <span> 테스트</span>테스트
       </div>
-      <div className="my-website">
-        <a href="https://github.com/Guts-Gun" target="_blank" rel="noreferrer">
+
+      {/* 발송하기버튼 */}
+      <div className="home-contents">
+            <CButton size="lg" color="primary">문자 발송하기</CButton>
+      </div>
+      <div className="small-home-contents">
+          <CImage className='main_img' src={teamInfo}/>
+          <a href="https://github.com/Guts-Gun" target="_blank" rel="noreferrer">
           Guts&Gun 🐰
         </a>
       </div>

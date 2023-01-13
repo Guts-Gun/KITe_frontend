@@ -10,7 +10,7 @@
   }
   
   .home-wrapper{
-    padding: 0 0 0 5rem;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +19,7 @@
       opacity: 0;
       animation: smoothAppear 1s forwards;
       animation-delay: 0.5s;
-      margin: 15px 0;
+      // margin: 15px 0;
       font-size: 2.4rem;
       font-weight: bold;
       color: midnightblue;
@@ -29,6 +29,7 @@
       }
     }
     .home-contents{
+      padding: 0 20%;
       opacity: 0;
       animation: smoothAppear 1s forwards;
       animation-delay: 1s;
@@ -36,6 +37,18 @@
       font-size: 1.5rem;
       color: #282c34;
     }
+
+    .small-home-contents{
+      padding: 0 30% 0 30%;
+      opacity: 0;
+      animation: smoothAppear 1s forwards;
+      animation-delay: 1s;
+      margin: 15px 0;
+      font-size: 1.5rem;
+      color: #282c34;
+      text-align: center;
+    }
+
     .about-project{
       opacity: 0;
       animation: smoothAppear 1s forwards;
