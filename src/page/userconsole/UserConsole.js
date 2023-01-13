@@ -1,40 +1,23 @@
-import React  from 'react'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardGroup,
-  CCardHeader,
-  CCardImage,
-  CCardLink,
-  CCardSubtitle,
-  CCardText,
-  CCardTitle,
-  CListGroup,
-  CListGroupItem,
-  CNav,
-  CNavItem,
-  CNavLink,
-  CCol,
-  CRow, CButtonGroup, CProgress,
-  CBadge, CProgressBar
-} from '@coreui/react'
-import { DocsExample } from 'src/components'
-import CIcon from "@coreui/icons-react";
-import {cibFacebook, cibGoogle, cibLinkedin, cibTwitter, cilCloudDownload} from "@coreui/icons";
-import {CChartLine} from "@coreui/react-chartjs";
-import {getStyle, hexToRgba} from "@coreui/utils";
-import { CChart } from '@coreui/react-chartjs';
-import { cilSend } from "@coreui/icons";
-import { cilEnvelopeClosed } from "@coreui/icons";
-
-import { CCarousel } from '@coreui/react';
-import { CCarouselItem } from '@coreui/react';
-import { CImage } from '@coreui/react';
+import React from 'react'
+import {CButton, CButtonGroup, CCard, CCardBody, CCarousel, CCarouselItem, CCol, CRow} from '@coreui/react'
+import UsageCard from "./component/UsageCard";
+import ShortCut from "./component/ShortCut";
+import SendingInfoCard from "./component/SendingInfoCard";
 
 
 function UserConsole() {
+
+  const totalUsages = [
+    { title: 'sms 사용량',type: "sms", usage: 500, totalUsage: 40, color: 'success' },
+    { title: 'email 사용량',type: "e-mail", usage: 600, totalUsage: 50, color: 'success' },
+    { title: 'kakao 사용량', type: "kakao", usage: 700, totalUsage: 60, color: 'success'}
+  ];
+  const totalSendingInfo = [
+    {id : 1, title : "2023-01-06 15:00:00", status : "완료", type : "sms", totalCount : 1000, successRate : 95, detailLink : "#"},
+    {id : 2, title : "2023-01-07 15:00:00", status : "대기", type : "email", totalCount : 2000, successRate : 0, detailLink : "#"},
+    {id : 3, title : "2023-01-08 15:00:00", status : "완료", type : "kakao", totalCount : 1000, successRate : 99, detailLink : "#"}
+  ];
+
 
   return (
     <div>
@@ -58,84 +41,23 @@ function UserConsole() {
               </CCol>
               <CCol sm = {6}>
                 <CCarousel controls indicators dark>
-                  <CCarouselItem>
-                    <CCard>
-                      <CCardBody>
-                        <CCardTitle>
-                          <span>메시지 사용량 </span>
-                        </CCardTitle>
-                        <CListGroup flush>
-                          <CListGroupItem>타입 : sms</CListGroupItem>
-                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
-                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
-                        </CListGroup>
-                      </CCardBody>
-
-                    </CCard>
-                  </CCarouselItem>
-
-                  <CCarouselItem>
-                    <CCard>
-                      <CCardBody>
-                        <CCardTitle>
-                          <span>email 사용량 </span>
-                        </CCardTitle>
-                        <CListGroup flush>
-                          <CListGroupItem>타입 : email</CListGroupItem>
-                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
-                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
-                        </CListGroup>
-                      </CCardBody>
-
-                    </CCard>
-                  </CCarouselItem>
-
-                  <CCarouselItem>
-                    <CCard>
-                      <CCardBody>
-                        <CCardTitle>
-                          <span>카카오 사용량 </span>
-                        </CCardTitle>
-                        <CListGroup flush>
-                          <CListGroupItem>타입 : kakao</CListGroupItem>
-                          <CListGroupItem>총 개수 : 1000</CListGroupItem>
-                          <CListGroupItem>총 사용량 : 500</CListGroupItem>
-                        </CListGroup>
-                      </CCardBody>
-
-                    </CCard>
-                  </CCarouselItem>
-
+                  {totalUsages.map((item, index) =>(
+                    <CCarouselItem key = {index}>
+                      <UsageCard title={item.title} type={item.type} usage={item.usage} totalUsage={item.totalUsage}/>
+                    </CCarouselItem>
+                  ))}
                 </CCarousel>
               </CCol>
 
 
               <CCol sm = {6}>
                 <CRow>
-                <CButtonGroup role="group">
-                  <CButton href="#" color="light" sm={6}>
-                    <CCard >
-                      <CCardBody>
-                        <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />sms</CCardTitle>
-                        <CCardSubtitle className="mb-2 text-medium-emphasis">sms</CCardSubtitle>
-                        <CCardLink href="#">발송하기</CCardLink>
-                      </CCardBody>
-                    </CCard>
-                  </CButton>
-                  <CButton href="#" color="light">
-                    <CCard>
-                      <CCardBody>
-                        <CCardTitle><CIcon className="me-2" icon={cilEnvelopeClosed} size="lg" />email</CCardTitle>
-                        <CCardSubtitle className="mb-2 text-medium-emphasis">email</CCardSubtitle>
-                        <CCardLink href="#">발송하기</CCardLink>
-                      </CCardBody>
-                    </CCard>
-                  </CButton>
-                </CButtonGroup>
+                  <CButtonGroup role="group">
+                    <ShortCut title={"sms"} link={'#'}/>
+                    <ShortCut title={"email"} link={'#'}/>
+                  </CButtonGroup>
                 </CRow>
               </CCol>
-
-
             </CRow>
 
 
@@ -170,89 +92,9 @@ function UserConsole() {
 
 
             <CRow className = 'mt-3'>
-              <CCol sm = {4}>
-                <CCard>
-                  <CCardBody>
-                    <CCardTitle>
-                      <span>2023-01-06 15:00:00 </span>
-                      <CBadge color="primary" shape="rounded-pill">완료</CBadge>
-                    </CCardTitle>
-                  </CCardBody>
-                  <CListGroup flush>
-                    <CListGroupItem>타입 : sms</CListGroupItem>
-                    <CListGroupItem>총 개수 : 1000</CListGroupItem>
-
-                  </CListGroup>
-                  <CCardBody>
-                    <div className="progress-group-header">
-                      <CIcon className="me-2" icon={cilSend} size="lg" />
-                      <span>성공</span>
-                      <span className="ms-auto fw-semibold">95%</span>
-                    </div>
-                    <CProgress className="mb-3">
-                      <CProgressBar color="success" value={95} />
-                      <CProgressBar color="danger" value={5} />
-                    </CProgress>
-                    <CButton>상세</CButton>
-                  </CCardBody>
-                </CCard>
-              </CCol>
-
-
-              <CCol sm = {4}>
-                <CCard>
-                  <CCardBody>
-                    <CCardTitle>
-                      <span>2023-01-06 15:00:00 </span>
-                      <CBadge color="dark" shape="rounded-pill">대기</CBadge>
-                    </CCardTitle>
-                  </CCardBody>
-                  <CListGroup flush>
-                    <CListGroupItem>타입 : email</CListGroupItem>
-                    <CListGroupItem>총 개수 : 1000</CListGroupItem>
-
-                  </CListGroup>
-                  <CCardBody>
-                    <div className="progress-group-header">
-                      <CIcon className="me-2" icon={cilSend} size="lg" />
-                      <span> 대기 </span>
-                    </div>
-                    <CProgress className="mb-3">
-                      <CProgressBar color={"dark"} value={100} />
-                    </CProgress>
-                    <CButton>상세</CButton>
-                  </CCardBody>
-                </CCard>
-              </CCol>
-              <CCol sm = {4}>
-                <CCard>
-                  <CCardBody>
-                    <CCardTitle>
-                      <span>2023-01-06 15:00:00 </span>
-                      <CBadge color="primary" shape="rounded-pill">완료</CBadge>
-                    </CCardTitle>
-                  </CCardBody>
-                  <CListGroup flush>
-                    <CListGroupItem>타입 : sms</CListGroupItem>
-                    <CListGroupItem>총 개수 : 1000</CListGroupItem>
-
-                  </CListGroup>
-                  <CCardBody>
-                    <div className="progress-group-header">
-                      <CIcon className="me-2" icon={cilSend} size="lg" />
-                      <span>성공</span>
-                      <span className="ms-auto fw-semibold">95%</span>
-                    </div>
-                    <CProgress className="mb-3">
-                      <CProgressBar color="success" value={95} />
-                      <CProgressBar color="danger" value={5} />
-                    </CProgress>
-                    <CButton>버튼</CButton>
-                  </CCardBody>
-                </CCard>
-              </CCol>
-
-
+              {totalSendingInfo.map((item, index) =>(
+                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.type} totalCount={item.totalCount} successRate={item.successRate} detailLink = {item.detailLink}/>
+                  ))}
             </CRow>
 
 
