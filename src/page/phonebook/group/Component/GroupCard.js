@@ -18,8 +18,14 @@ import {
 import CIcon from '@coreui/icons-react'
 import PropTypes from "prop-types";
 import {cilHamburgerMenu } from "@coreui/icons";
+import CopyGroupModal from './CopyGroupModal';
+import UpdateGroupModal from './UpdateGroupModal';
+import DeleteGroupModal from './DeleteGroupModal';
 
-function GroupCard({groupId,groupName,groupDescription}){
+function GroupCard({id,groupName,groupDescription}){
+  const [visibleCopy, setVisibleCopy] = useState(false);  
+  const [visibleUpdate, setVisibleUpdate] = useState(false); 
+  const [visibleDelete, setVisibleDelete] = useState(false); 
     return(
         <CCol className = 'mb-4' xs={12} sm = {6} md = {4}>
             <CCard>
@@ -36,9 +42,14 @@ function GroupCard({groupId,groupName,groupDescription}){
                           <CIcon icon={cilHamburgerMenu}/>
                         </CDropdownToggle>
                         <CDropdownMenu>
-                          <CDropdownItem>그룹 복사</CDropdownItem>
-                          <CDropdownItem>수정</CDropdownItem>
-                          <CDropdownItem>삭제</CDropdownItem>
+                          <CDropdownItem onClick={()=>setVisibleCopy(true)}>복사</CDropdownItem>
+                          <CopyGroupModal  id={id} name={groupName} visible={visibleCopy} setVisible={setVisibleCopy}/>
+
+                          <CDropdownItem onClick={()=>setVisibleUpdate(true)}>수정</CDropdownItem>
+                          <UpdateGroupModal id={id} name={groupName} visible={visibleUpdate} setVisible={setVisibleUpdate}/>
+                          
+                          <CDropdownItem onClick={()=>setVisibleDelete(true)}>삭제</CDropdownItem>
+                          <DeleteGroupModal id={id} name={groupName} visible={visibleDelete} setVisible={setVisibleDelete}/>
                         </CDropdownMenu>
                       </CDropdown>
                     </CCol>
@@ -64,7 +75,7 @@ function GroupCard({groupId,groupName,groupDescription}){
   }
 
 GroupCard.propTypes = {
-    groupId : PropTypes.string.isRequired,
+    id : PropTypes.number,
     groupName : PropTypes.string,
     groupDescription : PropTypes.string,
 };

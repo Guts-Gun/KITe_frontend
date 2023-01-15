@@ -9,8 +9,18 @@ const version = '/v1';
 
 
 const apiConfig = {
-    group:service.user+version+"/"+"group"
+    //select
+    groupSelect:service.user+"/group",
+    //create
+    groupCreate:service.user+"/group/create",
+    groupCopy:service.user+"/group/copy",
+    //update
+    groupUpdate:service.user+"/group",
+    //delete
+    groupDeleteSingle:service.user+"/group", //+groupId,
+    groupDeleteMulti:service.user+"/group",
 }
+
 export default apiConfig;
 
 

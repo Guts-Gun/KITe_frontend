@@ -7,7 +7,7 @@ import {
   CFormInput,
   CModal,
   CModalHeader,
-  CModalBody, CModalTitle
+  CModalBody, CModalTitle, CForm
 } from '@coreui/react';
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
@@ -21,8 +21,8 @@ export function MakeGroupModal() {
     setForm({ ...form, [e.target.name]: e.target.value });
     console.log(form);
   };
-  const onClick = (e) => {
-    axios.post(apiConfig.group, form)
+  const onSubmit = (e) => {
+    axios.post(apiConfig.groupCreate, form)
       .then(function (response) {
         console.log(response.data);
       }).catch(function (error) {
@@ -39,28 +39,32 @@ export function MakeGroupModal() {
           <CModalTitle>그룹 생성</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <CRow className="mb-3">
-            <CFormLabel name="userId">
-              그룹 이름
-            </CFormLabel>
-            <div className="col-sm-10">
-              <CFormInput name="groupName" onChange={(e) => onChange(e)} />
-            </div>
-          </CRow>
-          <CRow className="mb-3">
-            <CFormLabel htmlFor="inputPassword">
-              그룹 설명
-            </CFormLabel>
-            <div className="col-sm-10">
-              <CFormInput name="groupDescription" onChange={(e) => onChange(e)} />
-            </div>
-            <CCol>
-              <CButton color="secondary" onClick={() => setVisible(false)}>
-                Close
-              </CButton>
-              <CButton color="success" onClick={onClick}>그룹 생성</CButton>
-            </CCol>
-          </CRow>
+          <CForm onSubmit={onSubmit} validated={true}>
+            <CRow className="mb-3">
+              <CFormLabel name="userId">
+                그룹 이름
+              </CFormLabel>
+              <div className="col-sm-10">
+                <CFormInput name="groupName" feedbackInvalid="이름 값은 필수입니다!" required onChange={(e) => onChange(e)} />
+              </div>
+            </CRow>
+            <CRow className="mb-3">
+              <CFormLabel htmlFor="inputPassword">
+                그룹 설명
+              </CFormLabel>
+              <div className="col-sm-10">
+                <CFormInput name="groupDescription" onChange={(e) => onChange(e)} />
+              </div>
+            </CRow>
+            <CRow>
+              <CCol className="mt-3">
+                <CButton color="secondary" onClick={() => setVisible(false)}>
+                  Close
+                </CButton>
+                <CButton color="success" type="submit">그룹 생성</CButton>
+              </CCol>
+            </CRow>
+          </CForm>
         </CModalBody>
       </CModal>
     </>
