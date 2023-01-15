@@ -8,9 +8,9 @@ import SendingInfoCard from "./component/SendingInfoCard";
 function UserConsole() {
 
   const totalUsages = [
-    { title: 'sms 사용량', type: "SMS", usage: 500, totalUsage: 40, color: 'success' },
-    { title: 'email 사용량', type: "e-Mail", usage: 600, totalUsage: 50, color: 'success' },
-    { title: 'kakao 사용량', type: "Kakao", usage: 700, totalUsage: 60, color: 'success'}
+    { title: 'sms 사용량', type: "SMS", usage: 500, usageCap: 40, color: 'success' },
+    { title: 'email 사용량', type: "e-Mail", usage: 600, usageCap: 50, color: 'success' },
+    { title: 'kakao 사용량', type: "Kakao", usage: 700, usageCap: 60, color: 'success'}
   ];
   const totalSendingInfo = [
     {id : 1, title : "2023-01-06 15:00:00", status : "완료", type : "SMS", totalCount : 1000, successRate : 95, detailLink : "#"},
@@ -44,7 +44,7 @@ function UserConsole() {
                 <CCarousel controls indicators dark>
                   {totalUsages.map((item, index) =>(
                     <CCarouselItem key = {index}>
-                      <UsageCard title={item.title} type={item.type} usage={item.usage} totalUsage={item.totalUsage}/>
+                      <UsageCard title={item.title} type={item.type} usage={item.usage} usageCap={item.usageCap}/>
                     </CCarouselItem>
                   ))}
                 </CCarousel>
