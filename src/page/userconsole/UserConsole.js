@@ -1,24 +1,54 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {CButton, CButtonGroup, CCard, CCardBody, CCarousel, CCarouselItem, CCol, CRow} from '@coreui/react'
 import UsageCard from "./component/UsageCard";
 import ShortCut from "./component/ShortCut";
 import SendingInfoCard from "./component/SendingInfoCard";
+import axios from "axios";
+import apiConfig from "../../lib/apiConfig";
 
 
 function UserConsole() {
 
-  const totalUsages = [
-    { title: 'sms 사용량', type: "SMS", usage: 500, usageCap: 40, color: 'success' },
-    { title: 'email 사용량', type: "e-Mail", usage: 600, usageCap: 50, color: 'success' },
-    { title: 'kakao 사용량', type: "Kakao", usage: 700, usageCap: 60, color: 'success'}
-  ];
-  const totalSendingInfo = [
-    {id : 1, title : "2023-01-06 15:00:00", status : "완료", type : "SMS", totalCount : 1000, successRate : 95, detailLink : "#"},
-    {id : 2, title : "2023-01-07 15:00:00", status : "대기", type : "e-Mail", totalCount : 2000, successRate : 0, detailLink : "#"},
-    {id : 3, title : "2023-01-08 15:00:00", status : "완료", type : "Kakao", totalCount : 1000, successRate : 99, detailLink : "#"}
-  ];
 
-  const [sendingFilter,setSendingFilter] = useState("SMS");
+
+  const [totalUsages,setTotalUsages] = useState([
+    { title: 'sms 사용량', type: "SMS", usage: "0", usageCap: "0", color: 'success' },
+    { title: 'email 사용량', type: "e-Mail", usage: "0", usageCap: "0", color: 'success' },
+    { title: 'kakao 사용량', type: "Kakao", usage: "0", usageCap: "0", color: 'success'}
+  ]);
+  useEffect(()=>{
+    axios.get(apiConfig.resultUsage)
+      .then(function (response) {
+        console.log(response.data);
+        if (response.data.length > 0) {
+          setTotalUsages(response.data);
+        }
+      }).catch(function (error) {
+      // 오류발생시 실행
+    }).then(function() {
+      // 항상 실행
+    });
+  },[]);
+
+  const [totalSendingInfo,setTotalSendingInfo] = useState([
+    {id : "1", title : "2023-01-06 15:00:00", status : "완료", sendingType : "SMS", totalSending : "1000", successRate : "95", detailLink : "#"},
+    {id : "2", title : "2023-01-07 15:00:00", status : "대기", sendingType : "e-Mail", totalSending : "2000", successRate : "0", detailLink : "#"},
+    {id : "3", title : "2023-01-08 15:00:00", status : "완료", sendingType : "Kakao", totalSending : "1000", successRate : "99", detailLink : "#"}
+  ]);
+  useEffect(()=>{
+    axios.get(apiConfig.resultSending)
+      .then(function (response) {
+        console.log(response.data);
+        setTotalSendingInfo(response.data);
+
+      }).catch(function (error) {
+      // 오류발생시 실행
+    }).then(function() {
+      // 항상 실행
+    });
+  },[]);
+
+  const [sendingFilter,setSendingFilter] = useState("ALL");
 
   return (
     <div>
@@ -42,11 +72,12 @@ function UserConsole() {
               </CCol>
               <CCol sm = {6}>
                 <CCarousel controls indicators dark>
-                  {totalUsages.map((item, index) =>(
-                    <CCarouselItem key = {index}>
-                      <UsageCard title={item.title} type={item.type} usage={item.usage} usageCap={item.usageCap}/>
-                    </CCarouselItem>
-                  ))}
+                  {
+                    totalUsages.map((item, index) =>(
+                      <CCarouselItem key = {index}>
+                        <UsageCard title={item.type} type={item.type} usage={item.usage} usageCap={item.usageCap}/>
+                      </CCarouselItem>
+                    ))}
                 </CCarousel>
               </CCol>
 
@@ -82,7 +113,7 @@ function UserConsole() {
                       color="outline-secondary"
                       key={value}
                       className="mx-0"
-                      active={value === 'ALL'}
+                      active={value === sendingFilter}
                       onClick={() => setSendingFilter(value)}
                     >
                       {value}
@@ -94,9 +125,12 @@ function UserConsole() {
 
 
             <CRow className = 'mt-3'>
-              {totalSendingInfo.filter(item => item.type === sendingFilter).map((item, index) =>(
-                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.type} totalCount={item.totalCount} successRate={item.successRate} detailLink = {item.detailLink}/>
-                  ))}
+              {sendingFilter === "ALL"
+                ? totalSendingInfo.map((item, index) =>(
+                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>))
+                : totalSendingInfo.filter(item => item.sendingType === sendingFilter).map((item, index) =>(
+                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>
+              ))}
             </CRow>
 
 

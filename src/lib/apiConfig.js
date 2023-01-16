@@ -19,6 +19,10 @@ const apiConfig = {
     //delete
     groupDeleteSingle:service.user+"/group", //+groupId,
     groupDeleteMulti:service.user+"/group",
+
+    resultUsage:service.result + "/usage",
+    resultSending:service.result + "/sending"
+
 }
 
 export default apiConfig;
