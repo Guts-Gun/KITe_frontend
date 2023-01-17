@@ -21,7 +21,10 @@ const apiConfig = {
     groupDeleteMulti:service.user+"/group",
 
     resultUsage:service.result + "/usage",
-    resultSending:service.result + "/sending"
+    resultSending:service.result + "/sending",
+    resultSendingResult:service.result + "/sending/result",
+
+
 
 }
 

@@ -4,10 +4,7 @@ import SendingResultRow from "./SendingResultRow";
 import PropTypes from "prop-types";
 
 function SendingResultTable({sendingResultList}) {
-    const tableRowClick = (e, id) => {
-    // window.location.href = "/#/resultDetail/"+id;
-    window.location.href = "/#/resultDetail/";
-  };
+
 
     console.log(sendingResultList);
 

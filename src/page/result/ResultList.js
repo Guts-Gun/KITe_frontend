@@ -15,24 +15,32 @@ import {
   CRow,
 } from '@coreui/react'
 import SendingResultTable from "./component/SendingResultTable";
+import axios from "axios";
+import apiConfig from "../../lib/apiConfig";
 
 
 function ResultList() {
 
   const [sendingResultList,setSendingResultList] = useState([
-    {sendingId : 1, sendingType : "SMS", totalCount : 100, inputTime : 0, scheduleTime : 0, success: true, failureSending: 0, avgSpeed : 0, completeTime : 0 },
-    {sendingId : 2, sendingType : "EMAIL", totalCount : 100, inputTime : 0, scheduleTime : 0, success: false, failureSending: 0, avgSpeed : 0, completeTime : 0 },
+    {sendingId : 1, sendingType : "SMS", totalSending : 100, inputTime : 0, scheduleTime : 0, success: "true", failureSending: 0, avgSpeed : 0, completeTime : 0 },
+    {sendingId : 2, sendingType : "EMAIL", totalSending : 100, inputTime : 0, scheduleTime : 0, success: "false", failureSending: 0, avgSpeed : 0, completeTime : 0 },
   ]);
 
-  // useEffect(() => {
-  //   setSendingResult([
-  //     {id : 1, sendingType : "SMS"},
-  //   ]);
-  // })
-  //
-  // const sendingResultList = [
-  //   {id : 1, sendingType : "SMS", totalCount : 100, inputTime : 0, scheduleTime : 0, success: "True", failureSending: 0, avgSpeed : 0, completeTime : 0 },
-  // ];
+useEffect(()=>{
+    axios.get(apiConfig.resultSendingResult)
+      .then(function (response) {
+        console.log(response.data);
+        if (response.data.length > 0) {
+          setSendingResultList(response.data);
+        } else console.log('더미 삽입');
+      }).catch(function (error) {
+      // 오류발생시 실행
+      console.log('더미 삽입');
+    }).then(function() {
+      // 항상 실행
+    });
+  },[]);
+
 
   return (
     <>
