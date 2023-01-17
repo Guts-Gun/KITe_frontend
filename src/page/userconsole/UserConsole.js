@@ -22,9 +22,10 @@ function UserConsole() {
         console.log(response.data);
         if (response.data.length > 0) {
           setTotalUsages(response.data);
-        }
+        } else console.log('더미 삽입');
       }).catch(function (error) {
       // 오류발생시 실행
+      console.log('더미 삽입');
     }).then(function() {
       // 항상 실행
     });
@@ -39,10 +40,13 @@ function UserConsole() {
     axios.get(apiConfig.resultSending)
       .then(function (response) {
         console.log(response.data);
-        setTotalSendingInfo(response.data);
-
+        if (response.data.length > 0) {
+          setTotalSendingInfo(response.data);
+        }
+        else console.log('더미 삽입')
       }).catch(function (error) {
       // 오류발생시 실행
+      console.log('더미 삽입');
     }).then(function() {
       // 항상 실행
     });
@@ -127,10 +131,10 @@ function UserConsole() {
             <CRow className = 'mt-3'>
               {sendingFilter === "ALL"
                 ? totalSendingInfo.map((item, index) =>(
-                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>))
+                  <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>))
                 : totalSendingInfo.filter(item => item.sendingType === sendingFilter).map((item, index) =>(
-                <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>
-              ))}
+                  <SendingInfoCard key = {index} sendingId={item.id} title={item.title} status = {item.status} type={item.sendingType} totalCount={item.totalSending} successRate={item.successRate} detailLink = {item.detailLink}/>
+                ))}
             </CRow>
 
 
