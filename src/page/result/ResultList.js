@@ -27,7 +27,7 @@ function ResultList() {
   ]);
 
 useEffect(()=>{
-    axios.get(apiConfig.resultSendingResult)
+    axios.get(apiConfig.resultSendingResultList)
       .then(function (response) {
         console.log(response.data);
         if (response.data.length > 0) {

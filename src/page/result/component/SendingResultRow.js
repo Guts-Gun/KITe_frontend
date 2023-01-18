@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function SendingResultRow({rowIndex, sendingResult}) {
   // 상세 페이지 링크
   const tableRowClick = (e, id) => {
-    // window.location.href = "/#/resultDetail/"+id;
+    //window.location.href = "/#/resultDetail/"+id;
     window.location.href = "/#/resultDetail/";
   }
 

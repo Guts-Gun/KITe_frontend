@@ -22,7 +22,10 @@ const apiConfig = {
 
     resultUsage:service.result + "/usage",
     resultSending:service.result + "/sending",
-    resultSendingResult:service.result + "/sending/result",
+    resultSendingResultList:service.result + "/sending/result",
+    resultSendingResult:service.result + "/sending/result", //+sendingId
+
+
 
 
 
