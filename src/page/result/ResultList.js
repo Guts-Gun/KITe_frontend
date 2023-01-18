@@ -26,8 +26,11 @@ function ResultList() {
     {sendingId : 2, sendingType : "EMAIL", totalSending : 100, inputTime : 0, scheduleTime : 0, success: "false", failureSending: 0, avgSpeed : 0, completeTime : 0 },
   ]);
 
+  const [limit, setLimit] = useState(1);
+  const [page, setPage] = useState(0);
+
 useEffect(()=>{
-    axios.get(apiConfig.resultSendingResult)
+    axios.get(apiConfig.resultSendingResult + "?page="+page + "&size=" + limit)
       .then(function (response) {
         console.log(response.data);
         if (response.data.length > 0) {
@@ -39,8 +42,18 @@ useEffect(()=>{
     }).then(function() {
       // 항상 실행
     });
-  },[]);
+  },[page]);
 
+  const onIncrease = () => {
+    setPage(page + 1)
+    console.log(page)
+  }
+  const onDecrease = () => {
+    setPage(page - 1)
+    console.log(page)
+  }
+
+console.log(page);
 
   return (
     <>
@@ -111,13 +124,13 @@ useEffect(()=>{
           </CCard>
 
           <CPagination align="center" aria-label="Page navigation example">
-            <CPaginationItem aria-label="Previous" disabled>
+            <CPaginationItem aria-label="Previous" onClick = { onDecrease} disabled={page === 0}>
               <span aria-hidden="true">&laquo;</span>
             </CPaginationItem>
             <CPaginationItem active>1</CPaginationItem>
             <CPaginationItem>2</CPaginationItem>
             <CPaginationItem>3</CPaginationItem>
-            <CPaginationItem aria-label="Next">
+            <CPaginationItem aria-label="Next" onClick = {onIncrease}>
               <span aria-hidden="true">&raquo;</span>
             </CPaginationItem>
           </CPagination>
