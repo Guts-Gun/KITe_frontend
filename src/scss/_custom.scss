@@ -33,8 +33,9 @@
 
 // _______________________________________________________________________________________________
 .custom_height {
-    max-height: 220px;
-    overflow-y: scroll;
+  min-height: 220px;
+  max-height: 220px;
+  overflow-y: scroll;
 }
 
 
