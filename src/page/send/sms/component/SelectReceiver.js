@@ -114,7 +114,14 @@ const SelectReceiver = (prop) => {
     
 
    // 엑셀업로드__________________________________________________________________________________
-   function readUploadFile(e){
+
+  // spmale file download
+  function clickDownload(){
+    window.location.href = apiConfig.downloadSampleFile;
+  }
+
+  // file to JsonArray
+  function readUploadFile(e){
     e.preventDefault();
     if (e.target.files) {
       const reader = new FileReader();
@@ -298,7 +305,10 @@ const SelectReceiver = (prop) => {
                   </CTabPane>
                   <CTabPane role="tabpanel" aria-labelledby="home-tab" visible={activeKey === 4}>
                     <CCallout color="primary">
-                    <CButton component="input" type="button" color="primary" value="샘플파일 다운로드"/><br/>
+                      <CButton type="button" color="primary" onClick={clickDownload}>
+                        샘플파일 다운로드
+                      </CButton>
+                      <br/>
                       * 등록할 파일을 선택해 주세요. <br/>
                       * 반드시 위에 샘플 엑셀파일을 다운로드 하신 후 작성해서 등록해 주세요.
                     </CCallout>
