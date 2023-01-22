@@ -29,7 +29,7 @@ const Home = () => {
       <div className="home-contents">
         {/* 발송하기버튼 */}
         <div className="d-grid gap-2 col-6 mx-auto mt-3 mb-5">
-          <CButton size="lg" color="primary" href="sendSms" shape="rounded-pill">문자 발송하기</CButton>
+          <CButton size="lg" color="primary" href="/#/sendSms" shape="rounded-pill" >문자 발송하기</CButton>
         </div>
 
         {/* 중계사 */}
