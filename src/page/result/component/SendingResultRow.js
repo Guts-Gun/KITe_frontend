@@ -14,11 +14,11 @@ function SendingResultRow({rowIndex, sendingResult}) {
     <CTableRow onClick={(e) => tableRowClick(e, sendingResult.sendingId)}>
       <CTableHeaderCell scope="row">{(rowIndex + 1).toString()}</CTableHeaderCell>
       <CTableDataCell>{sendingResult.sendingType}</CTableDataCell>
-      <CTableDataCell>{sendingResult.totalSending}</CTableDataCell>
+      <CTableDataCell>{sendingResult.totalMessage}</CTableDataCell>
       <CTableDataCell>{sendingResult.inputTime}</CTableDataCell>
       <CTableDataCell>{sendingResult.scheduleTime}</CTableDataCell>
       <CTableDataCell>{sendingResult.success.toString()}</CTableDataCell>
-      <CTableDataCell>{sendingResult.failureSending}</CTableDataCell>
+      <CTableDataCell>{sendingResult.failedMessage}</CTableDataCell>
       <CTableDataCell>{sendingResult.avgSpeed}</CTableDataCell>
       <CTableDataCell>{sendingResult.completeTime}</CTableDataCell>
     </CTableRow>
@@ -33,11 +33,11 @@ SendingResultRow.propTypes  = {
   sendingResult : PropTypes.shape({
     sendingId : PropTypes.number,
     sendingType : PropTypes.string,
-    totalSending : PropTypes.number,
+    totalMessage : PropTypes.number,
     inputTime : PropTypes.number,
     scheduleTime : PropTypes.number,
-    success : PropTypes.string,
-    failureSending : PropTypes.number,
+    success : PropTypes.bool,
+    failedMessage : PropTypes.number,
     avgSpeed : PropTypes.number,
     completeTime : PropTypes.number,
   }),
