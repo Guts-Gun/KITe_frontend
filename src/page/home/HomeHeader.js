@@ -12,7 +12,7 @@ const HomeHeader = () => {
         </Link>
       </div>
       <div className="header-menu">
-        <Link to="/login">로그인</Link>
+        <Link to="/login">LOGIN</Link>
       </div>
     </div>
   );
