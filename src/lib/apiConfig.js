@@ -1,36 +1,34 @@
 const service = {
     user : "/user", //localhost:8001
     result : "/result", //localhost:8002
-    requestMsg : "/requestMsg", //localhost:8011
-    requestEmail : "/requestEmail", //localhost:8012
+    requestMsg : "/requestSending", //localhost:8011
 };
 
 const version = '/v1';
 
 
 const apiConfig = {
-    //select
-    groupSelect:service.user+"/group",
-    //create
-    groupCreate:service.user+"/group/create",
-    groupCopy:service.user+"/group/copy",
-    //update
-    groupUpdate:service.user+"/group",
-    //delete
-    groupDeleteSingle:service.user+"/group", //+groupId,
-    groupDeleteMulti:service.user+"/group",
 
-    resultUsage:service.result + "/usage",
-    resultSending:service.result + "/sending",
-    resultSendingResultList:service.result + "/sending/result",
-    resultSendingResult:service.result + "/sending/result", //+sendingId
+    // GROUP
+    groupSelect :           service.user + "/group",                         // SELECT
+    groupCreate :           service.user + "/group/create",                  // CREATE
+    groupCopy :             service.user + "/group/copy",                    // COPY
+    groupUpdate :           service.user + "/group",                         // UPDATE
+    groupDeleteSingle :     service.user + "/group", //+groupId,             // DELETE
+    groupDeleteMulti :      service.user + "/group",
 
 
+    // SENDING RESULT
+    resultUsage :           service.result + "/usage",
+    resultSending :         service.result + "/sending",
+    resultSendingResult :   service.result + "/sending/result",
 
 
+    // SEND
+    downloadSampleFile :    service.requestMsg + "/request/download/excel",  // 주소록입력 샘플파일 다운로드
+    sendRequest :           service.requestMsg + "/request/sendReq"          // 발송 요청
 
 }
-
 export default apiConfig;
 
 

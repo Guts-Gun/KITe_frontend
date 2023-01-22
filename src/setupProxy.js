@@ -16,7 +16,7 @@ module.exports = function(app) {
     })
   );
   app.use(
-    '/requestMsg',
+    '/requestSending',
     createProxyMiddleware( {
       target: 'http://localhost:8011',
       changeOrigin: true,
