@@ -36,17 +36,12 @@
       margin: 15px 0;
       font-size: 1.5rem;
       color: #282c34;
-    }
-
-    .small-home-contents{
-      padding: 0 30% 0 30%;
-      opacity: 0;
-      animation: smoothAppear 1s forwards;
-      animation-delay: 1s;
-      margin: 15px 0;
-      font-size: 1.5rem;
-      color: #282c34;
       text-align: center;
+      span{
+        font-size: 1.8rem;
+        font-weight: bold;
+        // font-family: 'Pacifico', cursive;
+      }
     }
 
     .about-project{

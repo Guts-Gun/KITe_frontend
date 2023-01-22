@@ -1,9 +1,12 @@
 import React from 'react'
-import {CButton, CImage, CRow,} from '@coreui/react'
+import {CButton, CImage, CRow, CCallout,CCarousel, CCarouselItem, CCarouselCaption, CCard, CCardHeader, CCardBody, CCardTitle, CCardText, CCardFooter, CCardImage} from '@coreui/react'
 import HomeHeader from './HomeHeader';
 import "./home.scss";
-import mainImg from "../../assets/images/home/KITe.png";
+import mainImg from "../../assets/images/home/kite1.png";
 import teamInfo from "../../assets/images/home/team.png";
+
+
+
 import BrokerInfoCardGroup from "./component/BrokerInfoCardGroup";
 
 function BrokerInfoCardList() {
@@ -12,47 +15,35 @@ function BrokerInfoCardList() {
 
 const Home = () => {
 
-
   return (
     <>
-    <HomeHeader></HomeHeader>
-    <div className="home-wrapper">
+      <HomeHeader></HomeHeader>
+      <div className="home-wrapper mb-5">
 
-      {/* 메인이미지 */}
-      <div className="home-title">
-          <CImage className='main_img' src={mainImg}/>
-      </div>
+        {/* 메인이미지 */}
+        <div className="home-title">
+            <CImage className='mt-1 main_img' src={mainImg}/>
+        </div>
 
-      <div className="about-project">
-      <CRow className="ml-20 mr-20">
-                  <ul className="s2__list">
-                    <li><i className=""></i>사용하기 쉬워요</li>
-                    <li><i className=""></i>다양한 선택지</li>
-                    <li><i className=""></i>자세한 결과화면</li>
-                    <li><i className=""></i> 실시간 중계사 추가</li>
-                    <li><i className=""></i>대체 발송 기능</li>
-                  </ul>
-              </CRow>
-          </div>
 
-      {/* 중계사 */}
       <div className="home-contents">
-        <BrokerInfoCardGroup/>
+        {/* 발송하기버튼 */}
+        <div className="d-grid gap-2 col-6 mx-auto mt-3 mb-5">
+          <CButton size="lg" color="primary" href="sendSms" shape="rounded-pill">문자 발송하기</CButton>
+        </div>
+
+        {/* 중계사 */}
+        <span>중계사 정보</span>
+          <BrokerInfoCardGroup/>
+        </div>
+
+        <div className="website">
+          <span className='my-website-title me-1'> Guts&Gun</span>
+          <a href="https://github.com/Guts-Gun" target="_blank" rel="noreferrer">github</a>
+        </div>
       </div>
+    </>
 
-      {/* 발송하기버튼 */}
-      <div className="home-contents">
-            <CButton size="lg" color="primary">문자 발송하기</CButton>
-      </div>
-
-      <div className="small-home-contents">
-          <CImage className='main_img' src={teamInfo}/>
-          <a href="https://github.com/Guts-Gun" target="_blank" rel="noreferrer"></a>
-      <div>
-
-</div>
-
-</div></div></>
   )
 }
 export default Home;
