@@ -16,17 +16,11 @@ module.exports = function(app) {
     })
   );
   app.use(
-    '/requestSending',
+    '/request',
     createProxyMiddleware( {
       target: 'http://localhost:8011',
       changeOrigin: true,
     })
   );
-  app.use(
-    '/requestEmail',
-    createProxyMiddleware( {
-      target: 'http://localhost:8012',
-      changeOrigin: true,
-    })
-  );
+
 };

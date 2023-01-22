@@ -1,7 +1,7 @@
 const service = {
     user : "/user", //localhost:8001
     result : "/result", //localhost:8002
-    requestMsg : "/requestSending", //localhost:8011
+    requestMsg : "/request", //localhost:8011
 };
 
 const version = '/v1';
@@ -25,8 +25,8 @@ const apiConfig = {
 
 
     // SEND
-    downloadSampleFile :    service.requestMsg + "/request/download/excel",  // 주소록입력 샘플파일 다운로드
-    sendRequest :           service.requestMsg + "/request/sendReq"          // 발송 요청
+    downloadSampleFile :    service.requestMsg + "/download/excel",  // 주소록입력 샘플파일 다운로드
+    sendRequest :           service.requestMsg + "/sendReq",          // 발송 요청
 
 }
 export default apiConfig;
