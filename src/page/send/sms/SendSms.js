@@ -25,8 +25,8 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
-import SelectBroker from './module/SelectBroker';
-import SelectReceiver from './module/SelectReceiver';
+import SelectBroker from './component/SelectBroker';
+import SelectReceiver from './component/SelectReceiver';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as smsAction from "../../../modules/sms";
@@ -37,14 +37,67 @@ import usePromise from 'src/lib/usePromise';
 
 const SendSms = () => {
 
-  // 메뉴얼 보기
-  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const { receiverList, sending, reservYn, sender, replaceSender, brokerList } = useSelector(({ sms }) => ({
+    receiverList : sms.receiverList,
+    sending : sms.sendingDto,
+    reservYn : sms.reservYn,
+    sender : sms.sender,
+    replaceSender : sms.replaceSender,
+    brokerList : sms.brokerList,
+  }));
+
+  
+  // const test=useSelector(state=>state.sms.sendingDto.content)
+  // console.log(test)
+
+  
+  // 메뉴얼 보기
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     dispatch(smsAction.initializeForm());
   }, []);
+
+
+
+  // 내용 수정
+  function changeContent(e) {
+    const { value, name } = e.target;
+    dispatch(smsAction.editContent( { value, name }));
+  }
+
+
+  // 수신자 추가
+  function addReceiver(name, phone, email) {
+    console.log(name, phone, email);
+    dispatch(smsAction.addReceiver( { name, phone, email }));
+  }
+
+
+    // 수신자 일괄 추가
+    function addReceivers(arr) {
+      console.log(arr);
+      dispatch(smsAction.addReceivers({arr}));
+    }
+  
+
+
+
+  // 수신자 삭제
+  function deleteReceiver(e) {
+    const { value, name } = e.target;
+    // dispatch(smsAction.editContent( { value, name }));
+  }
+
+
+  // 수신자 초기화
+  function deleteAllReceiver(e) {
+    const { value, name } = e.target;
+    // dispatch(smsAction.editContent( { value, name }));
+  }
+
 
   // 전송시간 - 예약발송여부
   const [sendReserv, setSendReserv] = useState(false);
@@ -66,11 +119,8 @@ const SendSms = () => {
 
   // 템플릿
   const [template, setTemplate] = useState(null);
-  const [description, setDescription] = useState('');
   
   
-
-
   return (
     <>
       <COffcanvas placement="end" visible={visible} onHide={() => setVisible(false)}>
@@ -89,14 +139,21 @@ const SendSms = () => {
           <CRow>
             <CCol lg={10} ><strong>SMS/MMS 발송 </strong></CCol>
             <CCol lg={2} className="text-end">
-              <CButton sm onClick={() => setVisible(true)}>예시보기</CButton>
+              <CButton onClick={() => setVisible(true)}>예시보기</CButton>
             </CCol>
           </CRow>
         </CCardHeader>
         <CCardBody>
           <CForm className="row g-3">
 
-            <SelectReceiver></SelectReceiver>
+
+            <SelectReceiver 
+              receiverList={receiverList}
+              addReceiver={addReceiver}
+              addReceivers={addReceivers}
+              deleteReceiver={deleteReceiver}
+              deleteAllReceiver={deleteAllReceiver}
+            > </SelectReceiver>
 
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">전송 시간</CFormLabel>
@@ -152,7 +209,7 @@ const SendSms = () => {
                       <CFormTextarea
                         rows="6"
                         text="140byte 초과 및 이미지나 동영상 첨부 시 MMS"
-                        onChange={(e)=>{setDescription(e.target.value)}}
+                        onChange={(e)=>{changeContent(e)}}
                         />
                     </CRow>
                     <CRow>
@@ -175,20 +232,22 @@ const SendSms = () => {
                   </CCol>
                   <CCol  sm={12} md={5} className="mt-3">
                     <div className='custom_div'>
-                      <div className='custom_msg'>[미리보기]<br/>{description}</div>
+                      <div className='custom_msg'>
+                        [미리보기]<br/>
+                        { sending.content.split("\n").map((line, i) => {
+                            return (
+                              <span key={i}> {line}<br /></span>
+                            );
+                          })
+                        }
+                      </div>
                     </div>
                 </CCol>
                 </CRow>
-               
+             
               </CCol>
             </CRow>
-
-
-
-
             <SelectBroker/>
-
-
             
           </CForm>
         </CCardBody>
