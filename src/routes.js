@@ -62,7 +62,7 @@ const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/Receiver
 const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/ReceiverMake'))
 
 //발신번호(sender)
-const SenderPhoneList = React.lazy(() => import('./page/sender/SenderPhoneList'));
+const SenderPhoneList = React.lazy(() => import('./page/sender/Phone/SenderPhoneList'));
 const SenderEmailList = React.lazy(() => import('./page/sender/Email/SenderEmailList'));
 
 //send
