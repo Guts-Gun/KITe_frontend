@@ -20,11 +20,17 @@ const apiConfig = {
     groupDeleteMulti :      service.user + "/group/list",                    // DELETE
     
     // PHONEBOOK
-    phoneBookSelect :       service.user + "/address",                      //GET
+    phoneBookSelectList :       service.user + "/address",                      //GET         
+    phoneBookSelectListFilter : service.user + "/address/filter",               //GET
+      //?name=sebin1
+      //?phone=010-2324-825
+      //?email=sbscsue@gmail.com
+
+    phoneBookSelectPage :       service.user + "/address/page",                      //GET
       //?page=0           
-    phoneBookSelectFilter : service.user + "/address/filter",               //GET
+    phoneBookSelectPageFilter : service.user + "/address/page/filter",               //GET
       //?name=sebin1&page=0 
-      //?phone=010-2324-825&page=0 
+      //?phone=010-2324-8257&page=0 
       //?email=sbscsue@gmail.com&page=0
     phoneBookCreate:        service.user + "/address",                      //POST
     phoneBookCreateList:    service.user + "/address/list",                 //POST

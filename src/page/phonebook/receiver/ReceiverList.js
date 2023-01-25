@@ -45,7 +45,7 @@ function ReceiverList() {
   useEffect(()=>{
     if(name===null && email ==null && phone==null){
       paramUrl = "/receiverList?"+"page=";
-      axios.get(apiConfig.phoneBookSelect,{params :{page:page}})
+      axios.get(apiConfig.phoneBookSelectPage,{params :{page:page}})
       .then(function (response) {
           console.log(response.data);
           setPhoneBookData(response.data);
@@ -58,7 +58,7 @@ function ReceiverList() {
     else{
       if(name!=null){
         paramUrl = "/receiverList?"+"name="+name+"&page=";
-        axios.get(apiConfig.phoneBookSelectFilter,{params :{name:name,page:page}})
+        axios.get(apiConfig.phoneBookSelectPageFilter,{params :{name:name,page:page}})
         .then(function (response) {
             console.log(response.data);
             setPhoneBookData(response.data);
@@ -70,7 +70,7 @@ function ReceiverList() {
       }
       if(phone!=null){
         paramUrl = "/receiverList?"+"phone="+phone+"&page=";
-        axios.get(apiConfig.phoneBookSelectFilter,{params :{phone:phone,page:page}})
+        axios.get(apiConfig.phoneBookSelectPageFilter,{params :{phone:phone,page:page}})
         .then(function (response) {
             console.log(response.data);
             setPhoneBookData(response.data);
@@ -82,7 +82,7 @@ function ReceiverList() {
       }
       if(email!=null){
         paramUrl = "/receiverList?"+"email="+email+"&page=";
-        axios.get(apiConfig.phoneBookSelectFilter,{params :{email:email,page:page}})
+        axios.get(apiConfig.phoneBookSelectPageFilter,{params :{email:email,page:page}})
         .then(function (response) {
             console.log(response.data);
             setPhoneBookData(response.data);
