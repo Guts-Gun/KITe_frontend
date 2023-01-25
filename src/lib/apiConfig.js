@@ -8,7 +8,7 @@ const version = '/v1';
 
 
 const apiConfig = {
-    
+
     /* USER */
     // GROUP
     groupSelectList :       service.user + "/group",                         // GET
@@ -30,12 +30,16 @@ const apiConfig = {
     emailCreate:            service.user + "/email",                        //POST
     emailUpdate:            service.user + "/email",                        //PUT
     emailDelete:            service.user + "/email",                        //DELETE
-    
+
 
     // SENDING RESULT
-    resultUsage :           service.result + "/usage",
-    resultSending :         service.result + "/sending",
-    resultSendingResult :   service.result + "/sending/result",
+    resultUsage :                 service.result + "/usage",
+    resultSending :               service.result + "/sending",
+    resultSendingResult :         service.result + "/sending/result",
+      //이거 고민해야함
+    resultSendingBrokerResult :   service.result + "/sending/result",
+    resultSendingTxResult :   service.result + "/sending/result",
+
 
 
     // SEND
