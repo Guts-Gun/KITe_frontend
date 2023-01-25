@@ -19,9 +19,13 @@ const apiConfig = {
 
 
     // SENDING RESULT
-    resultUsage :           service.result + "/usage",
-    resultSending :         service.result + "/sending",
-    resultSendingResult :   service.result + "/sending/result",
+    resultUsage :                 service.result + "/usage",
+    resultSending :               service.result + "/sending",
+    resultSendingResult :         service.result + "/sending/result",
+      //이거 고민해야함
+    resultSendingBrokerResult :   service.result + "/sending/result",
+    resultSendingTxResult :   service.result + "/sending/result",
+
 
 
     // SEND

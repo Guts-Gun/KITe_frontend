@@ -6,7 +6,22 @@ import PropTypes from "prop-types";
 
 function SendingResultDetailInfo({sendingId}) {
   const [sendingResultDetailInfo, setSendingResultDetailInfo] = useState(
-    {sendingId : 1, sendingType : "SMS", totalSending : 100, inputTime : 0, scheduleTime : 0, success: "true", failureSending: 0, avgSpeed : 0, completeTime : 0 },
+    {
+    id: 1,
+    userId: "1",
+    sendingId: 1,
+    sendingType: "SMS",
+    sendingRuleType: "CUSTOM",
+    success: true,
+    totalMessage: 10,
+    failedMessage: 2,
+    avgSpeed: 0.1,
+    inputTime: 1,
+    scheduleTime: 3,
+    startTime: 4,
+    completeTime: 5,
+    logTime: 6
+},
   );
   useEffect(()=>{
     axios.get(apiConfig.resultSendingResult + "/" + sendingId)
@@ -29,11 +44,11 @@ function SendingResultDetailInfo({sendingId}) {
       <CRow>
         <CCol xs={4}>
           <p>발송타입 : {sendingResultDetailInfo.sendingType}</p>
-          <p>개수(건) : {sendingResultDetailInfo.totalSending}</p>
+          <p>개수(건) : {sendingResultDetailInfo.totalMessage}</p>
           <p>등록 시간 : {sendingResultDetailInfo.inputTime}</p>
           <p>예약 시간 : {sendingResultDetailInfo.scheduleTime}</p>
           <p>성공 여부 : {sendingResultDetailInfo.success}</p>
-          <p>실패 개수 : {sendingResultDetailInfo.failureSending}</p>
+          <p>실패 개수 : {sendingResultDetailInfo.failedMessage}</p>
           <p>평균 속도(초): {sendingResultDetailInfo.avgSpeed}</p>
           <p>완료 시간 : {sendingResultDetailInfo.completeTime}</p>
         </CCol>

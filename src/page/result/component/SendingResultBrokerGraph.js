@@ -1,16 +1,109 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CCard, CCardBody, CCardHeader, CCol, CRow} from "@coreui/react";
 import {CChartBar, CChartDoughnut} from "@coreui/react-chartjs";
 import PropTypes from "prop-types";
+import axios from "axios";
+import apiConfig from "../../../lib/apiConfig";
 
 function SendingResultBrokerGraph({sendingId}) {
   const [sendingResultBroker, setSendingResultBroker] = useState(
     {
-      brokerCount : {brokerName : ['LG', 'SKT', 'KT', 'aaa'], data: [40, 20, 80, 55] },
-      brokerPFCount: {brokerName : ['LG-성공','LG-실패', 'SKT-성공','SKT-실패', 'KT-성공','KT-실패', 'aaa-성공','aaa-실패'], data: [40,2, 20,3, 80,4, 55,5] },
-      brokerSpeed : {brokerName : ['LG', 'SKT', 'KT', 'aaa'], data: [40, 20, 80, 55]}
+      "id": 1,
+      "brokerCount": {
+        "name": [
+          "3번 중계사",
+          "1번 중계사",
+          "2번 중계사"
+        ],
+        "data": [
+          2,
+          2,
+          2
+        ]
+      },
+      "brokerSuccessFail": {
+        "3번 중계사": {
+          "false": 1,
+          "true": 1
+        },
+        "1번 중계사": {
+          "false": 1,
+          "true": 1
+        },
+        "2번 중계사": {
+          "true": 2
+        }
+      },
+      "brokerSpeed": {
+        "name": [
+          "3번 중계사",
+          "1번 중계사",
+          "2번 중계사"
+        ],
+        "data": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
     }
   );
+
+  useEffect(() => {
+    axios.get(apiConfig.resultSendingBrokerResult + "/" + sendingId + "/broker")
+      .then(function (response) {
+        console.log(response.data);
+        setSendingResultBroker(response.data);
+      }).catch(function (error) {
+      // 오류발생시 실행
+      console.log('더미 삽입');
+      setSendingResultBroker(
+        {
+          "id": 1,
+          "brokerCount": {
+            "name": [
+              "3번 중계사",
+              "1번 중계사",
+              "2번 중계사"
+            ],
+            "data": [
+              2,
+              2,
+              2
+            ]
+          },
+          "brokerSuccessFail": {
+            "3번 중계사": {
+              "false": 1,
+              "true": 1
+            },
+            "1번 중계사": {
+              "false": 1,
+              "true": 1
+            },
+            "2번 중계사": {
+              "true": 2
+            }
+          },
+          "brokerSpeed": {
+            "name": [
+              "3번 중계사",
+              "1번 중계사",
+              "2번 중계사"
+            ],
+            "data": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        }
+      )
+    }).then(function () {
+      // 항상 실행
+    });
+  }, []);
+
 
   return (
     <div>
@@ -25,7 +118,7 @@ function SendingResultBrokerGraph({sendingId}) {
               <CChartDoughnut
                 data={
                   {
-                    labels: sendingResultBroker.brokerCount.brokerName,
+                    labels: sendingResultBroker.brokerCount.name,
                     datasets: [
                       {
                         // 색 어칼지 생각해보기
@@ -39,34 +132,36 @@ function SendingResultBrokerGraph({sendingId}) {
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol xs={4}>
-          <CCard className="mb-4">
-            <CCardHeader>전송 상황</CCardHeader>
-            <CCardBody>
-              <CChartBar
-                data={{
-                  labels: sendingResultBroker.brokerPFCount.brokerName,
-                  datasets: [
-                    {
-                      label: 'Count',
-                      backgroundColor: '#f87979',
-                      data: sendingResultBroker.brokerPFCount.data,
-                    },
-                  ],
-                }}
-                labels="months"
-              />
-            </CCardBody>
-          </CCard>
-        </CCol>
+
+
+        {/*여기도 고민하기*/}
+        {/*<CCol xs={4}>*/}
+        {/*  <CCard className="mb-4">*/}
+        {/*    <CCardHeader>전송 상황</CCardHeader>*/}
+        {/*    <CCardBody>*/}
+        {/*      <CChartBar*/}
+        {/*        data={{*/}
+        {/*          labels: sendingResultBroker.brokerSuccessFail.Name,*/}
+        {/*          datasets: [*/}
+        {/*            {*/}
+        {/*              label: 'Count',*/}
+        {/*              backgroundColor: '#f87979',*/}
+        {/*              data: sendingResultBroker.brokerSuccessFail.data,*/}
+        {/*            },*/}
+        {/*          ],*/}
+        {/*        }}*/}
+        {/*        labels="months"*/}
+        {/*      />*/}
+        {/*    </CCardBody>*/}
+        {/*  </CCard>*/}
+        {/*</CCol>*/}
         <CCol xs={4}>
           <CCard className="mb-4">
             <CCardHeader>속도</CCardHeader>
             <CCardBody>
               <CChartBar
                 data={{
-                  labels: sendingResultBroker.brokerSpeed.brokerName
-                  ,
+                  labels: sendingResultBroker.brokerSpeed.name,
                   datasets: [
                     {
                       label: 'SPEED',
@@ -85,7 +180,8 @@ function SendingResultBrokerGraph({sendingId}) {
 
   );
 }
+
 SendingResultBrokerGraph.propTypes = {
-  sendingId : PropTypes.number.isRequired,
+  sendingId: PropTypes.number.isRequired,
 }
 export default SendingResultBrokerGraph;
