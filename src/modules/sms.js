@@ -27,12 +27,10 @@ export const addReceiver = createAction(ADD_RECEIVER,({name, phone, email}) => (
 export const addReceivers = createAction(ADD_RECEIVERS,({arr}) => ({
    arr
 }));
-export const deleteReceiver = createAction(DELETE_RECEIVER,({value, name}) => ({
-    value, name
+export const deleteReceiver = createAction(DELETE_RECEIVER,({phone}) => ({
+    phone
 }));
-export const deleteAllReceiver = createAction(DELETE_ALLRECEIVER,({value, name}) => ({
-    value, name
-}));
+export const deleteAllReceiver = createAction(DELETE_ALLRECEIVER);
 export const editSender = createAction(EDIT_SENDER,({value, name}) => ({
     value, name
 }));
@@ -70,10 +68,12 @@ const initialState = {
         content : "",                       // 내용 접속
         reservDate : null,                  // 예약 날짜
         reservTime : null,                  // 예약 시간
-        ruleType : "CUSTOM",                // 중계사 비율 타입
+        reservationTime : null,             // 예약 날짜 시간
+        sendingRuleType : "CUSTOM",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
         totalSending : 0,                   // 총 메세지 개수
+        title : "",                         // 제목
     },
     reservYn : "N",                         // 예약 여부
     sender : null,                          // 발신자 정보
@@ -90,7 +90,7 @@ const sms = handleActions({
     [ADD_RECEIVER] : (state, {payload: pl }) => {
         let flag = true;
         state.receiverList.map(function(data) {
-            if(data.receiver===pl.phone){
+            if(data.receiver==pl.phone){
                 flag = false;
             }
         });
@@ -107,12 +107,9 @@ const sms = handleActions({
     },
 
     [ADD_RECEIVERS] : (state, {payload: pl }) => {
-       
+
         pl.arr.map(function(data) {
-
             let phoneTxt = '';
-            console.log(data.phone.length);
-
             if (data.phone.length === 10) {
                 phoneTxt = data.phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
             }
@@ -129,30 +126,36 @@ const sms = handleActions({
             }
 
             let flag = true;
-            state.receiverList.map(function(data) {
-                if(data.receiver===pl.phone){
+            state.receiverList.map(function(rdate) {
+                if(rdate.receiver == data.phone){
                     flag = false;
                 }
             });
-
             if(flag){
                 state.receiverList.push(receiver);
             }
         });
+        return { ...state}    
+    },
+
+    [DELETE_RECEIVER] : (state,{payload: pl }) => {
+        console.log(pl.phone);
 
         return { ...state}    
-  
     },
+
+    [DELETE_ALLRECEIVER] : (state) => {
+        state.receiverList = [];
+        return { ...state}    
+    },
+
+
 
     [EDIT_CONTENT] : (state, {payload: pl }) => {
         state.sendingDto.content = pl.value;
         console.log(state);
         return { ...state}    
     },
-
-  
-
-
 
   },
   initialState

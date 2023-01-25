@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useRef, useEffect, useState} from 'react'
 import {
     CButton,
     CCol,
@@ -92,7 +92,7 @@ const SelectReceiver = (prop) => {
     // 그룹 리스트 조회
     const [groupData, setGroupData] = useState([]);
     useEffect(()=>{
-      axios.get(apiConfig.groupSelect).then(function (response) {
+      axios.get(apiConfig.groupSelectList).then(function (response) {
         console.log(response.data);
           setGroupData(response.data);
       }).catch(function (error) {
@@ -102,56 +102,104 @@ const SelectReceiver = (prop) => {
 
     // 그룹 선택 시 해당 그룹의 주소록 조회
     const [selectedGroupReceiver, setSelectedGroupReceiver] = useState([]);
+    const [checkedStateGroupReceiver, setCheckedStateGroupReceiver] = useState([]);
+
     function changeGroupId(id){ 
       console.log(id);
+      axios.get(apiConfig.groupSelectDetail+"/"+id).then(function (response) {
+        const list = response.data.addressList;
+        setSelectedGroupReceiver(response.data.addressList);
+        setCheckedStateGroupReceiver(new Array(list.length).fill(true));
+        new Array(2).fill(false)
+      }).catch(function (error) {
+      }).then(function() {
+      });
     }; 
+
+    function changeCheckedStateGroupReceiver(index){
+
+      let list = checkedStateGroupReceiver;
+      list[index] = !list[index];
+      setCheckedStateGroupReceiver(list);
+
+      console.log(checkedStateGroupReceiver);
+    }
+
+    function clickAddCheckedGroupReceiver(){
+      let checkedList = null;
+      checkedList = selectedGroupReceiver.filter(function(value, index) {
+        return checkedStateGroupReceiver[index] != false;
+    });
+    
+    console.log(checkedList);
+    }
   
     
     // 주소록검색_________________________________________________________________________________
-    const [type, setType] = useState("");
+    const [type, setType] = useState("phone");
     const [keyword, setKeyword] = useState("");
+    const [searchPhoneReceiver, setSearchPhoneReceiver] = useState([]);
 
+
+    function clickSearchPhoneAddress(){
+     
+      axios.get(apiConfig.phoneBookSelectListFilter+"?" + type + "=" + keyword).then(function (response) {
+        setSearchPhoneReceiver(response.data);
+      }).catch(function (error) {
+      }).then(function() {
+      });
+    }
     
 
    // 엑셀업로드__________________________________________________________________________________
 
-  // spmale file download
-  function clickDownload(){
-    window.location.href = apiConfig.downloadSampleFile;
-  }
-
-  // file to JsonArray
-  function readUploadFile(e){
-    e.preventDefault();
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-          const data = e.target.result;
-          console.log(data);
-          const workbook = XLSX.read(data, { type: "binary" });
-          const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-          addReceivers(json);
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
+    // spmale file download
+    function clickDownload(){
+      window.location.href = apiConfig.downloadSampleFile;
     }
-  }
 
-  function addReceivers(arr){
-    if(window.confirm(arr.length +"개의 주소록이 입력됩니다.")){
-      prop.addReceivers(arr);
-    }           
-  }
+    const fileInput=useRef();
+    const onClearAttachment=()=>{
+          fileInput.current.value = "";
+      };
+
+    // file to JsonArray
+    function readUploadFile(e){
+      e.preventDefault();
+      if (e.target.files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, { type: "binary" });
+            const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+            addReceivers(json);
+        };
+        reader.readAsArrayBuffer(e.target.files[0]);
+      }
+    }
+
+    function addReceivers(arr){
+      if(arr.length >0){
+        if(window.confirm("🐰 " + arr.length +"개의 주소록이 입력됩니다.\n🐰 중복된 번호는 추가되지 않습니다!")){
+          prop.addReceivers(arr);
+          onClearAttachment();
+        }           
+      }
+    }
 
     // 수신자 삭제
-    function onclickDeleteReceiver(e){
-      console.log(e);
-
+    function onclickDeleteReceiver(phone){
+      prop.deleteReceiver(phone);
     }
 
     // 수신자 초기화
     function onclickDeleteAllReceiver(e){
-      console.log(e);
-
+      if (prop.receiverList.length>0){
+        // eslint-disable-next-line no-restricted-globals
+        if(confirm("🐰 초기화 하시겠습니까?")){
+          prop.deleteAllReceiver();
+        }
+      }
     }
 
 
@@ -161,12 +209,12 @@ const SelectReceiver = (prop) => {
         <CFormLabel className="col-sm-2">수신자 선택</CFormLabel>
           <CCol xs={10}>
             <CRow>
-            <CCol sm={12} md={6}>
+            <CCol sm={12} md={6} className="mb-3">
               <CNav role="tablist" variant="tabs">
                 <CNavItem><CNavLink active={activeKey === 1} onClick={() => setActiveKey(1)}> 입력 </CNavLink> </CNavItem>
                 <CNavItem><CNavLink active={activeKey === 2} onClick={() => setActiveKey(2)}> 그룹 </CNavLink></CNavItem>
                 <CNavItem><CNavLink active={activeKey === 3} onClick={() => setActiveKey(3)}> 주소록 </CNavLink></CNavItem>
-                <CNavItem><CNavLink active={activeKey === 4} onClick={() => setActiveKey(4)}> 엑셀 업로드 </CNavLink></CNavItem>
+                <CNavItem><CNavLink active={activeKey === 4} onClick={() => setActiveKey(4)}> 엑셀 </CNavLink></CNavItem>
               </CNav>
 
               <CTabContent>
@@ -224,10 +272,11 @@ const SelectReceiver = (prop) => {
                           </CTableHead>
                           <CTableBody className='custom_height'>
                           {
-                          selectedGroupReceiver.map((groupReceiver)=>(
-                            <CTableRow key={groupReceiver.id}>
+                          selectedGroupReceiver.map((groupReceiver, index)=>(
+                            <CTableRow key={"groupReceiver" + groupReceiver.userAddressId}>
                               <CTableHeaderCell scope="row">
-                              <CFormCheck id={groupReceiver.id} defaultChecked/>
+                              <CFormCheck id={"groupReceiverCK" + groupReceiver.userAddressId} defaultChecked value={checkedStateGroupReceiver[index]}
+                               onChange={(e) => changeCheckedStateGroupReceiver(index)}></CFormCheck>
                               </CTableHeaderCell>
                               <CTableDataCell>{groupReceiver.name}</CTableDataCell>
                               <CTableDataCell>{groupReceiver.phone}</CTableDataCell>
@@ -237,9 +286,9 @@ const SelectReceiver = (prop) => {
                           </CTableBody>
                         </CTable>
 
-                        {selectedGroupReceiver.size > 0 ? (
+                        {selectedGroupReceiver.length > 0 ? (
                             <CCol lg={12} className="text-end">
-                            <CButton color="success" variant="outline">
+                            <CButton color="success" variant="outline" onClick={clickAddCheckedGroupReceiver}>
                               추가 
                             </CButton>
                           </CCol>
@@ -253,11 +302,11 @@ const SelectReceiver = (prop) => {
                     <CRow className="mt-1">
                       <CInputGroup className="mb-1">
                         <CFormSelect onChange={(e) => setType(e.target.value)}>
-                          <option value="Phone">번호 검색</option>
-                          <option value="Name">이름 검색</option>
+                          <option value="phone">번호 검색</option>
+                          <option value="name">이름 검색</option>
                         </CFormSelect>
                         <CFormInput type="text" onChange={(e) => setKeyword(e.target.value)}/>
-                        <CButton variant="outline" >검색</CButton>
+                        <CButton variant="outline" onClick={clickSearchPhoneAddress}>검색</CButton>
                       </CInputGroup>
                       <CTable>
                         <CTableHead>
@@ -268,39 +317,33 @@ const SelectReceiver = (prop) => {
                             <CTableHeaderCell scope="col">Email</CTableHeaderCell>
                           </CTableRow>
                         </CTableHead>
-                        <CTableBody>
-                          <CTableRow>
-                            <CTableHeaderCell scope="row">
-                                <CIcon
-                                  className="CButton"
-                                  icon={cilPlus}
-                                  size="sm"
-                                  // onClick={(e) => {
-                                  //   addSendItemHandler(e, member)
-                                  // }}
-                                ></CIcon>
+
+                        <CTableBody className='custom_height'>
+                          {
+                          searchPhoneReceiver.map((phoneAddress)=>(
+                            <CTableRow key={phoneAddress.userAddressId}>
+                              <CTableHeaderCell scope="row">
+                              <CFormCheck id={phoneAddress.userAddressId} defaultChecked/>
                               </CTableHeaderCell>
-                              <CTableDataCell>고솔비</CTableDataCell>
-                              <CTableDataCell>010-4010-9537</CTableDataCell>
-                              <CTableDataCell>gsb0904@hanmail.net</CTableDataCell>
-                          </CTableRow>
-                          <CTableRow>
-                            <CTableHeaderCell scope="row">
-                                <CIcon
-                                  className="CButton"
-                                  icon={cilPlus}
-                                  size="sm"
-                                  // onClick={(e) => {
-                                  //   addSendItemHandler(e, member)
-                                  // }}
-                                ></CIcon>
-                              </CTableHeaderCell>
-                              <CTableDataCell>고솔비</CTableDataCell>
-                              <CTableDataCell>010-4010-9537</CTableDataCell>
-                              <CTableDataCell>gsb0904@hanmail.net</CTableDataCell>
+                              <CTableDataCell>{phoneAddress.name}</CTableDataCell>
+                              <CTableDataCell>{phoneAddress.phone}</CTableDataCell>
+                              <CTableDataCell>{phoneAddress.email}</CTableDataCell>
                             </CTableRow>
-                        </CTableBody>
+                            ))} 
+                          </CTableBody>
                       </CTable>
+
+                      {selectedGroupReceiver.length > 0 ? (
+                            <CCol lg={12} className="text-end">
+                            <CButton color="success" variant="outline">
+                              추가 
+                            </CButton>
+                          </CCol>
+                        ): <CCol lg={12} className="text-center">
+                          <span> 결과가 없습니다.</span>
+                          </CCol>}
+
+
                     </CRow>
                   </CTabPane>
                   <CTabPane role="tabpanel" aria-labelledby="home-tab" visible={activeKey === 4}>
@@ -313,7 +356,7 @@ const SelectReceiver = (prop) => {
                       * 반드시 위에 샘플 엑셀파일을 다운로드 하신 후 작성해서 등록해 주세요.
                     </CCallout>
                     <CInputGroup>
-                      <CFormInput type="file" accept=".xls,.xlsx" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" 
+                      <CFormInput type="file" accept=".xls,.xlsx" id="inputGroupFile04" ref={fileInput}  aria-label="Upload" 
                       onChange={readUploadFile}/>
                     </CInputGroup>
                   </CTabPane>
@@ -336,17 +379,16 @@ const SelectReceiver = (prop) => {
 
                       <CListGroupItem key={receiver.receiver} className="d-flex">
                       <CCol sm={11}>
-                        <span className='me-3'>{receiver.name}</span>
-                        <span className='me-3'>{receiver.phone}</span> 
-                        <span className='me-3'>{receiver.email}</span>
+                        <CCol sm={11}>{receiver.phone} ({receiver.name})</CCol> 
+                        <CCol sm={11}>{receiver.email}</CCol>
                       </CCol>
                       <CCol sm={1}>
                           <CButton
-                              color="danger"
-                              size="sm"
-                              variant="outline"
-                              shape="rounded-pill"
-                              onClick={onclickDeleteReceiver}
+                            color="danger"
+                            size="sm"
+                            variant="outline"
+                            shape="rounded-pill"
+                            onClick={(e) => onclickDeleteReceiver(receiver.receiver)}
                             >
                               <CIcon className="CButton" icon={cilMinus} size="sm"/>
                             </CButton>

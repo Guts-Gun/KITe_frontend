@@ -86,16 +86,14 @@ const SendSms = () => {
 
 
   // 수신자 삭제
-  function deleteReceiver(e) {
-    const { value, name } = e.target;
-    // dispatch(smsAction.editContent( { value, name }));
+  function deleteReceiver(phone) {
+    dispatch(smsAction.deleteReceiver({phone}));
   }
 
 
   // 수신자 초기화
-  function deleteAllReceiver(e) {
-    const { value, name } = e.target;
-    // dispatch(smsAction.editContent( { value, name }));
+  function deleteAllReceiver() {
+    dispatch(smsAction.deleteAllReceiver());
   }
 
 
@@ -174,13 +172,25 @@ const SendSms = () => {
               <CCol xs={10}>
                  <CInputGroup className="mb-1">
                   <CFormSelect>
+                        <option value="">선택</option>
                         <option value="0101111111">010-1111-1111</option>
                         <option value="01040109537">010-4010-9537</option>
                       </CFormSelect>
                 </CInputGroup>
               </CCol>
             </CRow>
-
+            <CRow className="mb-3">
+            <CFormLabel className="col-sm-2">대체발송</CFormLabel>
+              <CCol xs={10}>
+                <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSendReplaceSwitch}/>
+                {sendReplace ? 
+                (<CInputGroup className="mb-1">
+                <CFormSelect>
+                        <option value="">선택</option>
+                      </CFormSelect>
+                </CInputGroup> ) :  null}
+              </CCol>
+            </CRow>
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">문자 분류</CFormLabel>
               <CCol className="col-sm-10">
@@ -212,12 +222,6 @@ const SendSms = () => {
                         onChange={(e)=>{changeContent(e)}}
                         />
                     </CRow>
-                    <CRow>
-                      <CCol xs={12}>
-                        <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSendReplaceSwitch}/>
-                      </CCol>
-                    </CRow>
-
                     <CRow className='mt-3'>
                       <CAccordion  activeItemKey={1}>
                         <CAccordionItem itemKey={1}>

@@ -61,7 +61,7 @@ const apiConfig = {
 
 
     // SEND
-    downloadSampleFile :    service.requestMsg + "/download/excel",  // 주소록입력 샘플파일 다운로드
+    downloadSampleFile :    service.requestMsg + "/download/excel",   // 주소록입력 샘플파일 다운로드
     sendRequest :           service.requestMsg + "/sendReq",          // 발송 요청
 
 }
