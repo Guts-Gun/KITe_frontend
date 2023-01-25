@@ -45,7 +45,7 @@ export function EmailDeleteModal({deleteList}) {
                   <CIcon icon={cilXCircle} size="6xl"/>
               </CCol>
             </CRow>
-            <CRow className="justify-content-center">
+            <CRow className="justify-content-center mt-3 mb-3">
               선택한 발신 이메일을 정말 삭제하시겠습니까?
             </CRow>
             <CRow>
