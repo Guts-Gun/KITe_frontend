@@ -48,18 +48,18 @@ const _nav = [
     to: '/sendSms',
     icon: <CIcon icon={cilScreenSmartphone} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'e-mail',
-    to: '/',
-    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: '카카오톡',
-    to: '/',
-    icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'e-mail',
+  //   to: '/',
+  //   icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: '카카오톡',
+  //   to: '/',
+  //   icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
+  // },
   // {
   //   component: CNavGroup,
   //   name: '팩스',
