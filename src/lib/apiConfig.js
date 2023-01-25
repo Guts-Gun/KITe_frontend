@@ -11,12 +11,13 @@ const apiConfig = {
     
     /* USER */
     // GROUP
-    groupSelect :           service.user + "/group",                         // SELECT
-    groupCreate :           service.user + "/group/create",                  // CREATE
-    groupCopy :             service.user + "/group/copy",                    // COPY
-    groupUpdate :           service.user + "/group",                         // UPDATE
+    groupSelectList :       service.user + "/group",                         // GET
+    groupSelectDetail :     service.user + "/group", //+groupId,             // GET
+    groupCreate :           service.user + "/group/create",                  // POST
+    groupCopy :             service.user + "/group/copy",                    // POST
+    groupUpdate :           service.user + "/group",                         // PUT
     groupDeleteSingle :     service.user + "/group", //+groupId,             // DELETE
-    groupDeleteMulti :      service.user + "/group",
+    groupDeleteMulti :      service.user + "/group/list",                    // DELETE
 
     //SEND_PHONE
     phoneSelect:            service.user + "/phone",                        //GET

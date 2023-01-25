@@ -53,11 +53,12 @@ export function MakeGroupModal() {
                 그룹 설명
               </CFormLabel>
               <div className="col-sm-10">
-                <CFormInput name="groupDescription" onChange={(e) => onChange(e)} />
+                <CFormInput name="description" onChange={(e) => onChange(e)} />
               </div>
             </CRow>
             <CRow>
-              <CCol className="mt-3">
+              <CCol xs={7}></CCol>
+              <CCol xs={5} className="mt-3">
                 <CButton color="secondary" onClick={() => setVisible(false)}>
                   Close
                 </CButton>

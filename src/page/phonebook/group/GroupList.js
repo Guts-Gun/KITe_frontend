@@ -17,6 +17,8 @@ import apiConfig from 'src/lib/apiConfig';
 import GroupCard from './Component/GroupCard';
 import { MakeGroupModal } from './Component/MakeGroupModal';
 import ErrorComponent from 'src/component/error/ErrorComponent';
+import { DeleteBulkNotGroupModal } from './Component/DeleteBulkNotGroupModal';
+import { DeleteBulkGroupModal } from './Component/DeleteBulkGroupModal';
 
 
 
@@ -26,16 +28,9 @@ function GroupList() {
   //group filter
   const [groupDataFiltering,setGroupDataFiltering] = useState([]);
 
-  //filter
-  const [filter,setFilter] = useState("");
-  const onFilterChange = (e) => (setFilter(e.target.value));
-  const onFilterClick = (e) => setGroupDataFiltering(groupData.filter(d=>d.groupName.toUpperCase().includes(filter.toUpperCase())));
-  const onFitlerReset = (e) => {
-    setGroupDataFiltering(groupData);
-  }
-
+  //get data
   useEffect(()=>{
-    axios.get(apiConfig.groupSelect)
+    axios.get(apiConfig.groupSelectList)
     .then(function (response) {
         console.log(response.data);
         setGroupData(response.data);
@@ -47,6 +42,31 @@ function GroupList() {
     });
   },[]);
 
+  //select(for update.delete)
+  const [select,setSelect] = useState([]);
+  const onSelect = (id,checked) => {
+    if(checked===true){
+      setSelect([...select,id])
+    }
+    if(checked===false){ 
+      setSelect(select.filter(d=>d!=id));
+    }
+  };
+
+  useEffect(() => {
+    //교집합
+    setSelect(select.filter(x => groupDataFiltering.map(d=>d.id).includes(x)));
+  },[groupDataFiltering]);
+
+  //filter
+  const [filter,setFilter] = useState("");
+  const onFilterChange = (e) => (setFilter(e.target.value));
+  const onFilterClick = (e) => setGroupDataFiltering(
+    groupData.filter(
+      d=>d.groupName.toUpperCase().includes(filter.toUpperCase()) ));
+  const onFitlerReset = (e) => {
+    setGroupDataFiltering(groupData);
+  }
 
 
   return (
@@ -59,19 +79,18 @@ function GroupList() {
 
         <CCol className='mt-3 mb-3'>
           <CForm className="row">
-            <CCol className="col-sm-2">
+            <CCol className="col-sm-4">
               <MakeGroupModal/>
-            </CCol>
-            <CCol className="col-sm-2">
-              <CButton color="danger" variant="outline">
-                  그룹 삭제
-              </CButton>
+              {select.length == 0?
+                  <DeleteBulkNotGroupModal reason="하나 이상을 선택해주세요"/>
+                  :<DeleteBulkGroupModal deleteList={select}/>
+              }
             </CCol>
             <CCol className="col-sm-4">
             </CCol>
             <CCol className="col-sm-4">
               <CInputGroup>
-                <CFormInput type="text" onChange={onFilterChange}/>
+                <CFormInput type="text" placeholder="이름 검색" onChange={onFilterChange} />
                 <CButton color="danger" variant="outline" onClick={onFitlerReset}>초기화</CButton>
                 <CButton variant="outline" onClick={onFilterClick}>검색</CButton>
               </CInputGroup>
@@ -89,7 +108,7 @@ function GroupList() {
                   //<GroupCard key={1} groupName={"데이터 못 갖고오는중~"} groupDescription={"아직없어"}/>
                   : groupDataFiltering.length === 0
                     ?<ErrorComponent log={"검색한 결과가 없어요"}/> 
-                    :groupDataFiltering.map((d)=>(<GroupCard key={d.id} id={d.id} groupName={d.groupName} groupDescription={"아직없어"}/>))} 
+                    :groupDataFiltering.map((d)=>(<GroupCard key={d.id} id={d.id} groupName={d.groupName} groupDescription={d.description} regDt={d.regDt} modDt={d.regDt} addressCount={d.addressCount} onSelect={onSelect}/>))} 
               </CRow>
             </CCardBody>
           </CCard>

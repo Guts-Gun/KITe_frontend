@@ -22,10 +22,19 @@ import CopyGroupModal from './CopyGroupModal';
 import UpdateGroupModal from './UpdateGroupModal';
 import DeleteGroupModal from './DeleteGroupModal';
 
-function GroupCard({id,groupName,groupDescription}){
+function GroupCard({id,groupName,groupDescription,regDt,modDt,addressCount,onSelect}){
   const [visibleCopy, setVisibleCopy] = useState(false);  
   const [visibleUpdate, setVisibleUpdate] = useState(false); 
   const [visibleDelete, setVisibleDelete] = useState(false); 
+
+  const onCheck = (e,id) =>{
+    onSelect(id,e.target.checked);
+  }
+
+  const onlyDate = (d) => {
+    const date = new Date(d);
+    return date.getFullYear() + ". " + date.getMonth()+1 + ". " + date.getDate();
+  }
     return(
         <CCol className = 'mb-4' xs={12} sm = {6} md = {4}>
             <CCard>
@@ -33,7 +42,7 @@ function GroupCard({id,groupName,groupDescription}){
                 <CCardTitle>
                   <CRow className="mb-3">
                     <CCol lg={10}>
-                      <CFormCheck id="flexCheckDefault"/>
+                      <CFormCheck onChange={(e)=>onCheck(e,id)}/>
                       <span className="ms-2">{groupName}</span>
                     </CCol>
                     <CCol lg={2} className="text-end">
@@ -43,10 +52,10 @@ function GroupCard({id,groupName,groupDescription}){
                         </CDropdownToggle>
                         <CDropdownMenu>
                           <CDropdownItem onClick={()=>setVisibleCopy(true)}>복사</CDropdownItem>
-                          <CopyGroupModal  id={id} name={groupName} visible={visibleCopy} setVisible={setVisibleCopy}/>
+                          <CopyGroupModal  id={id} name={groupName} description={groupDescription} visible={visibleCopy} setVisible={setVisibleCopy}/>
 
                           <CDropdownItem onClick={()=>setVisibleUpdate(true)}>수정</CDropdownItem>
-                          <UpdateGroupModal id={id} name={groupName} visible={visibleUpdate} setVisible={setVisibleUpdate}/>
+                          <UpdateGroupModal id={id} name={groupName} description={groupDescription} visible={visibleUpdate} setVisible={setVisibleUpdate}/>
                           
                           <CDropdownItem onClick={()=>setVisibleDelete(true)}>삭제</CDropdownItem>
                           <DeleteGroupModal id={id} name={groupName} visible={visibleDelete} setVisible={setVisibleDelete}/>
@@ -58,9 +67,9 @@ function GroupCard({id,groupName,groupDescription}){
                 </CCardTitle>
               </CCardBody>
               <CListGroup flush>  
-                <CListGroupItem>인원 수 : 2000</CListGroupItem>
-                <CListGroupItem>생성일 : 2022.03.21</CListGroupItem>
-                <CListGroupItem>수정일 : 2022.03.25</CListGroupItem>
+                <CListGroupItem>인원 수 : {addressCount}</CListGroupItem>
+                <CListGroupItem>생성일 : {onlyDate(regDt)}</CListGroupItem>
+                <CListGroupItem>수정일 : {onlyDate(modDt)}</CListGroupItem>
               </CListGroup>
               <CCardBody>
                 <CRow>
@@ -72,12 +81,18 @@ function GroupCard({id,groupName,groupDescription}){
             </CCard>
         </CCol> 
   )
-  }
+}
+
+
 
 GroupCard.propTypes = {
     id : PropTypes.number,
     groupName : PropTypes.string,
     groupDescription : PropTypes.string,
+    regDt : PropTypes.string,
+    modDt : PropTypes.string,
+    addressCount : PropTypes.number,
+    onSelect : PropTypes.func
 };
 
 

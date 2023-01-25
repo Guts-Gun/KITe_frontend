@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
 
-function CopyGroupModal({id,name,visible,setVisible}) {
+function CopyGroupModal({id,name,description,visible,setVisible}) {
   const [form, setForm] = useState({ id: id, groupName: "" });
   const onChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -55,12 +55,29 @@ function CopyGroupModal({id,name,visible,setVisible}) {
               <CFormInput name="groupName" feedbackInvalid="이름 값은 필수입니다!" required onChange={onChange}/>
             </div>
           </CRow>
+          <CRow className="mb-3">
+            <CFormLabel htmlFor="staticEmail">
+              선택한 그룹 설명
+            </CFormLabel>
+            <div className="col-sm-10">
+              <CFormInput placeholder={description} disabled/>
+            </div>
+          </CRow>
+          <CRow className="mb-3">
+            <CFormLabel htmlFor="inputPassword">
+              복사 할 그룹 설명
+            </CFormLabel>
+            <div className="col-sm-10">
+              <CFormInput name="description" onChange={onChange}/>
+            </div>
+          </CRow>
           <CRow>
-            <CCol className="mt-3">
+            <CCol xs={7}></CCol>
+            <CCol xs={5} className="mt-3">
               <CButton color="secondary" onClick={() => setVisible(false)}>
                 Close
               </CButton>
-              <CButton color="success" type="submit">그룹 수정</CButton>
+              <CButton color="success" type="submit">그룹 복사</CButton>
             </CCol>
           </CRow>
         </CForm>
@@ -73,6 +90,7 @@ function CopyGroupModal({id,name,visible,setVisible}) {
 CopyGroupModal.propTypes = {
   id:PropTypes.number,
   name:PropTypes.string,
+  description : PropTypes.string,
   visible:PropTypes.bool,
   setVisible:PropTypes.func
 };
