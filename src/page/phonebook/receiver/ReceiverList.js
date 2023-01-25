@@ -1,29 +1,138 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect} from 'react'
 import {
   CButton,
   CFormSelect,
   CFormInput,
-  CForm,
   CInputGroup,
   CRow,CCol,
   CCard,CCardHeader,CCardBody,
   CTable,
   CTableBody,
-  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CFormCheck,
   CPagination,CPaginationItem,
   CFormLabel,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter
 } from '@coreui/react'
 
+
+import {useSearchParams,useNavigate } from "react-router-dom";
+
+
+import { PhoneTableRow } from './Component/PhoneTableRow'
+import ErrorComponent from 'src/component/error/ErrorComponent';
+import axios from 'axios';
+import apiConfig from 'src/lib/apiConfig';
+import { PhoneBookDeleteModal } from './Component/PhoneBookDeleteModal';
+import { PhoneBookNotDeleteModal } from './Component/PhoneBookNotDeleteModal';
+
+
+let paramUrl;
 function ReceiverList() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const email = searchParams.get("email");
+  const phone = searchParams.get("phone");
+  const page = searchParams.get('page');
+
+  const navigate = useNavigate();
+
+
+  //group get
+  const [phoneBookData,setPhoneBookData] = useState([]);
+
+  //get data
+  useEffect(()=>{
+    if(name===null && email ==null && phone==null){
+      paramUrl = "/receiverList?"+"page=";
+      axios.get(apiConfig.phoneBookSelect,{params :{page:page}})
+      .then(function (response) {
+          console.log(response.data);
+          setPhoneBookData(response.data);
+      }).catch(function (error) {
+          // 오류발생시 실행
+      }).then(function() {
+          // 항상 실행
+      });
+    }
+    else{
+      if(name!=null){
+        paramUrl = "/receiverList?"+"name="+name+"&page=";
+        axios.get(apiConfig.phoneBookSelectFilter,{params :{name:name,page:page}})
+        .then(function (response) {
+            console.log(response.data);
+            setPhoneBookData(response.data);
+        }).catch(function (error) {
+            // 오류발생시 실행
+        }).then(function() {
+            // 항상 실행
+        });
+      }
+      if(phone!=null){
+        paramUrl = "/receiverList?"+"phone="+phone+"&page=";
+        axios.get(apiConfig.phoneBookSelectFilter,{params :{phone:phone,page:page}})
+        .then(function (response) {
+            console.log(response.data);
+            setPhoneBookData(response.data);
+        }).catch(function (error) {
+            // 오류발생시 실행
+        }).then(function() {
+            // 항상 실행
+        });
+      }
+      if(email!=null){
+        paramUrl = "/receiverList?"+"email="+email+"&page=";
+        axios.get(apiConfig.phoneBookSelectFilter,{params :{email:email,page:page}})
+        .then(function (response) {
+            console.log(response.data);
+            setPhoneBookData(response.data);
+        }).catch(function (error) {
+            // 오류발생시 실행
+        }).then(function() {
+            // 항상 실행
+        });
+      }
+    }
+  },[]);
+
+  //select
+  const [select,setSelect] = useState([]);
+  const onSelect = (id,checked) => {
+    if(checked===true){
+      setSelect([...select,id])
+    }
+    if(checked===false){ 
+      setSelect(select.filter(d=>d!=id));
+    }
+  };
+
+  //filter  
+  const [filterType,setFilterType] = useState("phone");
+  const [filterValue,setFilterValue] = useState("");
+
+  const onFilterTypeChange = (e) => (setFilterType(e.target.value));
+  const onFilterValueChange = (e) => (setFilterValue(e.target.value));
+  const onFilterSumbit = (e)=>{
+    navigate("/receiverList?"+filterType+"="+filterValue+"&page=0");
+    window.location.reload();
+  };
+  const onFilterReset = () => {
+    navigate("/receiverList?"+"page=0");
+    window.location.reload();
+  };
+
+  console.log(paramUrl);
+  //pagination
+  const pagenationLimit = 5;
+  const onClickPagination = (num) => {
+    console.log(num);
+    console.log(paramUrl+num);
+    navigate(paramUrl+num);
+    window.location.reload();
+  }
+
+
+  
   return (
     <div>
       <CCard className="m-4">
@@ -32,11 +141,73 @@ function ReceiverList() {
         </CCardHeader>
         <CCardBody>
           <CRow className="mt-3 mb-3">
-            <Menu />
+            <CRow className="mb-3">
+              <CRow>
+                <CCol className="col-sm-2"> 
+                  <CFormLabel>필터</CFormLabel>
+                </CCol>
+                <CCol className="col-sm-10"> 
+                <CInputGroup>
+                    <CFormSelect onChange={onFilterTypeChange}>
+                      <option value="phone">번호</option>
+                      <option value="name">이름</option>
+                      <option value="email">이메일</option>
+                      </CFormSelect>
+                    <CFormInput type="text"  onChange={onFilterValueChange}/>
+                    <CButton color="danger" variant="outline" onClick={onFilterReset}>초기화</CButton>
+                    <CButton variant="outline" onClick={onFilterSumbit}>검색</CButton>
+                </CInputGroup>
+                </CCol>
+              </CRow>
+            </CRow>
+            <CRow>
+              <CCol className="col-sm-2"> 
+                <CFormLabel>변경</CFormLabel>
+              </CCol>
+              <CCol className="col-sm-2"> 
+              {select.length == 0?
+                  <PhoneBookNotDeleteModal reason="하나 이상을 선택해주세요"/>
+                  :<PhoneBookDeleteModal deleteList={select}/>
+              }
+              </CCol>
+            </CRow>
           </CRow>
           <CRow className="mt-3 mb-3">
             <CFormLabel className="mt-3 mb-3">주소록</CFormLabel>
-            <List/>
+            <CRow className="mb-3">
+            <CTable>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
+                  <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {phoneBookData.length===0 
+                  ?<ErrorComponent log={"데이터가 없어요"}/>
+                  :phoneBookData.map(d=> <PhoneTableRow key={d.userAddressId} id={d.userAddressId} name={d.name} email={d.email} phone={d.phone} groupList={d.groupList} onSelect={onSelect}/> ) 
+                } 
+              </CTableBody>
+            </CTable>
+            </CRow>
+          </CRow>
+          <CRow className="mb-3 justify-content-center">
+            <CCol lg={12}>
+              <CPagination align="center" aria-label="Page navigation example">
+                {parseInt(page)-1===-1?
+                null
+                :<CPaginationItem onClick={()=>onClickPagination(parseInt(page)-1)} >{parseInt(page)}</CPaginationItem>
+                }
+                <CPaginationItem onClick={()=>onClickPagination(parseInt(page))}>{parseInt(page)+1}</CPaginationItem>
+                {phoneBookData.length < pagenationLimit?
+                null
+                :<CPaginationItem onClick={()=>onClickPagination(parseInt(page)+1)}>{parseInt(page)+2}</CPaginationItem>
+                }
+              </CPagination>
+            </CCol>
           </CRow>
         </CCardBody>
     </CCard>
@@ -45,163 +216,4 @@ function ReceiverList() {
 }
 export default ReceiverList
 
-function Menu() {
-  return (
-    <div>
-      <CRow className="mb-3">
-        <CRow>
-          <CCol className="col-sm-2"> 
-            <CFormLabel >필터</CFormLabel>
-          </CCol>
-          <CCol className="col-sm-3"> 
-            <CInputGroup>
-              <CFormSelect>
-                <option value="Phone">그룹1</option>
-                <option value="Phone">그룹2</option>
-              </CFormSelect>
-            </CInputGroup>
-          </CCol>
-          <CCol className="col-sm-7"> 
-          <CInputGroup>
-              <CFormSelect>
-                <option value="Phone">번호</option>
-                <option value="Name">이름</option>
-                <option value="Name">이메일</option>
-                </CFormSelect>
-              <CFormInput type="text"/>
-              <CButton variant="outline" >검색</CButton>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-      </CRow>
-      <CRow>
-        <CCol className="col-sm-2"> 
-          <CFormLabel>변경</CFormLabel>
-        </CCol>
-        <CCol className="col-sm-2"> 
-        <GroupMoveModal/>
-        </CCol>
-        <CCol className="col-sm-2"> 
-        <CButton color="danger" variant="outline">삭제</CButton>
-        </CCol>
-      </CRow>
-    </div>
-  )
-}
-function GroupMoveModal(){
-  const [visible, setVisible] = useState(false)
-  return (
-    <>
-      <CButton color="info" variant="outline" onClick={() => setVisible(!visible)}>그룹 이동</CButton>
-      <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
-        <CModalHeader>
-          <CModalTitle>그룹 이동</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <CRow className="mb-3">
-            <CFormLabel htmlFor="inputPassword">
-              이전 그룹
-            </CFormLabel>
-            <CInputGroup>
-              <CFormInput 
-                placeholder="그룹1"
-                disabled/>
-            </CInputGroup>
-          </CRow>
-          <CRow className="mb-3">
-            <CFormLabel htmlFor="staticEmail">
-              이동할 그룹
-            </CFormLabel>
-            <CInputGroup>
-              <CFormSelect>
-                <option value="Phone">안</option>
-                <option value="Phone">뇽</option>
-                <option value="Phone">뇽</option>
-              </CFormSelect>
-            </CInputGroup>
-          </CRow>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setVisible(false)}>
-            Close
-          </CButton>
-          <CButton color="info">그룹 이동</CButton>
-        </CModalFooter>
-      </CModal>
-    </>
-  )
-}
 
-function List() {
-  return (
-    <div>
-      <CRow className="mb-3">
-        <CTable>
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col"></CTableHeaderCell>
-              <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-              <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
-              <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
-              <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            <CTableRow>
-              <CTableHeaderCell scope="row">
-                <CFormCheck id="flexCheckDefault"/>
-              </CTableHeaderCell>
-              <CTableDataCell>김세빈</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell scope="row">
-                <CFormCheck id="flexCheckDefault"/>
-              </CTableHeaderCell>
-              <CTableDataCell>고솔비</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell scope="row">
-                <CFormCheck id="flexCheckDefault"/>
-              </CTableHeaderCell>
-              <CTableDataCell>이지용</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell scope="row">
-                <CFormCheck id="flexCheckDefault"/>
-              </CTableHeaderCell>
-              <CTableDataCell>박윤재</CTableDataCell>
-              <CTableDataCell>010-1234-1234</CTableDataCell>
-              <CTableDataCell>ksbpgsue21@gmail.com</CTableDataCell>
-              <CTableDataCell>가천대</CTableDataCell>
-            </CTableRow>
-          </CTableBody>
-        </CTable>
-      </CRow>
-      
-      <CRow className="mb-3 justify-content-center">
-        <CCol lg={12}>
-          <CPagination align="center" aria-label="Page navigation example">
-            <CPaginationItem aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </CPaginationItem>
-            <CPaginationItem>1</CPaginationItem>
-            <CPaginationItem>2</CPaginationItem>
-            <CPaginationItem>3</CPaginationItem>
-            <CPaginationItem aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </CPaginationItem>
-          </CPagination>
-        </CCol>
-      </CRow>
-    </div>
-  )
-}

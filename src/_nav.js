@@ -106,7 +106,7 @@ const _nav = [
       {
         component: CNavItem,
         name: '주소록 리스트',
-        to: '/receiverList',
+        to: '/receiverList'+"?page=0",
       },
     ],
   },
