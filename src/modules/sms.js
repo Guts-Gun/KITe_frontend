@@ -2,7 +2,8 @@ import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, { createRequestActionTypes} from '../lib/createRequestSaga';
 import { delay, put, takeLatest, select, throttle } from 'redux-saga/effects';
 import moment from 'moment';
-
+import * as smsAPI from '../lib/api/sms';
+import { detach } from 'redux-saga';
 
 const INITIALIZE_FORM = 'sms/initialize_form';          // 초기화
 const ADD_RECEIVER = 'sms/add_receiver';                // 수신자 추가
@@ -18,6 +19,9 @@ const EDIT_SENDREPLACEMEMT = 'sms/eidt_sendreplace';    // 대채발송 여부 �
 const EDIT_BROKERTYPE = 'sms/edit_brokertype';          // 중계사 비율 타입 수정
 const EDIT_BROKERRATIO = 'sms/edit_brokerratio';        // 중계사 비율 설정
 
+const [EDIT_BROKER, BROKERLIST] = createRequestActionTypes('sms/edit_brokerlist');  // 중계사 리스트
+
+  
 
 export const initializeForm = createAction(INITIALIZE_FORM);
 
@@ -56,9 +60,15 @@ export const editBrokerType = createAction(EDIT_BROKERTYPE,({value, name}) => ({
 export const editBrokerRatio = createAction(EDIT_BROKERRATIO,({value, name}) => ({
     value, name
 }));
+export const editBrokerList = createAction(EDIT_BROKER);
 
+
+
+const brokerSaga = createRequestSaga(EDIT_BROKER, smsAPI.brokerList);
 export function* smsSaga() {
+    yield takeLatest(EDIT_BROKER, brokerSaga);
 }
+
 
 const initialState = {
     receiverList : [],                      // name 수신자 이름
@@ -69,7 +79,7 @@ const initialState = {
         reservDate : null,                  // 예약 날짜
         reservTime : null,                  // 예약 시간
         reservationTime : null,             // 예약 날짜 시간
-        sendingRuleType : "CUSTOM",         // 중계사 비율 타입
+        sendingRuleType : "SPEED",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
         totalSending : 0,                   // 총 메세지 개수
@@ -156,6 +166,23 @@ const sms = handleActions({
         console.log(state);
         return { ...state}    
     },
+
+
+    [BROKERLIST]: (state, { payload: pl }) => {
+        let brokerList = [];
+        pl.map(function(data) {
+            brokerList.push({
+                brokerId : data.id,
+                weight : Math.round(100/pl.length),
+                name : data.name,
+                price : data.price,
+                speed : data.speed
+            });
+        });
+        state.brokerList = brokerList;
+        return { ...state} 
+    },
+    
 
   },
   initialState

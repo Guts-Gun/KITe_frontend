@@ -93,7 +93,6 @@ const SelectReceiver = (prop) => {
     const [groupData, setGroupData] = useState([]);
     useEffect(()=>{
       axios.get(apiConfig.groupSelectList).then(function (response) {
-        console.log(response.data);
           setGroupData(response.data);
       }).catch(function (error) {
       }).then(function() {

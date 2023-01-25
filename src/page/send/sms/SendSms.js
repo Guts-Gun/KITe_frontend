@@ -58,6 +58,7 @@ const SendSms = () => {
 
   useEffect(() => {
     dispatch(smsAction.initializeForm());
+    dispatch(smsAction.editBrokerList());
   }, []);
 
 
@@ -89,7 +90,6 @@ const SendSms = () => {
   function deleteReceiver(phone) {
     dispatch(smsAction.deleteReceiver({phone}));
   }
-
 
   // 수신자 초기화
   function deleteAllReceiver() {
@@ -251,7 +251,7 @@ const SendSms = () => {
              
               </CCol>
             </CRow>
-            <SelectBroker/>
+            <SelectBroker brokerList = {brokerList} sendingRuleType={sending.sendingRuleType}/>
             
           </CForm>
         </CCardBody>
