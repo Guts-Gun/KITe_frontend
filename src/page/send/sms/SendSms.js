@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useRef, useEffect, useState} from 'react'
 import {
   CButton,
   CCard, CCardBody, CCardHeader, CCardFooter,
@@ -22,6 +22,10 @@ import {
   COffcanvasTitle,
   CCloseButton,
   COffcanvasBody,
+  CToast,
+  CToastHeader,
+  CToastBody,
+  CToastClose,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
@@ -32,10 +36,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as smsAction from "../../../modules/sms";
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
-import usePromise from 'src/lib/usePromise';
+import { useNavigate } from 'react-router-dom';
+import Loading from 'src/lib/Loading/Loading';
+import { auth } from 'src/modules/auth';
+
 
 
 const SendSms = () => {
+  
+  const { auth } = useSelector(({auth})=> ({auth:auth}));
+  var headers =null;
+  if (auth != null) {
+    const accessToken = auth.accesstoken;
+    headers = {'Authorization': 'Bearer ' + accessToken };
+  }
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false); // 대기
 
 
   const dispatch = useDispatch();
@@ -47,20 +65,58 @@ const SendSms = () => {
     replaceSender : sms.replaceSender,
     brokerList : sms.brokerList,
   }));
-
-  
-  // const test=useSelector(state=>state.sms.sendingDto.content)
-  // console.log(test)
-
   
   // 메뉴얼 보기
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(smsAction.initializeForm());
-    dispatch(smsAction.editBrokerList());
+    dispatch(smsAction.initializeForm()); // 초기화
+    dispatch(smsAction.editBrokerList()); // 중계사 리스트
   }, []);
 
+
+  const [toast, addToast] = useState(0);
+  const toaster = useRef();
+
+  const messageToast = (text) => (
+    <CToast>
+      <CToastHeader closeButton>
+        <strong className="me-auto"></strong>
+        {/* <small>7 min ago</small> */}
+      </CToastHeader>
+      <CToastBody>{ text }</CToastBody>
+    </CToast>
+  );
+
+
+  
+  // 발송 요청
+ function onclickSend(){
+
+  const body = {
+    receiverList : receiverList,
+    sendingDTO : sending,
+    reservYn : reservYn,
+    sender : sender,
+    replaceSender :replaceSender,
+    brokerList : brokerList,
+  };
+  console.log(body);
+  setLoading(true);
+    try {
+      axios.post(apiConfig.sendRequest, body, {headers: headers})
+        .then((response) => {
+          addToast(messageToast("발송 요청 완료"));
+          // navigate('/resultList');
+        })
+      .catch(function (error) {
+      }).then(function() {
+        setLoading(false);
+      });
+    } catch (e){
+      setLoading(false);
+    }
+};
 
 
   // 내용 수정
@@ -69,22 +125,17 @@ const SendSms = () => {
     dispatch(smsAction.editContent( { value, name }));
   }
 
-
   // 수신자 추가
   function addReceiver(name, phone, email) {
     console.log(name, phone, email);
     dispatch(smsAction.addReceiver( { name, phone, email }));
   }
 
-
-    // 수신자 일괄 추가
-    function addReceivers(arr) {
-      console.log(arr);
-      dispatch(smsAction.addReceivers({arr}));
-    }
-  
-
-
+  // 수신자 일괄 추가
+  function addReceivers(arr) {
+    console.log(arr);
+    dispatch(smsAction.addReceivers({arr}));
+  }
 
   // 수신자 삭제
   function deleteReceiver(phone) {
@@ -97,30 +148,49 @@ const SendSms = () => {
   }
 
 
-  // 전송시간 - 예약발송여부
-  const [sendReserv, setSendReserv] = useState(false);
-
   // 예약발송 스위치
   function changeSwitch(e){ 
     const checked = e.target.checked;
-    setSendReserv(checked);
+    dispatch(smsAction.editReservation({checked}));
   };
   
-  // 
-  const [sendReplace, setSendReplace] = useState(false);
+  
+  // 발신번호
+  const [senderPhoneList, setSenderPhoneList] = useState([]);
+  useEffect(()=>{
+    axios.get(apiConfig.phoneSelect).then(function (response) {
+      setSenderPhoneList(response.data);
+    }).catch(function (error) {
+    }).then(function() {
+    });
+  },[]);
+
+  // 발신번호 선택
+  function changeSenderPhone(e){
+    const value = e.target.value;
+    dispatch(smsAction.editSender({value}));
+  }
+
 
   // 대체발송 스위치
   function changeSendReplaceSwitch(e){ 
     const checked = e.target.checked;
-    setSendReplace(checked);
+    dispatch(smsAction.editSenderReplace({checked}));
   };
 
   // 템플릿
-  const [template, setTemplate] = useState(null);
+  const [template, setTemplate] = useState("");
   
+  // 중계사 비율 타입 수정
+  function editSendingRuleType(value){
+    console.log(value);
+    dispatch(smsAction.editSendingRuleType({value}));
+  }
   
+
   return (
     <>
+    { loading?  <Loading /> : <>
       <COffcanvas placement="end" visible={visible} onHide={() => setVisible(false)}>
         <COffcanvasHeader>
           <COffcanvasTitle>SMS/MMS 발송 매뉴얼</COffcanvasTitle>
@@ -157,7 +227,7 @@ const SendSms = () => {
               <CFormLabel className="col-sm-2">전송 시간</CFormLabel>
               <CCol xs={10}>
                   <CFormSwitch label="예약 발송" id="reserv_send" onChange={changeSwitch}/>
-                  {sendReserv? (<> <CRow>
+                  {reservYn == "Y" ? (<> <CRow>
                       <CCol xs={6}>
                         <CFormInput type="date"/>
                     </CCol>
@@ -171,10 +241,11 @@ const SendSms = () => {
               <CFormLabel className="col-sm-2">발신 번호</CFormLabel>
               <CCol xs={10}>
                  <CInputGroup className="mb-1">
-                  <CFormSelect>
+                  <CFormSelect onChange={(e) => changeSenderPhone(e)}>
                         <option value="">선택</option>
-                        <option value="0101111111">010-1111-1111</option>
-                        <option value="01040109537">010-4010-9537</option>
+                        { senderPhoneList.map((senderPhone)=>(
+                            <option key={senderPhone.id} value={senderPhone.phone}>{senderPhone.phone} </option>
+                        ))}
                       </CFormSelect>
                 </CInputGroup>
               </CCol>
@@ -183,7 +254,7 @@ const SendSms = () => {
             <CFormLabel className="col-sm-2">대체발송</CFormLabel>
               <CCol xs={10}>
                 <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSendReplaceSwitch}/>
-                {sendReplace ? 
+                {sending.replaceYn == "Y" ? 
                 (<CInputGroup className="mb-1">
                 <CFormSelect>
                         <option value="">선택</option>
@@ -210,9 +281,7 @@ const SendSms = () => {
                   
                     <CRow className="mb-1">
                       <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
-                        <option value="" disabled>내용 템플릿 선택</option>
-                        <option value="0101111111">템플릿1</option>
-                        <option value="01040109537">템플릿2</option>
+                        <option value="" >내용 템플릿 선택</option>
                       </CFormSelect>
                     </CRow>
                     <CRow>
@@ -251,21 +320,25 @@ const SendSms = () => {
              
               </CCol>
             </CRow>
-            <SelectBroker brokerList = {brokerList} sendingRuleType={sending.sendingRuleType}/>
+            <SelectBroker 
+            brokerList = {brokerList} 
+            sendingRuleType={sending.sendingRuleType}
+            editSendingRuleType = {editSendingRuleType}/>
             
           </CForm>
         </CCardBody>
 
         <CCardFooter>
           <CCol lg={12} className="text-end">
-            <CButton color="success" variant="outline">
+            <CButton color="success" variant="outline" onClick={onclickSend}>
               발송하기 
             </CButton>
           </CCol>
         </CCardFooter>
-      </CCard>
+      </CCard> 
+      </>
+       }
     </>
-
   )
 }
 

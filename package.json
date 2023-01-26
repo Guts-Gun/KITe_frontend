@@ -48,6 +48,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.1",
     "simplebar-react": "^2.4.1",
+    "styled-components": "^5.3.6",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

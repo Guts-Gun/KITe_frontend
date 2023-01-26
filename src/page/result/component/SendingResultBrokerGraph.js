@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CCard, CCardBody, CCardHeader, CCol, CRow} from "@coreui/react";
 import {CChartBar, CChartDoughnut} from "@coreui/react-chartjs";
-import PropTypes from "prop-types";
+import PropTypes, {object} from "prop-types";
 import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 
@@ -105,6 +105,7 @@ function SendingResultBrokerGraph({sendingId}) {
   }, []);
 
 
+
   return (
     <div>
       <CRow>
@@ -135,26 +136,27 @@ function SendingResultBrokerGraph({sendingId}) {
 
 
         {/*여기도 고민하기*/}
-        {/*<CCol xs={4}>*/}
-        {/*  <CCard className="mb-4">*/}
-        {/*    <CCardHeader>전송 상황</CCardHeader>*/}
-        {/*    <CCardBody>*/}
-        {/*      <CChartBar*/}
-        {/*        data={{*/}
-        {/*          labels: sendingResultBroker.brokerSuccessFail.Name,*/}
-        {/*          datasets: [*/}
-        {/*            {*/}
-        {/*              label: 'Count',*/}
-        {/*              backgroundColor: '#f87979',*/}
-        {/*              data: sendingResultBroker.brokerSuccessFail.data,*/}
-        {/*            },*/}
-        {/*          ],*/}
-        {/*        }}*/}
-        {/*        labels="months"*/}
-        {/*      />*/}
-        {/*    </CCardBody>*/}
-        {/*  </CCard>*/}
-        {/*</CCol>*/}
+        <CCol xs={4}>
+          <CCard className="mb-4">
+            <CCardHeader>전송 상황</CCardHeader>
+            <CCardBody>
+              <CChartBar
+                data={{
+                  labels: sendingResultBroker.brokerSuccessFail.name,
+                  datasets: [
+                    {
+                      label: 'Count',
+                      backgroundColor: '#f87979',
+                      data: sendingResultBroker.brokerSuccessFail.data,
+                    },
+                  ],
+                }}
+                labels="months"
+              />
+            </CCardBody>
+          </CCard>
+        </CCol>
+
         <CCol xs={4}>
           <CCard className="mb-4">
             <CCardHeader>속도</CCardHeader>

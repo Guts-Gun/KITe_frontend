@@ -24,7 +24,7 @@ import { cilMediaSkipForward, cilDollar } from '@coreui/icons';
 
 
 const SelectBroker = (prop) => {
-
+    console.log(prop.sendingRuleType);
 
     let ratioLabels = [];
     let ratioData = [];
@@ -34,12 +34,10 @@ const SelectBroker = (prop) => {
     });
 
     function changeSendingRuleType(sendingRuleType){
-
-
+        prop.editSendingRuleType(sendingRuleType);
     }
 
         // 중계사
-    const [brokerType, setBrokerType] = useState("1");
 
     const [brokerRatio1, setBrokerRatio1] = useState(20);
     const [brokerRatio2, setBrokerRatio2] = useState(15);
@@ -48,8 +46,13 @@ const SelectBroker = (prop) => {
     const [brokerRatio5, setBrokerRatio5] = useState(30);
 
     function changeBrokerType(e){
-    setBrokerType(e.target.value);
-    console.log(e.target.value);
+        console.log(e.target.value);
+        if(e.target.value == 1){
+            changeSendingRuleType("CUSTOM");
+        }else{
+            changeSendingRuleType(null);
+
+        }
     };
 
     function changeBrokerRatio(e){
@@ -61,10 +64,10 @@ const SelectBroker = (prop) => {
     <CRow className="mb-3">
     <CFormLabel className="col-sm-2">중계사 비율</CFormLabel>
     <CCol className="col-sm-10">
-            <CFormCheck inline type="radio" name="brokerType" id="brokerType1" value="1" label="중계사 비율 선택" defaultChecked onChange={(event)=>{changeBrokerType(event)}}/>
-            <CFormCheck inline type="radio" name="brokerType" id="brokerType2" value="2" label="추천 리스트" onChange={(event)=>{changeBrokerType(event)}}/>
+            <CFormCheck inline type="radio" name="brokerType" id="brokerType1" value="1" label="중계사 비율 선택" defaultChecked onClick={(event)=>{changeBrokerType(event)}}/>
+            <CFormCheck inline type="radio" name="brokerType" id="brokerType2" value="2" label="추천 리스트" onClick={(event)=>{changeBrokerType(event)}}/>
         
-        {brokerType === "1"? (<>
+        {prop.sendingRuleType == "CUSTOM"? (<>
             <CRow>
                 <CCol sm={12} md={8}>
                 <CTable>
@@ -80,12 +83,12 @@ const SelectBroker = (prop) => {
                     <CTableBody>
                         {
                         prop.brokerList.map((broker, index)=>(<>
-                            <CTableRow key={broker.brokerId}>
-                            <CTableHeaderCell scope="row">{broker.brokerId}</CTableHeaderCell>
-                            <CTableDataCell>{broker.name}</CTableDataCell>
-                            <CTableDataCell>{broker.price}</CTableDataCell>
-                            {/* <CTableDataCell>KT</CTableDataCell> */}
-                            <CTableDataCell><CFormInput id ={broker.brokerId} type="number" value={broker.weight} onChange={(e) => changeBrokerRatio(e)} /></CTableDataCell>
+                            <CTableRow key={"broker"+broker.brokerId}>
+                                <CTableHeaderCell scope="row">{broker.brokerId}</CTableHeaderCell>
+                                <CTableDataCell>{broker.name}</CTableDataCell>
+                                <CTableDataCell>{broker.price}</CTableDataCell>
+                                {/* <CTableDataCell>KT</CTableDataCell> */}
+                                <CTableDataCell><CFormInput id ={"broker_ck_"+broker.brokerId} type="number" value={broker.weight} onChange={(e) => changeBrokerRatio(e)} /></CTableDataCell>
                             </CTableRow>
                             </>
                         ))}
@@ -108,9 +111,7 @@ const SelectBroker = (prop) => {
                     }}/>
                 </CCol>
             </CRow>
-        </>):null}
-
-        { brokerType === "2"? (<>
+        </>): (<>
             <CRow className='mt-3'>
                 <CCol xs={6}>
                     <CWidgetStatsF
@@ -131,7 +132,7 @@ const SelectBroker = (prop) => {
                     value="가격 우선"/>
                 </CCol>
             </CRow>
-            </>):null}
+            </>)}
 
         </CCol>
     </CRow>
