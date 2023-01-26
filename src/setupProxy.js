@@ -16,6 +16,13 @@ module.exports = function(app) {
     })
   );
   app.use(
+    '/auth',
+    createProxyMiddleware( {
+      target: 'http://localhost:8007',
+      changeOrigin: true,
+    })
+  );
+  app.use(
     '/request',
     createProxyMiddleware( {
       target: 'http://localhost:8011',
