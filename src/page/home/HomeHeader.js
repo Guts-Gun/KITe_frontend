@@ -27,8 +27,14 @@ const HomeHeader = () => {
       </div>
       <div className="header-menu">
         <Link onClick={()=>{ 
-          localStorage.getItem("email")!==null ? dispatch(initializeForm({})) : dispatch(login_modal({}))
-          localStorage.getItem("email")!==null ? localStorage.clear() : localStorage.length()
+          if(localStorage.getItem("email")){
+            dispatch(initializeForm({}))
+            localStorage.clear()
+            window.location.reload()
+          }
+          else{
+            dispatch(login_modal({}))
+          }
         }}>{localStorage.getItem("email") ? "로그아웃" : "로그인"}</Link>
       </div>
       { modal_mode && <LoginModal/> }

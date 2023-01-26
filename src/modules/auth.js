@@ -18,7 +18,7 @@ const initialState = {
     accesstoken : "",
     refreshtoken : "",
     email : "",
-    username : ""
+    username : "",
 };
 
 
