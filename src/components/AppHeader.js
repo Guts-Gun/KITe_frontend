@@ -16,11 +16,15 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
-import { logo } from 'src/assets/brand/logo'
+import { auth } from 'src/modules/auth';
+
 
 const AppHeader = () => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const sidebarShow = useSelector((state) => state.sidebarShow);
+  const { auth } = useSelector(({auth})=> ({auth:auth}));
+
+  console.log(auth.username);
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -47,8 +51,12 @@ const AppHeader = () => {
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
         </CHeaderNav>
+        <CHeaderNav>
+        { auth != null ? auth.username : <></>}
+        </CHeaderNav> 
         <CHeaderNav className="ms-3">
-          <AppHeaderDropdown />
+        {auth != null ? (
+          <AppHeaderDropdown />):null}
         </CHeaderNav>
       </CContainer>
       <CHeaderDivider />
