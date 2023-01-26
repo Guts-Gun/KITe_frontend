@@ -306,7 +306,11 @@ const SelectReceiver = (prop) => {
                                   onChange={(e) => changeCheckedStateGroupReceiver(index)}/>
                               </CTableHeaderCell>
                               <CTableDataCell>{groupReceiver.name}</CTableDataCell>
-                              <CTableDataCell>{groupReceiver.phone}</CTableDataCell>
+                              <CTableDataCell>
+                                {groupReceiver.phone.length ===10? groupReceiver.phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : 
+                                (groupReceiver.phone.length === 11? groupReceiver.phone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') 
+                                : groupReceiver.phone)}
+                                </CTableDataCell>
                               <CTableDataCell>{groupReceiver.email}</CTableDataCell>
                             </CTableRow>
                             ))} 
@@ -357,7 +361,11 @@ const SelectReceiver = (prop) => {
                                   onChange={(e) => changeCheckedStatePhoneReceiver(index)}/>
                               </CTableHeaderCell>
                               <CTableDataCell>{phoneAddress.name}</CTableDataCell>
-                              <CTableDataCell>{phoneAddress.phone}</CTableDataCell>
+                              <CTableDataCell>
+                                {phoneAddress.phone.length ===10? phoneAddress.phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : 
+                                (phoneAddress.phone.length === 11? phoneAddress.phone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') 
+                                : phoneAddress.phone)}
+                                </CTableDataCell>
                               <CTableDataCell>{phoneAddress.email}</CTableDataCell>
                             </CTableRow>
                             ))} 
