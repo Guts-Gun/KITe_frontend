@@ -17,6 +17,7 @@ import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 import PropTypes from "prop-types";
 import SendingResultDetailInfo from "./SendingResultDetailInfo";
+import MyPagination from "./MyPagination";
 
 export function ResultTxResultTable({sendingId}) {
 
@@ -175,8 +176,11 @@ export function ResultTxResultTable({sendingId}) {
     "numberOfElements": 6,
     "empty": false
   });
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
-    axios.get(apiConfig.resultSendingTxResult + "/" + sendingId + "/tx")
+    axios.get(apiConfig.resultSendingTxResult + "/" + sendingId + "/tx" + "?page=" + page + "&size=" + limit)
       .then(function (response) {
         console.log(response.data);
         setTxResultList(response.data);
@@ -186,7 +190,7 @@ export function ResultTxResultTable({sendingId}) {
     }).then(function () {
       // 항상 실행
     });
-  }, []);
+  }, [page]);
 
 
   return (
@@ -220,17 +224,8 @@ export function ResultTxResultTable({sendingId}) {
           </CRow>
           <CRow className="mb-3 justify-content-center">
             <CCol lg={12}>
-              <CPagination align="center" aria-label="Page navigation example">
-                <CPaginationItem aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </CPaginationItem>
-                <CPaginationItem>1</CPaginationItem>
-                <CPaginationItem>2</CPaginationItem>
-                <CPaginationItem>3</CPaginationItem>
-                <CPaginationItem aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </CPaginationItem>
-              </CPagination>
+              <MyPagination pagable={txResultList.pageable} totalPages={txResultList.totalPages} page={page}
+                            setPage={setPage} first={txResultList.first} last={txResultList.last}/>
             </CCol>
           </CRow>
         </CCol>
