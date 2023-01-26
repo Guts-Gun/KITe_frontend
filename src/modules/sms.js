@@ -8,7 +8,7 @@ import { detach } from 'redux-saga';
 const INITIALIZE_FORM = 'sms/initialize_form';          // 초기화
 const ADD_RECEIVER = 'sms/add_receiver';                // 수신자 추가
 const ADD_RECEIVERS = 'sms/add_receivers';              // 수신자 일괄 추가
-const DELETE_RECEIVER = 'sms/add_receiver';             // 수신자 삭제
+const DELETE_RECEIVER = 'sms/delete_receiver';             // 수신자 삭제
 const DELETE_ALLRECEIVER = 'sms/delete_allreceiver';    // 수신자 삭제
 const EDIT_SENDER = 'sms/edit_sender';                  // 발신번호 수정
 const EDIT_RESERVATION = 'sms/edit_reservation';        // 예약 여부 수정
@@ -38,8 +38,8 @@ export const deleteAllReceiver = createAction(DELETE_ALLRECEIVER);
 export const editSender = createAction(EDIT_SENDER,({value, name}) => ({
     value, name
 }));
-export const editReservation = createAction(EDIT_RESERVATION,({value, name}) => ({
-    value, name
+export const editReservation = createAction(EDIT_RESERVATION,({checked}) => ({
+    checked
 }));
 export const editReservDate = createAction(EDIT_RESERVDATE,({value, name}) => ({
     value, name
@@ -51,8 +51,8 @@ export const editReservTime = createAction(EDIT_RESERVTIME,({value, name}) => ({
 export const editContent = createAction(EDIT_CONTENT,( { value, name }) => ({
     value, name
 }));
-export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({value, name}) => ({
-    value, name
+export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({checked}) => ({
+    checked
 }));
 export const editBrokerType = createAction(EDIT_BROKERTYPE,({value, name}) => ({
     value, name
@@ -113,11 +113,12 @@ const sms = handleActions({
                 replace_receiver : pl.email,
             })
         }
+        console.log(state);
         return { ...state}
     },
 
-    [ADD_RECEIVERS] : (state, {payload: pl }) => {
 
+    [ADD_RECEIVERS] : (state, {payload: pl }) => {
         pl.arr.map(function(data) {
             let phoneTxt = '';
             if (data.phone.length === 10) {
@@ -126,7 +127,6 @@ const sms = handleActions({
             else if (data.phone.length === 11) {
                 phoneTxt = data.phone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
             }
-
             const receiver = {
                 name : data.name,
                 receiver : data.phone,
@@ -134,7 +134,6 @@ const sms = handleActions({
                 phone : phoneTxt,
                 email : data.email
             }
-
             let flag = true;
             state.receiverList.map(function(rdate) {
                 if(rdate.receiver == data.phone){
@@ -149,8 +148,9 @@ const sms = handleActions({
     },
 
     [DELETE_RECEIVER] : (state,{payload: pl }) => {
-        console.log(pl.phone);
-
+        state.receiverList = state.receiverList.filter(function(value, index) {
+            return value.receiver != pl.phone;
+        });
         return { ...state}    
     },
 
@@ -182,9 +182,23 @@ const sms = handleActions({
         state.brokerList = brokerList;
         return { ...state} 
     },
-    
 
-  },
+    [EDIT_RESERVATION]: (state, { payload: pl }) => {
+        state.reservYn =  pl.checked? "Y" : "N";
+        return { ...state} 
+    },
+
+
+    [EDIT_SENDREPLACEMEMT]: (state, { payload: pl }) => {
+        state.sendingDto.replaceYn = pl.checked? "Y" : "N";
+        return { ...state} 
+    },
+  
+
+
+
+
+},
   initialState
 );
 

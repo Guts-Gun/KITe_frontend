@@ -48,9 +48,6 @@ const SendSms = () => {
     brokerList : sms.brokerList,
   }));
 
-  
-  // const test=useSelector(state=>state.sms.sendingDto.content)
-  // console.log(test)
 
   
   // 메뉴얼 보기
@@ -62,13 +59,11 @@ const SendSms = () => {
   }, []);
 
 
-
   // 내용 수정
   function changeContent(e) {
     const { value, name } = e.target;
     dispatch(smsAction.editContent( { value, name }));
   }
-
 
   // 수신자 추가
   function addReceiver(name, phone, email) {
@@ -76,15 +71,11 @@ const SendSms = () => {
     dispatch(smsAction.addReceiver( { name, phone, email }));
   }
 
-
-    // 수신자 일괄 추가
-    function addReceivers(arr) {
-      console.log(arr);
-      dispatch(smsAction.addReceivers({arr}));
-    }
-  
-
-
+  // 수신자 일괄 추가
+  function addReceivers(arr) {
+    console.log(arr);
+    dispatch(smsAction.addReceivers({arr}));
+  }
 
   // 수신자 삭제
   function deleteReceiver(phone) {
@@ -97,26 +88,31 @@ const SendSms = () => {
   }
 
 
-  // 전송시간 - 예약발송여부
-  const [sendReserv, setSendReserv] = useState(false);
-
   // 예약발송 스위치
   function changeSwitch(e){ 
     const checked = e.target.checked;
-    setSendReserv(checked);
+    dispatch(smsAction.editReservation({checked}));
   };
   
-  // 
-  const [sendReplace, setSendReplace] = useState(false);
+  // 발신번호
+  const [senderPhoneList, setSenderPhoneList] = useState([]);
+  useEffect(()=>{
+    axios.get(apiConfig.phoneSelect).then(function (response) {
+      setSenderPhoneList(response.data);
+    }).catch(function (error) {
+    }).then(function() {
+    });
+  },[]);
 
   // 대체발송 스위치
   function changeSendReplaceSwitch(e){ 
     const checked = e.target.checked;
-    setSendReplace(checked);
+    dispatch(smsAction.editSenderReplace({checked}));
   };
 
   // 템플릿
-  const [template, setTemplate] = useState(null);
+  const [template, setTemplate] = useState("");
+  
   
   
   return (
@@ -157,7 +153,7 @@ const SendSms = () => {
               <CFormLabel className="col-sm-2">전송 시간</CFormLabel>
               <CCol xs={10}>
                   <CFormSwitch label="예약 발송" id="reserv_send" onChange={changeSwitch}/>
-                  {sendReserv? (<> <CRow>
+                  {reservYn == "Y" ? (<> <CRow>
                       <CCol xs={6}>
                         <CFormInput type="date"/>
                     </CCol>
@@ -173,8 +169,9 @@ const SendSms = () => {
                  <CInputGroup className="mb-1">
                   <CFormSelect>
                         <option value="">선택</option>
-                        <option value="0101111111">010-1111-1111</option>
-                        <option value="01040109537">010-4010-9537</option>
+                        { senderPhoneList.map((senderPhone)=>(
+                            <option key={senderPhone.id} value={senderPhone.id}>{senderPhone.phone} </option>
+                        ))}
                       </CFormSelect>
                 </CInputGroup>
               </CCol>
@@ -183,7 +180,7 @@ const SendSms = () => {
             <CFormLabel className="col-sm-2">대체발송</CFormLabel>
               <CCol xs={10}>
                 <CFormSwitch label="발송 실패 시 대체 플랫폼 발송 " id="formSwitchCheckChecked" onChange={changeSendReplaceSwitch}/>
-                {sendReplace ? 
+                {sending.replaceYn == "Y" ? 
                 (<CInputGroup className="mb-1">
                 <CFormSelect>
                         <option value="">선택</option>
@@ -210,9 +207,7 @@ const SendSms = () => {
                   
                     <CRow className="mb-1">
                       <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
-                        <option value="" disabled>내용 템플릿 선택</option>
-                        <option value="0101111111">템플릿1</option>
-                        <option value="01040109537">템플릿2</option>
+                        <option value="" >내용 템플릿 선택</option>
                       </CFormSelect>
                     </CRow>
                     <CRow>

@@ -80,12 +80,12 @@ const SelectBroker = (prop) => {
                     <CTableBody>
                         {
                         prop.brokerList.map((broker, index)=>(<>
-                            <CTableRow key={broker.brokerId}>
-                            <CTableHeaderCell scope="row">{broker.brokerId}</CTableHeaderCell>
-                            <CTableDataCell>{broker.name}</CTableDataCell>
-                            <CTableDataCell>{broker.price}</CTableDataCell>
-                            {/* <CTableDataCell>KT</CTableDataCell> */}
-                            <CTableDataCell><CFormInput id ={broker.brokerId} type="number" value={broker.weight} onChange={(e) => changeBrokerRatio(e)} /></CTableDataCell>
+                            <CTableRow key={"broker"+broker.brokerId}>
+                                <CTableHeaderCell scope="row">{broker.brokerId}</CTableHeaderCell>
+                                <CTableDataCell>{broker.name}</CTableDataCell>
+                                <CTableDataCell>{broker.price}</CTableDataCell>
+                                {/* <CTableDataCell>KT</CTableDataCell> */}
+                                <CTableDataCell><CFormInput id ={"broker_ck_"+broker.brokerId} type="number" value={broker.weight} onChange={(e) => changeBrokerRatio(e)} /></CTableDataCell>
                             </CTableRow>
                             </>
                         ))}

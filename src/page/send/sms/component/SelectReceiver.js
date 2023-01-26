@@ -103,52 +103,77 @@ const SelectReceiver = (prop) => {
     const [selectedGroupReceiver, setSelectedGroupReceiver] = useState([]);
     const [checkedStateGroupReceiver, setCheckedStateGroupReceiver] = useState([]);
 
+    // 그룹 선택
     function changeGroupId(id){ 
       console.log(id);
       axios.get(apiConfig.groupSelectDetail+"/"+id).then(function (response) {
         const list = response.data.addressList;
-        setSelectedGroupReceiver(response.data.addressList);
+        setSelectedGroupReceiver(list);
         setCheckedStateGroupReceiver(new Array(list.length).fill(true));
-        new Array(2).fill(false)
       }).catch(function (error) {
       }).then(function() {
       });
     }; 
 
+    //체크박스 change
     function changeCheckedStateGroupReceiver(index){
-
       let list = checkedStateGroupReceiver;
       list[index] = !list[index];
       setCheckedStateGroupReceiver(list);
-
-      console.log(checkedStateGroupReceiver);
     }
 
+    // 추가 버튼 클릭
     function clickAddCheckedGroupReceiver(){
       let checkedList = null;
       checkedList = selectedGroupReceiver.filter(function(value, index) {
-        return checkedStateGroupReceiver[index] != false;
-    });
-    
-    console.log(checkedList);
+        return checkedStateGroupReceiver[index] !== false;
+      });
+      console.log(checkedList);
+      prop.addReceivers(checkedList);
     }
   
     
     // 주소록검색_________________________________________________________________________________
     const [type, setType] = useState("phone");
     const [keyword, setKeyword] = useState("");
+
     const [searchPhoneReceiver, setSearchPhoneReceiver] = useState([]);
+    const [checkedStatePhoneReceiver, setCheckedStatePhoneReceiver] = useState([]);
 
-
+    // 검색 버튼 클릭
     function clickSearchPhoneAddress(){
-     
       axios.get(apiConfig.phoneBookSelectListFilter+"?" + type + "=" + keyword).then(function (response) {
-        setSearchPhoneReceiver(response.data);
+        const list = response.data;
+        setSearchPhoneReceiver(list);
+        setCheckedStatePhoneReceiver(new Array(list.length).fill(true));
+
       }).catch(function (error) {
       }).then(function() {
       });
     }
     
+    //체크박스 change
+    function changeCheckedStatePhoneReceiver(index){
+      let list = checkedStatePhoneReceiver;
+      list[index] = !list[index];
+      setCheckedStatePhoneReceiver(list);
+    }
+
+    // 추가 버튼 클릭
+    function clickAddCheckedPhoneReceiver(){
+      let checkedList = null;
+      checkedList = searchPhoneReceiver.filter(function(value, index) {
+        return checkedStatePhoneReceiver[index] !== false;
+      });
+    
+    console.log(checkedList);
+    prop.addReceivers(checkedList);
+
+    }
+  
+
+
+
 
    // 엑셀업로드__________________________________________________________________________________
 
@@ -274,8 +299,11 @@ const SelectReceiver = (prop) => {
                           selectedGroupReceiver.map((groupReceiver, index)=>(
                             <CTableRow key={"groupReceiver" + groupReceiver.userAddressId}>
                               <CTableHeaderCell scope="row">
-                              <CFormCheck id={"groupReceiverCK" + groupReceiver.userAddressId} defaultChecked value={checkedStateGroupReceiver[index]}
-                               onChange={(e) => changeCheckedStateGroupReceiver(index)}></CFormCheck>
+                                <CFormCheck 
+                                  id={"group_receiver_ck_" + groupReceiver.userAddressId} 
+                                  defaultChecked 
+                                  value={checkedStateGroupReceiver[index]}
+                                  onChange={(e) => changeCheckedStateGroupReceiver(index)}/>
                               </CTableHeaderCell>
                               <CTableDataCell>{groupReceiver.name}</CTableDataCell>
                               <CTableDataCell>{groupReceiver.phone}</CTableDataCell>
@@ -319,10 +347,14 @@ const SelectReceiver = (prop) => {
 
                         <CTableBody className='custom_height'>
                           {
-                          searchPhoneReceiver.map((phoneAddress)=>(
+                          searchPhoneReceiver.map((phoneAddress, index )=>(
                             <CTableRow key={phoneAddress.userAddressId}>
                               <CTableHeaderCell scope="row">
-                              <CFormCheck id={phoneAddress.userAddressId} defaultChecked/>
+                                <CFormCheck 
+                                  id={"search_phone_ck_" + phoneAddress.userAddressId} 
+                                  defaultChecked 
+                                  value={checkedStatePhoneReceiver[index]}
+                                  onChange={(e) => changeCheckedStatePhoneReceiver(index)}/>
                               </CTableHeaderCell>
                               <CTableDataCell>{phoneAddress.name}</CTableDataCell>
                               <CTableDataCell>{phoneAddress.phone}</CTableDataCell>
@@ -332,9 +364,9 @@ const SelectReceiver = (prop) => {
                           </CTableBody>
                       </CTable>
 
-                      {selectedGroupReceiver.length > 0 ? (
+                      {searchPhoneReceiver.length > 0 ? (
                             <CCol lg={12} className="text-end">
-                            <CButton color="success" variant="outline">
+                            <CButton color="success" variant="outline" onClick={clickAddCheckedPhoneReceiver}>
                               추가 
                             </CButton>
                           </CCol>
