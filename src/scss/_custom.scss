@@ -79,8 +79,13 @@ thead, tbody tr {
 
 .custom_msg {
   position: relative;
-  padding : 50px 10px;
+  margin : 50px 20px;
+  padding : 7px;
   border :rgb(44, 44, 44);
+  background-color: rgb(214, 214, 214);
+  border-radius: 15px;
+  height: 410px;
+  overflow-y: scroll;
 }
 
 .custom_background_color {

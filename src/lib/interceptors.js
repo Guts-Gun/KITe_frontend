@@ -34,7 +34,7 @@ axios.interceptors.response.use(
       if ( err.response.status === 401 &&err.config &&!err.config.__isRetryRequest ) {
         originalReq._retry = true;
       
-        // const user = localStorage.getItem("user");
+        const user = localStorage.getItem("acce");
         // const ACCESS_TOKEN = JSON.parse(user).token.access_token;
         // // console.log("원래 토큰", ACCESS_TOKEN);
         // const REFRESH_TOKEN = JSON.parse(user).token.refresh_token;

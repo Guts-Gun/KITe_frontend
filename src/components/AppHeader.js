@@ -24,8 +24,6 @@ const AppHeader = () => {
   const sidebarShow = useSelector((state) => state.sidebarShow);
   const { auth } = useSelector(({auth})=> ({auth:auth}));
 
-  console.log(auth.username);
-
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
