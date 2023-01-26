@@ -3,11 +3,20 @@ const service = {
     result : "/result",        // localhost:8002
     requestMsg : "/request",   // localhost:8011
     broker : "/brokermanager", // localhost:8005
-    auth : "/auth", //localhost:8007
+    auth : "/auth",            //localhost:8007
 };
 
 
 const apiConfig = {
+
+    // AUTH
+    authLogin :                              service.auth + "/login",
+    authRegister :                           service.auth + "/register",
+    authRegisterCheckEmailDuplication :      service.auth + "/register/check_email",
+    authRegisterCheckUsernameDuplication :   service.auth + "/register/check_username",
+    authRefreshToken :                       service.auth + "/refresh_token",
+
+
     // BROKER
     brokerList :            service.broker + "/broker/list",                       // 브로커 리스트 조회
 
@@ -51,13 +60,6 @@ const apiConfig = {
     resultSendingResult :         service.result + "/sending/result",
     resultSendingBrokerResult :   service.result + "/sending/result",
     resultSendingTxResult :       service.result + "/sending/result",
-
-    authLogin:service.auth + "/login",
-    authRegister:service.auth + "/register",
-    authRegisterCheckEmailDuplication:service.auth + "/register/check_email",
-    authRegisterCheckUsernameDuplication:service.auth + "/register/check_username",
-    authRefreshToken:service.auth + "/refresh_token",
-
 
 }
 export default apiConfig;
