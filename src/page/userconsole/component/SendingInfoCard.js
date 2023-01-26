@@ -40,7 +40,7 @@ function SendingInfoCard({sendingId, title, status, type, totalCount, successRat
               <CProgressBar color="success" value={successRate} />
               <CProgressBar color="danger" value={100 - successRate} />
             </CProgress>
-            <CButton href={detailLink}>상세</CButton>
+            <CButton href={'/#/resultDetail'}>상세</CButton>
           </CCardBody>
         </CCard>
       </CCol>
@@ -53,12 +53,12 @@ SendingInfoCard.defaultProps = {
 };
 
 SendingInfoCard.propTypes = {
-  sendingId : PropTypes.string.isRequired,
+  sendingId : PropTypes.number.isRequired,
   title : PropTypes.string,
   status : PropTypes.string,
   type : PropTypes.string,
-  totalCount : PropTypes.string,
-  successRate : PropTypes.string,
+  totalCount : PropTypes.number,
+  successRate : PropTypes.number,
   detailLink : PropTypes.string
 };
 

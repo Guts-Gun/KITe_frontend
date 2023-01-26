@@ -20,15 +20,15 @@ function UsageCard({title, type, usage, usageCap}) {
 }
 UsageCard.defaultProps = {
   title: "title",
-  usage: "usage",
-  usageCap: "total",
+  usage: 10,
+  usageCap: 1000,
   type : "type"
 };
 
 UsageCard.propTypes = {
   title : PropTypes.string,
   type : PropTypes.string,
-  usage : PropTypes.string,
-  usageCap : PropTypes.string
+  usage : PropTypes.number,
+  usageCap : PropTypes.number
 };
 export default UsageCard;

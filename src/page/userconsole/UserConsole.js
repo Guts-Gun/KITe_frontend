@@ -12,9 +12,9 @@ function UserConsole() {
 
 
   const [totalUsages,setTotalUsages] = useState([
-    { title: 'sms 사용량', type: "SMS", usage: "0", usageCap: "0", color: 'success' },
-    { title: 'email 사용량', type: "e-Mail", usage: "0", usageCap: "0", color: 'success' },
-    { title: 'kakao 사용량', type: "Kakao", usage: "0", usageCap: "0", color: 'success'}
+    { title: 'sms 사용량', type: "SMS", usage: 0, usageCap: 0, color: 'success' },
+    { title: 'email 사용량', type: "e-Mail", usage: 0, usageCap: 0, color: 'success' },
+    { title: 'kakao 사용량', type: "Kakao", usage: 0, usageCap: 0, color: 'success'}
   ]);
   useEffect(()=>{
     axios.get(apiConfig.resultUsage)
@@ -32,9 +32,9 @@ function UserConsole() {
   },[]);
 
   const [totalSendingInfo,setTotalSendingInfo] = useState([
-    {id : "1", title : "2023-01-06 15:00:00", status : "완료", sendingType : "SMS", totalSending : "1000", successRate : "95", detailLink : "#"},
-    {id : "2", title : "2023-01-07 15:00:00", status : "대기", sendingType : "e-Mail", totalSending : "2000", successRate : "0", detailLink : "#"},
-    {id : "3", title : "2023-01-08 15:00:00", status : "완료", sendingType : "Kakao", totalSending : "1000", successRate : "99", detailLink : "#"}
+    {id : 1, title : "2023-01-06 15:00:00", status : "완료", sendingType : "SMS", totalSending : 1000, successRate : 95, detailLink : "#"},
+    {id : 2, title : "2023-01-07 15:00:00", status : "대기", sendingType : "e-Mail", totalSending : 2000, successRate : 0, detailLink : "#"},
+    {id : 3, title : "2023-01-08 15:00:00", status : "완료", sendingType : "Kakao", totalSending : 1000, successRate : 99, detailLink : "#"}
   ]);
   useEffect(()=>{
     axios.get(apiConfig.resultSending)
