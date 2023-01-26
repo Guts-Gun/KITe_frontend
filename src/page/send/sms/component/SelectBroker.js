@@ -24,41 +24,33 @@ import { cilMediaSkipForward, cilDollar } from '@coreui/icons';
 
 
 const SelectBroker = (prop) => {
-    console.log(prop.sendingRuleType);
 
+    // 중계사 비율 선택 그래프
     let ratioLabels = [];
     let ratioData = [];
     prop.brokerList.map(function(data) {
         ratioLabels.push(data.name);
         ratioData.push(data.weight);
     });
+    
+    // 중계사 비율 라디오 클릭
+    const [brokerType, setBrokerType] = useState(1);
+    function changeBrokerType(e){
+        setBrokerType(e.target.value);
+        if(e.target.value == 1){
+            changeSendingRuleType("CUSTOM");
+        }
+    };
 
     function changeSendingRuleType(sendingRuleType){
         prop.editSendingRuleType(sendingRuleType);
     }
 
-        // 중계사
-
-    const [brokerRatio1, setBrokerRatio1] = useState(20);
-    const [brokerRatio2, setBrokerRatio2] = useState(15);
-    const [brokerRatio3, setBrokerRatio3] = useState(20);
-    const [brokerRatio4, setBrokerRatio4] = useState(15);
-    const [brokerRatio5, setBrokerRatio5] = useState(30);
-
-    function changeBrokerType(e){
-        console.log(e.target.value);
-        if(e.target.value == 1){
-            changeSendingRuleType("CUSTOM");
-        }else{
-            changeSendingRuleType(null);
-
-        }
-    };
-
     function changeBrokerRatio(e){
-        console.log(e.target.id);
-        console.log(e.target.value);
+        prop.editBrokerRatio(e);
     }
+
+
     return (
     <>
     <CRow className="mb-3">
@@ -67,7 +59,7 @@ const SelectBroker = (prop) => {
             <CFormCheck inline type="radio" name="brokerType" id="brokerType1" value="1" label="중계사 비율 선택" defaultChecked onClick={(event)=>{changeBrokerType(event)}}/>
             <CFormCheck inline type="radio" name="brokerType" id="brokerType2" value="2" label="추천 리스트" onClick={(event)=>{changeBrokerType(event)}}/>
         
-        {prop.sendingRuleType == "CUSTOM"? (<>
+        {brokerType == 1? (<>
             <CRow>
                 <CCol sm={12} md={8}>
                 <CTable>
@@ -88,7 +80,14 @@ const SelectBroker = (prop) => {
                                 <CTableDataCell>{broker.name}</CTableDataCell>
                                 <CTableDataCell>{broker.price}</CTableDataCell>
                                 {/* <CTableDataCell>KT</CTableDataCell> */}
-                                <CTableDataCell><CFormInput id ={"broker_ck_"+broker.brokerId} type="number" value={broker.weight} onChange={(e) => changeBrokerRatio(e)} /></CTableDataCell>
+                                <CTableDataCell>
+                                    <CFormInput 
+                                    id ={"broker_ck_"+broker.brokerId}
+                                    name={broker.brokerId}
+                                    type="number" value={broker.weight} 
+                                    onChange={(e) => changeBrokerRatio(e)} 
+                                    min={0}/>
+                                </CTableDataCell>
                             </CTableRow>
                             </>
                         ))}

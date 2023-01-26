@@ -77,6 +77,7 @@ const initialState = {
                                             // replace_receiver 대체발송 수신자 정보
     sendingDto : {
         content : "",                       // 내용 접속
+        contentLength : 0,                  // 내용 길이
         reservDate : null,                  // 예약 날짜
         reservTime : null,                  // 예약 시간
         reservationTime : null,             // 예약 날짜 시간
@@ -115,6 +116,7 @@ const sms = handleActions({
             })
         }
         console.log(state);
+        state.sendingDto.totalSending= state.receiverList.length;
         return { ...state}
     },
 
@@ -145,6 +147,7 @@ const sms = handleActions({
                 state.receiverList.push(receiver);
             }
         });
+        state.sendingDto.totalSending= state.receiverList.length;
         return { ...state}    
     },
 
@@ -152,19 +155,42 @@ const sms = handleActions({
         state.receiverList = state.receiverList.filter(function(value, index) {
             return value.receiver != pl.phone;
         });
+        state.sendingDto.totalSending= state.receiverList.length;
         return { ...state}    
     },
 
     [DELETE_ALLRECEIVER] : (state) => {
         state.receiverList = [];
+        state.sendingDto.totalSending= 0;
         return { ...state}    
     },
 
 
 
     [EDIT_CONTENT] : (state, {payload: pl }) => {
-        state.sendingDto.content = pl.value;
-        console.log(state);
+
+        const text = pl.value;
+        state.sendingDto.content = text;
+
+        var returnVal = '';
+        var currentLength = 0;
+        var codeByte = 0;
+        
+        for (var i = 0; i < text.length; i++) {
+          var oneChar = escape(text.charAt(i));
+          
+          if(oneChar.length > 4) {
+              codeByte += 2;
+          }else{
+              codeByte++;
+          }
+    
+          if(codeByte <= 140){
+              currentLength = i + 1;
+          }
+
+        }
+        state.sendingDto.contentLength = codeByte;
         return { ...state}    
     },
 
@@ -174,7 +200,7 @@ const sms = handleActions({
         pl.map(function(data) {
             brokerList.push({
                 brokerId : data.id,
-                weight : Math.round(100/pl.length),
+                weight : 0,
                 name : data.name,
                 price : data.price,
                 speed : data.speed
@@ -200,10 +226,18 @@ const sms = handleActions({
     },
 
     [EDIT_SENDINGRULETYPE] : (state, { payload: pl }) => {
-        state.sendingRuleType = pl.value;
+        state.sendingDto.sendingRuleType = pl.value;
         return { ...state} 
     },
 
+    [EDIT_BROKERRATIO]  : (state, { payload: pl }) => {
+        state.brokerList.map(function(broker) {
+            if(broker.brokerId == pl.name){
+                broker.weight = pl.value;
+            }
+        });
+        return { ...state} 
+    },
 
 
 },

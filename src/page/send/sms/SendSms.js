@@ -29,6 +29,10 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
+import guide1 from 'src/assets/images/guide/guide1.png';
+import guide2 from 'src/assets/images/guide/guide2.png';
+import guide3 from 'src/assets/images/guide/guide3.png';
+import guide4 from 'src/assets/images/guide/guide4.png';
 import SelectBroker from './component/SelectBroker';
 import SelectReceiver from './component/SelectReceiver';
 
@@ -89,9 +93,34 @@ const SendSms = () => {
   );
 
 
-  
   // 발송 요청
  function onclickSend(){
+
+  if(receiverList.length<1){
+    alert("🐰 수신자를 선택해주세요.");
+    return;
+  }
+  if(sender == null){
+    alert("🐰 발신번호를 선택해주세요.");
+    return;
+  }
+  if(sending.contentLength <1){
+    alert("🐰 메시지 내용을 입력해주세요.");
+    return;
+  }
+
+  if(sending.sendingRuleType == "CUSTOM"){
+    let totalWeight = 0;
+    brokerList.map(function(broker) {
+      totalWeight += Number(broker.weight);
+    });
+    console.log(totalWeight);
+    if(totalWeight != 100){
+      alert("🐰 중계사 비율을 정확하게 입력해주세요.");
+      return;
+    }
+  }
+
 
   const body = {
     receiverList : receiverList,
@@ -102,12 +131,13 @@ const SendSms = () => {
     brokerList : brokerList,
   };
   console.log(body);
+  
   setLoading(true);
     try {
       axios.post(apiConfig.sendRequest, body, {headers: headers})
         .then((response) => {
           addToast(messageToast("발송 요청 완료"));
-          // navigate('/resultList');
+          navigate('/#/userConsole');
         })
       .catch(function (error) {
       }).then(function() {
@@ -117,7 +147,6 @@ const SendSms = () => {
       setLoading(false);
     }
 };
-
 
   // 내용 수정
   function changeContent(e) {
@@ -133,7 +162,6 @@ const SendSms = () => {
 
   // 수신자 일괄 추가
   function addReceivers(arr) {
-    console.log(arr);
     dispatch(smsAction.addReceivers({arr}));
   }
 
@@ -147,13 +175,11 @@ const SendSms = () => {
     dispatch(smsAction.deleteAllReceiver());
   }
 
-
   // 예약발송 스위치
   function changeSwitch(e){ 
     const checked = e.target.checked;
     dispatch(smsAction.editReservation({checked}));
   };
-  
   
   // 발신번호
   const [senderPhoneList, setSenderPhoneList] = useState([]);
@@ -171,7 +197,6 @@ const SendSms = () => {
     dispatch(smsAction.editSender({value}));
   }
 
-
   // 대체발송 스위치
   function changeSendReplaceSwitch(e){ 
     const checked = e.target.checked;
@@ -183,10 +208,13 @@ const SendSms = () => {
   
   // 중계사 비율 타입 수정
   function editSendingRuleType(value){
-    console.log(value);
     dispatch(smsAction.editSendingRuleType({value}));
   }
-  
+
+  function editBrokerRatio(e){
+    const { value, name } = e.target;
+    dispatch(smsAction.editBrokerRatio({value, name}));
+  }
 
   return (
     <>
@@ -197,8 +225,16 @@ const SendSms = () => {
           <CCloseButton className="text-reset" onClick={() => setVisible(false)} />
         </COffcanvasHeader>
         <COffcanvasBody>
-          <p>SMS/MMS 발송 매뉴얼</p>
-          <CImage src={phoneImg} width={100}/>
+          <CRow className='mb-3'>
+            <p>1. 수신자 선택</p>
+            <CImage src={guide3} width={100}/>
+            <CImage src={guide4} width={100}/>
+          </CRow>
+          <CRow>
+            <p>2. 내용 입력 및 중계사 분배 비율 설정</p>
+            <CImage src={guide1} width={100}/>
+            <CImage src={guide2} width={100}/>
+          </CRow>
         </COffcanvasBody>
       </COffcanvas>
 
@@ -207,7 +243,7 @@ const SendSms = () => {
           <CRow>
             <CCol lg={10} ><strong>SMS/MMS 발송 </strong></CCol>
             <CCol lg={2} className="text-end">
-              <CButton onClick={() => setVisible(true)}>예시보기</CButton>
+              <CButton onClick={() => setVisible(true)}>가이드보기</CButton>
             </CCol>
           </CRow>
         </CCardHeader>
@@ -277,7 +313,7 @@ const SendSms = () => {
               <CCol className="col-sm-10">
                 <CRow>
                   <CCol sm={12} md={7}>
-                    <p>전송상태 / <code>단문메세지</code></p>
+                    <p>전송상태 / <code>{ sending.contentLength >= 140? "단문메시지(SMS)" : "장문메세지(MMS)" }</code></p>
                   
                     <CRow className="mb-1">
                       <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
@@ -306,7 +342,7 @@ const SendSms = () => {
                   <CCol  sm={12} md={5} className="mt-3">
                     <div className='custom_div'>
                       <div className='custom_msg'>
-                        [미리보기]<br/>
+                        [미리보기]<br/><br/>
                         { sending.content.split("\n").map((line, i) => {
                             return (
                               <span key={i}> {line}<br /></span>
@@ -323,7 +359,9 @@ const SendSms = () => {
             <SelectBroker 
             brokerList = {brokerList} 
             sendingRuleType={sending.sendingRuleType}
-            editSendingRuleType = {editSendingRuleType}/>
+            editSendingRuleType = {editSendingRuleType}
+            editBrokerRatio ={editBrokerRatio}
+            />
             
           </CForm>
         </CCardBody>
