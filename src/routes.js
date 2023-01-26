@@ -58,8 +58,8 @@ const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
 const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
 
 //phonebook
-const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/ReceiverList'))
-const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/ReceiverMake'))
+const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/List/ReceiverList'))
+const ReceiverMake = React.lazy(() => import('./page/phonebook/receiver/Make/ReceiverMake'))
 
 //발신번호(sender)
 const SenderPhoneList = React.lazy(() => import('./page/sender/Phone/SenderPhoneList'));
