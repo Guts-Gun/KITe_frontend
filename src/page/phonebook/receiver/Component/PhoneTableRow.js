@@ -6,6 +6,7 @@ import {
 } from '@coreui/react';
 
 import PropTypes from "prop-types";
+import { GroupListModal } from './GroupListModal';
 
 export function PhoneTableRow({key,id,name,phone,email,groupList,onSelect}) {
   const onCheck = (e,id) =>{
@@ -20,7 +21,7 @@ export function PhoneTableRow({key,id,name,phone,email,groupList,onSelect}) {
       <CTableDataCell>{name}</CTableDataCell>
       <CTableDataCell>{phone}</CTableDataCell>
       <CTableDataCell>{email}</CTableDataCell>
-      <CTableDataCell>{}</CTableDataCell>
+      <CTableDataCell><GroupListModal groupList={groupList}/></CTableDataCell>
     </CTableRow>
   );
 }
