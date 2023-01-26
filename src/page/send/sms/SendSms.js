@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useRef, useEffect, useState} from 'react'
 import {
   CButton,
   CCard, CCardBody, CCardHeader, CCardFooter,
@@ -22,6 +22,10 @@ import {
   COffcanvasTitle,
   CCloseButton,
   COffcanvasBody,
+  CToast,
+  CToastHeader,
+  CToastBody,
+  CToastClose,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
@@ -32,10 +36,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as smsAction from "../../../modules/sms";
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
-import usePromise from 'src/lib/usePromise';
+import { useNavigate } from 'react-router-dom';
+import Loading from 'src/lib/Loading/Loading';
+import { auth } from 'src/modules/auth';
+
 
 
 const SendSms = () => {
+  
+  const { auth } = useSelector(({auth})=> ({auth:auth}));
+  var headers =null;
+  if (auth != null) {
+    const accessToken = auth.accesstoken;
+    headers = {'Authorization': 'Bearer ' + accessToken };
+  }
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false); // 대기
 
 
   const dispatch = useDispatch();
@@ -47,16 +65,58 @@ const SendSms = () => {
     replaceSender : sms.replaceSender,
     brokerList : sms.brokerList,
   }));
-
-
   
   // 메뉴얼 보기
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(smsAction.initializeForm());
-    dispatch(smsAction.editBrokerList());
+    dispatch(smsAction.initializeForm()); // 초기화
+    dispatch(smsAction.editBrokerList()); // 중계사 리스트
   }, []);
+
+
+  const [toast, addToast] = useState(0);
+  const toaster = useRef();
+
+  const messageToast = (text) => (
+    <CToast>
+      <CToastHeader closeButton>
+        <strong className="me-auto"></strong>
+        {/* <small>7 min ago</small> */}
+      </CToastHeader>
+      <CToastBody>{ text }</CToastBody>
+    </CToast>
+  );
+
+
+  
+  // 발송 요청
+ function onclickSend(){
+
+  const body = {
+    receiverList : receiverList,
+    sendingDTO : sending,
+    reservYn : reservYn,
+    sender : sender,
+    replaceSender :replaceSender,
+    brokerList : brokerList,
+  };
+  console.log(body);
+  setLoading(true);
+    try {
+      axios.post(apiConfig.sendRequest, body, {headers: headers})
+        .then((response) => {
+          addToast(messageToast("발송 요청 완료"));
+          // navigate('/resultList');
+        })
+      .catch(function (error) {
+      }).then(function() {
+        setLoading(false);
+      });
+    } catch (e){
+      setLoading(false);
+    }
+};
 
 
   // 내용 수정
@@ -94,6 +154,7 @@ const SendSms = () => {
     dispatch(smsAction.editReservation({checked}));
   };
   
+  
   // 발신번호
   const [senderPhoneList, setSenderPhoneList] = useState([]);
   useEffect(()=>{
@@ -104,6 +165,13 @@ const SendSms = () => {
     });
   },[]);
 
+  // 발신번호 선택
+  function changeSenderPhone(e){
+    const value = e.target.value;
+    dispatch(smsAction.editSender({value}));
+  }
+
+
   // 대체발송 스위치
   function changeSendReplaceSwitch(e){ 
     const checked = e.target.checked;
@@ -113,10 +181,16 @@ const SendSms = () => {
   // 템플릿
   const [template, setTemplate] = useState("");
   
+  // 중계사 비율 타입 수정
+  function editSendingRuleType(value){
+    console.log(value);
+    dispatch(smsAction.editSendingRuleType({value}));
+  }
   
-  
+
   return (
     <>
+    { loading?  <Loading /> : <>
       <COffcanvas placement="end" visible={visible} onHide={() => setVisible(false)}>
         <COffcanvasHeader>
           <COffcanvasTitle>SMS/MMS 발송 매뉴얼</COffcanvasTitle>
@@ -167,10 +241,10 @@ const SendSms = () => {
               <CFormLabel className="col-sm-2">발신 번호</CFormLabel>
               <CCol xs={10}>
                  <CInputGroup className="mb-1">
-                  <CFormSelect>
+                  <CFormSelect onChange={(e) => changeSenderPhone(e)}>
                         <option value="">선택</option>
                         { senderPhoneList.map((senderPhone)=>(
-                            <option key={senderPhone.id} value={senderPhone.id}>{senderPhone.phone} </option>
+                            <option key={senderPhone.id} value={senderPhone.phone}>{senderPhone.phone} </option>
                         ))}
                       </CFormSelect>
                 </CInputGroup>
@@ -246,21 +320,25 @@ const SendSms = () => {
              
               </CCol>
             </CRow>
-            <SelectBroker brokerList = {brokerList} sendingRuleType={sending.sendingRuleType}/>
+            <SelectBroker 
+            brokerList = {brokerList} 
+            sendingRuleType={sending.sendingRuleType}
+            editSendingRuleType = {editSendingRuleType}/>
             
           </CForm>
         </CCardBody>
 
         <CCardFooter>
           <CCol lg={12} className="text-end">
-            <CButton color="success" variant="outline">
+            <CButton color="success" variant="outline" onClick={onclickSend}>
               발송하기 
             </CButton>
           </CCol>
         </CCardFooter>
-      </CCard>
+      </CCard> 
+      </>
+       }
     </>
-
   )
 }
 

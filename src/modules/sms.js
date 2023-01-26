@@ -8,7 +8,7 @@ import { detach } from 'redux-saga';
 const INITIALIZE_FORM = 'sms/initialize_form';          // 초기화
 const ADD_RECEIVER = 'sms/add_receiver';                // 수신자 추가
 const ADD_RECEIVERS = 'sms/add_receivers';              // 수신자 일괄 추가
-const DELETE_RECEIVER = 'sms/delete_receiver';             // 수신자 삭제
+const DELETE_RECEIVER = 'sms/delete_receiver';          // 수신자 삭제
 const DELETE_ALLRECEIVER = 'sms/delete_allreceiver';    // 수신자 삭제
 const EDIT_SENDER = 'sms/edit_sender';                  // 발신번호 수정
 const EDIT_RESERVATION = 'sms/edit_reservation';        // 예약 여부 수정
@@ -16,7 +16,7 @@ const EDIT_RESERVDATE = 'sms/edit_reservdate';          // 예약 날짜 수정
 const EDIT_RESERVTIME = 'sms/edit_reservtime';          // 예약 시간 수정 
 const EDIT_CONTENT = 'sms/edit_content';                // 발송 내용 수정
 const EDIT_SENDREPLACEMEMT = 'sms/eidt_sendreplace';    // 대채발송 여부 수정
-const EDIT_BROKERTYPE = 'sms/edit_brokertype';          // 중계사 비율 타입 수정
+const EDIT_SENDINGRULETYPE = 'sms/edit_sendingruletype';// 중계사 비율 타입 수정
 const EDIT_BROKERRATIO = 'sms/edit_brokerratio';        // 중계사 비율 설정
 
 const [EDIT_BROKER, BROKERLIST] = createRequestActionTypes('sms/edit_brokerlist');  // 중계사 리스트
@@ -35,8 +35,9 @@ export const deleteReceiver = createAction(DELETE_RECEIVER,({phone}) => ({
     phone
 }));
 export const deleteAllReceiver = createAction(DELETE_ALLRECEIVER);
-export const editSender = createAction(EDIT_SENDER,({value, name}) => ({
-    value, name
+
+export const editSender = createAction(EDIT_SENDER,({value}) => ({
+    value
 }));
 export const editReservation = createAction(EDIT_RESERVATION,({checked}) => ({
     checked
@@ -54,8 +55,8 @@ export const editContent = createAction(EDIT_CONTENT,( { value, name }) => ({
 export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({checked}) => ({
     checked
 }));
-export const editBrokerType = createAction(EDIT_BROKERTYPE,({value, name}) => ({
-    value, name
+export const editSendingRuleType = createAction(EDIT_SENDINGRULETYPE,({value}) => ({
+    value
 }));
 export const editBrokerRatio = createAction(EDIT_BROKERRATIO,({value, name}) => ({
     value, name
@@ -79,7 +80,7 @@ const initialState = {
         reservDate : null,                  // 예약 날짜
         reservTime : null,                  // 예약 시간
         reservationTime : null,             // 예약 날짜 시간
-        sendingRuleType : "SPEED",         // 중계사 비율 타입
+        sendingRuleType : "CUSTOM",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
         totalSending : 0,                   // 총 메세지 개수
@@ -188,13 +189,20 @@ const sms = handleActions({
         return { ...state} 
     },
 
-
     [EDIT_SENDREPLACEMEMT]: (state, { payload: pl }) => {
         state.sendingDto.replaceYn = pl.checked? "Y" : "N";
         return { ...state} 
     },
-  
 
+    [EDIT_SENDER]: (state, { payload: pl }) => {
+        state.sender = pl.value;
+        return { ...state} 
+    },
+
+    [EDIT_SENDINGRULETYPE] : (state, { payload: pl }) => {
+        state.sendingRuleType = pl.value;
+        return { ...state} 
+    },
 
 
 

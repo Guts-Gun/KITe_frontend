@@ -184,8 +184,8 @@ const SelectReceiver = (prop) => {
 
     const fileInput=useRef();
     const onClearAttachment=()=>{
-          fileInput.current.value = "";
-      };
+        fileInput.current.value = "";
+    };
 
     // file to JsonArray
     function readUploadFile(e){
