@@ -413,7 +413,7 @@ const SelectReceiver = (prop) => {
                         </CButton>
                       </div>
                   </CListGroupItem>
-                  <div className='custom_height'>
+                  <div className='custom_height2'>
                     {prop.receiverList.map((receiver)=>(
 
                       <CListGroupItem key={receiver.receiver} className="d-flex">
