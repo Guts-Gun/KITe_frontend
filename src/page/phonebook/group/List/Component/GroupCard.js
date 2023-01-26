@@ -22,7 +22,11 @@ import CopyGroupModal from './CopyGroupModal';
 import UpdateGroupModal from './UpdateGroupModal';
 import DeleteGroupModal from './DeleteGroupModal';
 
+import {useNavigate, Link } from "react-router-dom";
+
 function GroupCard({id,groupName,groupDescription,regDt,modDt,addressCount,onSelect}){
+  const navigate = useNavigate();
+  const url = "/groupDetail"+"?id="+id;
   const [visibleCopy, setVisibleCopy] = useState(false);  
   const [visibleUpdate, setVisibleUpdate] = useState(false); 
   const [visibleDelete, setVisibleDelete] = useState(false); 
@@ -74,7 +78,7 @@ function GroupCard({id,groupName,groupDescription,regDt,modDt,addressCount,onSel
               <CCardBody>
                 <CRow>
                 <CCol>
-                <CCardLink href="#">전화번호 내역 확인</CCardLink>
+                <Link onClick={()=>{navigate(url);window.location.reload();}}>전화번호 내역 확인</Link>
                 </CCol>
                 </CRow>
               </CCardBody>

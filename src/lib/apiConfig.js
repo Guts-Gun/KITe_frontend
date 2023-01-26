@@ -28,7 +28,9 @@ const apiConfig = {
     groupUpdate :           service.user + "/group",                        // PUT 
     groupDeleteSingle :     service.user + "/group", //+groupId,            // DELETE
     groupDeleteMulti :      service.user + "/group/list",                   // DELETE
-    
+    groupPhoneCreate :      service.user + "/group/address",//+groupId      // POST
+    groupPhoneDelete :      service.user + "/group/address",//+groupId      // DELETE
+
     // USER_PHONEBOOK
     phoneBookSelectList :       service.user + "/address",                  // GET         
     phoneBookSelectListFilter : service.user + "/address/filter",           // GET (name/phone/email)

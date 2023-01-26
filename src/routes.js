@@ -56,6 +56,7 @@ const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
 
 //group
 const GroupList = React.lazy(() => import('./page/phonebook/group/List/GroupList'))
+const GroupDetail = React.lazy(() => import('./page/phonebook/group/Detail/GroupDetail'))
 
 //phonebook
 const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/List/ReceiverList'))
@@ -80,6 +81,7 @@ const routes = [
   { path: '/userConsole', name: 'UserConsole', element: UserConsole },
   //그룹
   { path: '/groupList', name: 'GroupList', element: GroupList },
+  { path: '/groupDetail', name: 'GroupDetail', element: GroupDetail },
   //주소록(receiver)
   { path: '/receiverList', name: 'ReceiverList', element: ReceiverList },
   { path: '/receiverMake', name: 'ReceiverMake', element: ReceiverMake },
