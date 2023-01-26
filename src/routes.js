@@ -55,7 +55,7 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
 
 //group
-const GroupList = React.lazy(() => import('./page/phonebook/group/GroupList'))
+const GroupList = React.lazy(() => import('./page/phonebook/group/List/GroupList'))
 
 //phonebook
 const ReceiverList = React.lazy(() => import('./page/phonebook/receiver/List/ReceiverList'))
