@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CCard, CCardBody, CCardHeader, CCol, CRow} from "@coreui/react";
 import {CChartBar, CChartDoughnut} from "@coreui/react-chartjs";
-import PropTypes, {object} from "prop-types";
+import PropTypes from "prop-types";
 import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 
@@ -11,9 +11,9 @@ function SendingResultBrokerGraph({sendingId}) {
       "id": 1,
       "brokerCount": {
         "name": [
-          "3번 중계사",
-          "1번 중계사",
-          "2번 중계사"
+          "SK",
+          "LG",
+          "SKT"
         ],
         "data": [
           2,
@@ -22,23 +22,28 @@ function SendingResultBrokerGraph({sendingId}) {
         ]
       },
       "brokerSuccessFail": {
-        "3번 중계사": {
-          "false": 1,
-          "true": 1
-        },
-        "1번 중계사": {
-          "false": 1,
-          "true": 1
-        },
-        "2번 중계사": {
-          "true": 2
-        }
+        "name": [
+          "SK-false",
+          "SK-true",
+          "LG-false",
+          "LG-true",
+          "SKT-false",
+          "SKT-true"
+        ],
+        "data": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
       },
       "brokerSpeed": {
         "name": [
-          "3번 중계사",
-          "1번 중계사",
-          "2번 중계사"
+          "SK",
+          "LG",
+          "SKT"
         ],
         "data": [
           1.0,
@@ -62,9 +67,9 @@ function SendingResultBrokerGraph({sendingId}) {
           "id": 1,
           "brokerCount": {
             "name": [
-              "3번 중계사",
-              "1번 중계사",
-              "2번 중계사"
+              "SK",
+              "LG",
+              "SKT"
             ],
             "data": [
               2,
@@ -73,23 +78,28 @@ function SendingResultBrokerGraph({sendingId}) {
             ]
           },
           "brokerSuccessFail": {
-            "3번 중계사": {
-              "false": 1,
-              "true": 1
-            },
-            "1번 중계사": {
-              "false": 1,
-              "true": 1
-            },
-            "2번 중계사": {
-              "true": 2
-            }
+            "name": [
+              "SK-false",
+              "SK-true",
+              "LG-false",
+              "LG-true",
+              "SKT-false",
+              "SKT-true"
+            ],
+            "data": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
           },
           "brokerSpeed": {
             "name": [
-              "3번 중계사",
-              "1번 중계사",
-              "2번 중계사"
+              "SK",
+              "LG",
+              "SKT"
             ],
             "data": [
               1.0,
@@ -103,7 +113,6 @@ function SendingResultBrokerGraph({sendingId}) {
       // 항상 실행
     });
   }, []);
-
 
 
   return (
