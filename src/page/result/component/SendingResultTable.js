@@ -1,12 +1,9 @@
-import {CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
+import {CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow} from "@coreui/react";
 import React from "react";
 import SendingResultRow from "./SendingResultRow";
 import PropTypes from "prop-types";
 
 function SendingResultTable({sendingResultList}) {
-
-
-    console.log(sendingResultList);
 
   return(
     <CTable>

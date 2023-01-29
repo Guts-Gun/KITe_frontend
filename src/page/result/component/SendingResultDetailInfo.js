@@ -5,8 +5,8 @@ import apiConfig from "../../../lib/apiConfig";
 import PropTypes from "prop-types";
 
 function SendingResultDetailInfo({sendingId}) {
-  const [sendingResultDetailInfo, setSendingResultDetailInfo] = useState(
-    {
+
+  const sendingResultDetailInfoDummy = {
     id: 1,
     userId: "1",
     sendingId: 1,
@@ -21,9 +21,9 @@ function SendingResultDetailInfo({sendingId}) {
     startTime: 4,
     completeTime: 5,
     logTime: 6
-},
-  );
-  useEffect(()=>{
+  }
+  const [sendingResultDetailInfo, setSendingResultDetailInfo] = useState(sendingResultDetailInfoDummy);
+  useEffect(() => {
     axios.get(apiConfig.resultSendingResult + "/" + sendingId)
       .then(function (response) {
         console.log(response.data);
@@ -31,10 +31,10 @@ function SendingResultDetailInfo({sendingId}) {
       }).catch(function (error) {
       // 오류발생시 실행
       console.log('더미 삽입');
-    }).then(function() {
+    }).then(function () {
       // 항상 실행
     });
-  },[]);
+  }, []);
 
   return (
     <CRow>
@@ -58,7 +58,7 @@ function SendingResultDetailInfo({sendingId}) {
 }
 
 SendingResultDetailInfo.propTypes = {
-  sendingId : PropTypes.number.isRequired,
+  sendingId: PropTypes.number.isRequired,
 }
 
 export default SendingResultDetailInfo;

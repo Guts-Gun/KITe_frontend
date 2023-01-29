@@ -37,7 +37,7 @@ function UsageCarousel() {
 
   const [totalUsages, setTotalUsages] = useState([]);
   useEffect(() => {
-    axios.get(apiConfig.resultUsage, headers)
+    axios.get(apiConfig.resultUsage, {headers : headers})
       .then(function (response) {
         console.log('usage api');
         console.log(response.data);

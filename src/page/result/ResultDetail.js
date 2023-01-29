@@ -1,14 +1,10 @@
 import {CCard, CCardBody, CCardHeader,} from '@coreui/react';
-import React, {useState} from 'react'
+import React from 'react'
 import SendingResultDetailInfo from "./component/SendingResultDetailInfo";
 import SendingResultBrokerGraph from "./component/SendingResultBrokerGraph";
-import PropTypes from "prop-types";
 import ResultTxResultTable from "./component/ResultTxResultTable";
 
 function ResultDetail() {
-  const [sendingResultDetail,setSendingResultDetail] = useState([
-    {sendingId : 1, sendingType : "SMS", totalSending : 100, inputTime : 0, scheduleTime : 0, success: "true", failureSending: 0, avgSpeed : 0, completeTime : 0 },
-  ]);
   return (
     <div>
       <CCard className="m-4">

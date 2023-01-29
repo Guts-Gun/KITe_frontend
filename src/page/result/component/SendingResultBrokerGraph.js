@@ -6,53 +6,52 @@ import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 
 function SendingResultBrokerGraph({sendingId}) {
-  const [sendingResultBroker, setSendingResultBroker] = useState(
-    {
-      "id": 1,
-      "brokerCount": {
-        "name": [
-          "SK",
-          "LG",
-          "SKT"
-        ],
-        "data": [
-          2,
-          2,
-          2
-        ]
-      },
-      "brokerSuccessFail": {
-        "name": [
-          "SK-false",
-          "SK-true",
-          "LG-false",
-          "LG-true",
-          "SKT-false",
-          "SKT-true"
-        ],
-        "data": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1
-        ]
-      },
-      "brokerSpeed": {
-        "name": [
-          "SK",
-          "LG",
-          "SKT"
-        ],
-        "data": [
-          1.0,
-          1.0,
-          1.0
-        ]
-      }
+  const sendingResultBrokerDummy = {
+    "id": 1,
+    "brokerCount": {
+      "name": [
+        "SK",
+        "LG",
+        "SKT"
+      ],
+      "data": [
+        2,
+        2,
+        2
+      ]
+    },
+    "brokerSuccessFail": {
+      "name": [
+        "SK-false",
+        "SK-true",
+        "LG-false",
+        "LG-true",
+        "SKT-false",
+        "SKT-true"
+      ],
+      "data": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "brokerSpeed": {
+      "name": [
+        "SK",
+        "LG",
+        "SKT"
+      ],
+      "data": [
+        1.0,
+        1.0,
+        1.0
+      ]
     }
-  );
+  }
+  const [sendingResultBroker, setSendingResultBroker] = useState(sendingResultBrokerDummy);
 
   useEffect(() => {
     axios.get(apiConfig.resultSendingBrokerResult + "/" + sendingId + "/broker")
@@ -62,53 +61,7 @@ function SendingResultBrokerGraph({sendingId}) {
       }).catch(function (error) {
       // 오류발생시 실행
       console.log('더미 삽입');
-      setSendingResultBroker(
-        {
-          "id": 1,
-          "brokerCount": {
-            "name": [
-              "SK",
-              "LG",
-              "SKT"
-            ],
-            "data": [
-              2,
-              2,
-              2
-            ]
-          },
-          "brokerSuccessFail": {
-            "name": [
-              "SK-false",
-              "SK-true",
-              "LG-false",
-              "LG-true",
-              "SKT-false",
-              "SKT-true"
-            ],
-            "data": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ]
-          },
-          "brokerSpeed": {
-            "name": [
-              "SK",
-              "LG",
-              "SKT"
-            ],
-            "data": [
-              1.0,
-              1.0,
-              1.0
-            ]
-          }
-        }
-      )
+      setSendingResultBroker(sendingResultBrokerDummy);
     }).then(function () {
       // 항상 실행
     });

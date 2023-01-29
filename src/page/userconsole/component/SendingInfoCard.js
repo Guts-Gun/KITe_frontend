@@ -38,7 +38,7 @@ function SendingInfoCardList() {
       logTime: 6,
       sendingStatus: null
     },
-       {
+    {
       id: 2,
       userId: "solbitest",
       sendingId: 1,
@@ -55,7 +55,7 @@ function SendingInfoCardList() {
       logTime: 6,
       sendingStatus: null
     },
-       {
+    {
       id: 3,
       userId: "solbitest",
       sendingId: 1,
@@ -161,11 +161,11 @@ function SendingInfoCard({sendingInfo}) {
           <div className="progress-group-header">
             <CIcon className="me-2" icon={cilSend} size="lg"/>
             <span>{sendingInfo.sendingStatus}</span>
-            <span className="ms-auto fw-semibold">{(sendingInfo.failedMessage/sendingInfo.totalMessage)*100}%</span>
+            <span className="ms-auto fw-semibold">{(sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}%</span>
           </div>
           <CProgress className="mb-3">
-            <CProgressBar color="success" value={100 - (sendingInfo.failedMessage/sendingInfo.totalMessage)*100}/>
-            <CProgressBar color="danger" value={(sendingInfo.failedMessage/sendingInfo.totalMessage)*100}/>
+            <CProgressBar color="success" value={100 - (sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}/>
+            <CProgressBar color="danger" value={(sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}/>
           </CProgress>
           <CButton href={'/#/resultDetail'}>상세</CButton>
         </CCardBody>
