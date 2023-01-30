@@ -16,9 +16,8 @@ const apiConfig = {
     authRegisterCheckUsernameDuplication :   service.auth + "/register/check_username",
     authRefreshToken :                       service.auth + "/refresh_token",
 
-
     // BROKER
-    brokerList :            service.broker + "/broker/list",                       // 브로커 리스트 조회
+    brokerList :            service.broker + "/broker/list",                // 브로커 리스트 조회
 
     // USER_GROUP
     groupSelectList :       service.user + "/group",                        // GET 그룹 리스트 조회
@@ -51,6 +50,12 @@ const apiConfig = {
     emailCreate:            service.user + "/email",                        //POST
     emailUpdate:            service.user + "/email",                        //PUT
     emailDelete:            service.user + "/email",                        //DELETE
+
+    //USER_MESSAGE__TEMPLATE
+    messageTemplateList:    service.user + "/messageTemplate/list",         // 메세지 템플릿 리스트 조회
+    createMessageTemplate:  service.user + "/messageTemplate/create",       // 메세지 템플릿 등록
+    deleteMessageTemplate:  service.user + "/messageTemplate/delete",       // 메세지 템플릿 삭제
+
 
     // REQUEST
     downloadSampleFile :    service.requestMsg + "/download/excel",         // 주소록입력 샘플파일 다운로드

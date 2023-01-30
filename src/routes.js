@@ -70,7 +70,7 @@ const SenderEmailList = React.lazy(() => import('./page/sender/Email/SenderEmail
 const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
 
 //setting
-const templateList = React.lazy(() => import('./page/setting/template/TemplateList'));
+const templateList = React.lazy(() => import('./page/template/TemplateList'));
 
 //result
 const ResultList = React.lazy(() => import('./page/result/ResultList'));

@@ -5,19 +5,20 @@ import apiConfig from "../lib/apiConfig";
 //요청시 AccessToken 계속 보내주기
 axios.interceptors.request.use(function (config) {
 
-  // let token = null;
+  let token = null;
 
-  // const user = localStorage.getItem("user");
+  const accesstoken = localStorage.getItem("accesstoken");
 
-  // if(user){
-  //   if (config.url != apiConfig.refreshToken) {
-  //     token = JSON.parse(user).token.access_token;
-  //   }
-  // }
-  // if(token !== null){
-  //   config.headers.Authorization = `Bearer ${token}`;
+  if(accesstoken){
+    if (config.url != apiConfig.refreshToken) {
+      token = accesstoken;
+    }
+  }
+  if(token !== null){
+    config.headers.Authorization = `Bearer ${accesstoken}`;
 
-  // }
+  }
+  
   return config;
 
 });
