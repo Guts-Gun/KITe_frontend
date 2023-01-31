@@ -6,7 +6,8 @@ import Login from 'src/views/pages/login/Login';
 import { 
   CButton, 
   CModal, 
-  CModalFooter 
+  CModalFooter,
+  CLink
 } from '@coreui/react';
 import Register from 'src/views/pages/register/Register';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ const HomeHeader = () => {
         </Link>
       </div>
       <div className="header-menu">
+        {localStorage.getItem("email") ? ( <CLink href={"/#/userConsole"}>사용자 콘솔</CLink>) : null}
         <Link onClick={()=>{ 
           if(localStorage.getItem("email")){
             dispatch(initializeForm({}))

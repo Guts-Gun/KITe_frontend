@@ -8,7 +8,8 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-} from '@coreui/react'
+} from '@coreui/react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   cilBell,
   cilCreditCard,
@@ -22,23 +23,22 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import avatar8 from './../../assets/images/avatars/test_profile.jpeg'
+import avatar8 from './../../assets/images/avatars/test_profile.jpeg';
+import { auth } from 'src/modules/auth';
+
 
 const AppHeaderDropdown = () => {
+  const { auth } = useSelector(({auth})=> ({auth:auth}));
+
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
         <CAvatar src={avatar8} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilBell} className="me-2" />
-          Updates
-          <CBadge color="info" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
+        {/* <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
+      
         <CDropdownItem href="#">
           <CIcon icon={cilEnvelopeOpen} className="me-2" />
           Messages
@@ -59,13 +59,13 @@ const AppHeaderDropdown = () => {
           <CBadge color="warning" className="ms-2">
             42
           </CBadge>
-        </CDropdownItem>
-        <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
+        </CDropdownItem> */}
+        <CDropdownHeader className="bg-light fw-semibold py-2">{ auth != null ? auth.username : null}</CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
-          Profile
+          마이페이지
         </CDropdownItem>
-        <CDropdownItem href="#">
+        {/* <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
           Settings
         </CDropdownItem>
@@ -83,10 +83,15 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
-        <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownDivider /> */}
+        <CDropdownItem onClick={()=>{ 
+          if(localStorage.getItem("email")){
+            localStorage.clear();
+            window.location.href="/";
+          }
+        }}>
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          로그아웃
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

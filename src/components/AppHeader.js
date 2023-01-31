@@ -50,7 +50,7 @@ const AppHeader = () => {
           </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav>
-        { auth != null ? auth.username : <></>}
+        {/* { auth != null ? auth.username : <></>} */}
         </CHeaderNav> 
         <CHeaderNav className="ms-3">
         {auth != null ? (
