@@ -3,6 +3,7 @@ import { all } from 'redux-saga/effects';
 import sms, { smsSaga } from './sms';
 import auth from './auth';
 import modal from './modal';
+import intorceptors from "../lib/interceptors";
 
 
 const rootReducer = combineReducers({

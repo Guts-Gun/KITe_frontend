@@ -12,6 +12,7 @@ axios.interceptors.request.use(function (config) {
   if(accesstoken){
     if (config.url != apiConfig.refreshToken) {
       token = accesstoken;
+
     }
   }
   if(token !== null){
@@ -35,26 +36,31 @@ axios.interceptors.response.use(
       if ( err.response.status === 401 &&err.config &&!err.config.__isRetryRequest ) {
         originalReq._retry = true;
       
-        const user = localStorage.getItem("acce");
-        // const ACCESS_TOKEN = JSON.parse(user).token.access_token;
-        // // console.log("원래 토큰", ACCESS_TOKEN);
-        // const REFRESH_TOKEN = JSON.parse(user).token.refresh_token;
+        const accessToken = localStorage.getItem("accesstoken");
+        const refreshToken = localStorage.getItem("refreshtoken");
+        console.log(accessToken);
+         axios.post(apiConfig.authRefreshToken,{ refresh_token: refreshToken })
+        .then((res) => {
+            // 새로 받은 token들의 정보 저장
 
-        //  axios.post(apiConfig.refreshToken,{ refresh_token: REFRESH_TOKEN })
-        // .then((res) => {
-        //     // 새로 받은 token들의 정보 저장
-        //     localStorage.setItem('user', JSON.stringify(res.data));
+            console.log(res);
 
-        //     return axios(originalReq);
 
-        // }).catch(() => {
-        //   // access token을 받아오지 못하는 오류 발생시 logout 처리
-        //   localStorage.removeItem("user");
-        //   window.location.href = "/"; 
 
-        //   return false;
-        // });
-      }
+            // refresh
+
+
+
+            // return axios(originalReq);
+
+        }).catch(() => {
+          // access token을 받아오지 못하는 오류 발생시 logout 처리
+          localStorage.clear();
+          window.location.reload();
+          window.location.href = "/"; 
+
+          return false;
+        });
       // 오류 발생 시 오류 내용 출력 후 요청 거절
       return Promise.reject(err);
     });
