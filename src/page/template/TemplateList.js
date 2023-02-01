@@ -34,6 +34,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { auth } from 'src/modules/auth';
 import Loading from 'src/lib/Loading/Loading';
 import Pagination from "react-js-pagination";
+import ErrorComponent from 'src/component/error/ErrorComponent';
 
 
 const TemplateList = () => {
@@ -164,7 +165,7 @@ const handlePageChange = (selectedPage) => {
                     </CTableRow>
                     </>
                     ))
-                  : '참여 목록이 없습니다.' }
+                  : <ErrorComponent log={"검색한 결과가 없어요"}></ErrorComponent> }
                   </>}
                 </CTableBody>
               </CTable>

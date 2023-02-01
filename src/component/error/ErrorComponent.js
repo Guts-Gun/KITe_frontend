@@ -28,7 +28,7 @@ function ErrorComponent({log}) {
             <div style={style.inner}>
                 <CIcon icon={cilMoodBad} size="6xl"/>
                 <div style={{margin:"25x"}}></div>
-                <h1 style={{margin:"5px"}}>{log}</h1>
+                <h4 style={{margin:"5px"}}>{log}</h4>
             </div>
         </div>
      );
