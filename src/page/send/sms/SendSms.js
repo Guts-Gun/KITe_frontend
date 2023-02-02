@@ -86,7 +86,7 @@ const SendSms = () => {
   const messageToast = (text) => (
     <CToast>
       <CToastHeader closeButton>
-      <strong className="me-auto">KIT:e</strong>
+      <strong className="me-auto">🐰 KIT:e</strong>
         {/* <small>7 min ago</small> */}
       </CToastHeader>
       <CToastBody>{ text }</CToastBody>

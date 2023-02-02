@@ -131,8 +131,8 @@ const TemplateList = () => {
   const toaster = useRef();
   const exampleToast = (text) => (
     <CToast>
-      <CToastHeader closeButton> 🐰
-        <strong className="me-auto">KIT:e</strong>
+      <CToastHeader closeButton>
+        <strong className="me-auto">🐰 KIT:e</strong>
       </CToastHeader>
       <CToastBody>{ text }</CToastBody>
     </CToast>
