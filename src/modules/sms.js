@@ -80,7 +80,7 @@ const initialState = {
         contentLength : 0,                  // 내용 길이
         reservDate : "",                    // 예약 날짜
         reservTime : "",                    // 예약 시간
-        reservationTime : "",             // 예약 날짜 시간
+        reservationTime : null,             // 예약 날짜 시간
         sendingRuleType : "CUSTOM",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
@@ -216,6 +216,9 @@ const sms = handleActions({
             state.sendingDto.reservDate = moment().add(7, 'days').format('YYYY-MM-DD');
             state.sendingDto.reservTime = moment().format('HH:mm');
             state.sendingDto.reservationTime = moment().add(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+        }else{
+            state.sendingDto.reservationTime = null;
+
         }
         return { ...state} 
     },
