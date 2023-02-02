@@ -49,7 +49,11 @@ const TemplateList = () => {
   const [detail, setDetail] = useState(null);
 
   const [loading, setLoading] = useState(false);
+
   const [templateList , setTemplateList] = useState([]);
+  const [checkedTemplateList , setCheckedTemplateList] = useState([]);
+
+
   const [pageData, setPageData] = useState({
     totalPage: 0,
     page: 1,
@@ -75,6 +79,8 @@ const TemplateList = () => {
   .then(response => {
     const data = response.data;
     setTemplateList(data.content);
+    setCheckedTemplateList(new Array(templateList.length).fill(true));
+
     setPageData({
     totalPage: 0,
     page: data.number+1,
@@ -89,6 +95,7 @@ const TemplateList = () => {
   })
   .catch(error => console.error('Error', error));
 };
+
 
   // 페이지 클릭
   const handlePageChange = (selectedPage) => {
@@ -106,9 +113,8 @@ const TemplateList = () => {
         "title" : title,
         "content": content
     }
-    setLoading(true);
-
     try {
+      setLoading(true);
       axios.post(apiConfig.createMessageTemplate, body, {headers: headers})
         .then((response) => {
           addToast(exampleToast("등록 완료"));
@@ -125,6 +131,54 @@ const TemplateList = () => {
     }
 
   }
+
+//   const onCheckAll = (checked) => { //전체 선택
+//     if (checked) {
+//         setCheckedTemplateList( checkedTemplateList.map((data, index) => {
+//           data = true;
+//         }));
+//     } else { //전체 해제
+//       setCheckedTemplateList( checkedTemplateList.map((data, index) => {
+//         data = false;
+//       }));
+//     }
+// }
+
+ //체크박스 change
+ function changeCheckedState(index){
+    let list = checkedTemplateList;
+    list[index] = !list[index];
+    setCheckedTemplateList(list);
+  } 
+
+
+  function clickDeleteTempplate(){
+    const arr = [];
+    templateList.map((data, index) => {
+      if(checkedTemplateList[index] !== false){
+        arr.push(data.id);
+      }
+    });
+    console.log(arr);
+
+    try {
+      setLoading(true);
+      axios.post(apiConfig.deleteMessageTemplate, arr, {headers: headers})
+        .then((response) => {
+          addToast(exampleToast("삭제 완료"));
+          setLoading(false);
+          handleFetch(1);
+        })
+      .catch(function (error) {
+      }).then(function() {
+        setLoading(false);
+      });
+    } catch (e){
+      setLoading(false);
+    }
+
+  }
+  
 
 
   const [toast, addToast] = useState(0)
@@ -161,7 +215,7 @@ const TemplateList = () => {
             <CCol sm={12} md={6}>
               <CRow className="mb-1">
               <CCol xs="auto" className="me-auto">
-                  <CButton color="danger" size="sm" variant="outline">삭제</CButton>
+                  <CButton color="danger" size="sm" variant="outline" onClick={clickDeleteTempplate}>삭제</CButton>
                 </CCol>
                 <CCol xs="auto">
                   <CButton color="primary" size="sm" variant="outline" onClick={() => setVisibleRegModal(!visibleRegModal)}>등록</CButton>
@@ -171,7 +225,12 @@ const TemplateList = () => {
               <CTable hover>
                 <CTableHead color="light">
                   <CTableRow>
-                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">#
+                    {/* <CFormCheck 
+                      defaultChecked 
+                      onChange={(e) => onCheckAll(e.target.checked)}
+                      /> */}
+                    </CTableHeaderCell>
                     <CTableHeaderCell scope="col">이름</CTableHeaderCell>
                     <CTableHeaderCell scope="col">등록일</CTableHeaderCell>
                   </CTableRow>
@@ -180,10 +239,14 @@ const TemplateList = () => {
                 { loading ? <Loading /> : 
                   
                     templateList.length > 0 ? 
-                    templateList.map((data) => (
+                    templateList.map((data, index) => (
                       <CTableRow key={data.id} onClick={(e) => tableRowClick(e, data)}>
                           <CTableHeaderCell scope="row">
-                          <CFormCheck id="flexCheckDefault"/>
+                          <CFormCheck 
+                            id={"flexCheckDefault" + data.id} 
+                            defaultChecked 
+                            value={checkedTemplateList[index]}
+                            onChange={(e) => changeCheckedState(index)}/>
                           </CTableHeaderCell>
                           <CTableDataCell>{data.title}</CTableDataCell>
                           <CTableDataCell>{moment(new Date(data.regDt)).format('YYYY-MM-DD HH:MM:SS')}</CTableDataCell>

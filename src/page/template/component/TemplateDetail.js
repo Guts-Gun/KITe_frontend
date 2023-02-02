@@ -9,8 +9,6 @@ import {
 } from '@coreui/react';
 
 const TemplateDetail = (prop) => {
-  console.log(prop);
-
   return (
     <CCol sm={12} md={6}>
       <CInputGroup className="mb-3">
