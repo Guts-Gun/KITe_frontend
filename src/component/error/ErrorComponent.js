@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import CIcon from "@coreui/icons-react";
 import { cilList, cilShieldAlt,cilMoodBad  } from '@coreui/icons';
+import { CRow } from '@coreui/react';
 
 const style = {
     outer : {
@@ -24,13 +25,13 @@ const style = {
 
 function ErrorComponent({log}) {
     return ( 
-        <div style={style.outer}>
+        <CRow style={style.outer}>
             <div style={style.inner}>
                 <CIcon icon={cilMoodBad} size="6xl"/>
                 <div style={{margin:"25x"}}></div>
                 <h4 style={{margin:"5px"}}>{log}</h4>
             </div>
-        </div>
+        </CRow>
      );
 }
 
