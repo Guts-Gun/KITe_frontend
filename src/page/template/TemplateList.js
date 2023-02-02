@@ -66,12 +66,12 @@ const TemplateList = () => {
 
   useEffect(() => {
     setLoading(true);
-    handleFetch(1, '');
+    handleFetch(1);
   }, []);
 
   const handleFetch = (selectedPage) => {
   setLoading(true);
-  axios.get(apiConfig.messageTemplateList,{headers: headers})
+  axios.get(apiConfig.messageTemplateList+"?page="+ selectedPage,{headers: headers})
   .then(response => {
     const data = response.data;
     setTemplateList(data.content);
@@ -94,12 +94,9 @@ const handlePageChange = (selectedPage) => {
   handleFetch(selectedPage);
 };
 
-  const tableRowClick = (e, id) => {
-    console.log(e);
-    // window.location.href = "/#/survey/detail/"+id;
+  const tableRowClick = (e, data) => {
+    setDetail(data);
   }
-
-
 
   return (
     <>
@@ -152,27 +149,23 @@ const handlePageChange = (selectedPage) => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                { loading ? <Loading /> : <>
-                  { 
+                { loading ? <Loading /> : 
+                  
                     templateList.length > 0 ? 
                     templateList.map((data) => (
-                    <>
-                      <CTableRow key={data.id}>
-                      <CTableHeaderCell scope="row">
-                      <CFormCheck id="flexCheckDefault"/>
-                      </CTableHeaderCell>
-                      <CTableDataCell>템플릿1</CTableDataCell>
+                      <CTableRow key={data.id} onClick={(e) => tableRowClick(e, data)}>
+                          <CTableHeaderCell scope="row">
+                          <CFormCheck id="flexCheckDefault"/>
+                          </CTableHeaderCell>
+                          <CTableDataCell>템플릿1</CTableDataCell>
                     </CTableRow>
-                    </>
                     ))
                   : <ErrorComponent log={"검색한 결과가 없어요"}></ErrorComponent> }
-                  </>}
+                  
                 </CTableBody>
               </CTable>
-
-            
               {
-                  templateList.length > 0 ? (<Pagination
+                  templateList.length > 0 ? (<Pagination key={pageData.page}
                     activePage={pageData.page}
                     itemsCountPerPage={pageData.size}
                     totalItemsCount={pageData.totalElements}
