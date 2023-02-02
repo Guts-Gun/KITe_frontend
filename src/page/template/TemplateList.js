@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {
   CButton,
   CCard, CCardBody, CCardHeader,
@@ -14,19 +14,13 @@ import {
   CTableRow,
   CTableHead,
   CTableDataCell,
-  CInputGroupText,
-  CFormTextarea,
-  CPagination,
-  CPaginationItem,
-  CModal,
-  CModalBody,
-  CModalContent,
-  CModalDialog,
-  CModalFooter,
-  CModalHeader,
-  CModalTitle
+  CToast,
+  CToaster,
+  CToastHeader,
+  CToastBody,
+  CToastClose
 } from '@coreui/react';
-import TemplateDetail from './TemplateDetail';
+import TemplateDetail from './component/TemplateDetail';
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
 import UsePromise from 'src/lib/usePromise';
@@ -35,6 +29,8 @@ import { auth } from 'src/modules/auth';
 import Loading from 'src/lib/Loading/Loading';
 import Pagination from "react-js-pagination";
 import ErrorComponent from 'src/component/error/ErrorComponent';
+import moment from 'moment';
+import TemplateRegModal from './component/TemplateRegModal';
 
 
 const TemplateList = () => {
@@ -46,8 +42,11 @@ const TemplateList = () => {
     headers = {'Authorization': 'Bearer ' + accessToken };
   }
 
-  
+  // 등록 모달
   const [visibleRegModal, setVisibleRegModal] = useState(false);
+
+  // 클릭한 메세지 템플릿 상세 정보
+  const [detail, setDetail] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [templateList , setTemplateList] = useState([]);
@@ -61,14 +60,15 @@ const TemplateList = () => {
     next: false,
     totalElements : 1
   })
-  const [detail, setDetail] = useState(null);
 
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(false);
     handleFetch(1);
   }, []);
 
+
+  // 메세지 템플릿 리스트 조회
   const handleFetch = (selectedPage) => {
   setLoading(true);
   axios.get(apiConfig.messageTemplateList+"?page="+ selectedPage,{headers: headers})
@@ -90,38 +90,65 @@ const TemplateList = () => {
   .catch(error => console.error('Error', error));
 };
 
-const handlePageChange = (selectedPage) => {
-  handleFetch(selectedPage);
-};
+  // 페이지 클릭
+  const handlePageChange = (selectedPage) => {
+    handleFetch(selectedPage);
+  };
 
+  // 테이블 row 클릭
   const tableRowClick = (e, data) => {
     setDetail(data);
   }
 
+  // 등록
+  const clickRegMessageTemplate = (title, content) => {
+    const body = {
+        "title" : title,
+        "content": content
+    }
+    setLoading(true);
+
+    try {
+      axios.post(apiConfig.createMessageTemplate, body, {headers: headers})
+        .then((response) => {
+          addToast(exampleToast("등록 완료"));
+          setLoading(false);
+          setVisibleRegModal(false);
+          handleFetch(1);
+        })
+      .catch(function (error) {
+      }).then(function() {
+        setLoading(false);
+      });
+    } catch (e){
+      setLoading(false);
+    }
+
+  }
+
+
+  const [toast, addToast] = useState(0)
+  const toaster = useRef();
+  const exampleToast = (text) => (
+    <CToast>
+      <CToastHeader closeButton> 🐰
+        <strong className="me-auto">KIT:e</strong>
+      </CToastHeader>
+      <CToastBody>{ text }</CToastBody>
+    </CToast>
+  )
+
   return (
     <>
-    <CModal alignment="center" backdrop="static" visible={visibleRegModal} onClose={() => setVisibleRegModal(false)}>
-      <CModalHeader>
-        <CModalTitle>템플릿 등록</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        <CInputGroup className="mb-3">
-          <CInputGroupText id="basic-addon1">이름</CInputGroupText>
-            <CFormInput value="" />
-          </CInputGroup>
-        <CInputGroup>
-        <CInputGroupText>내용</CInputGroupText>
-          <CFormTextarea aria-label="With textarea" rows="10" >
-          </CFormTextarea>
-        </CInputGroup>
-      </CModalBody>
-      <CModalFooter>
-        <CButton color="secondary" variant="outline" onClick={() => setVisibleRegModal(false)}>
-          취소
-        </CButton>
-        <CButton color="success" variant="outline">저장</CButton>
-      </CModalFooter>
-    </CModal>
+      <CToaster ref={toaster} push={toast} placement="top-end" />
+
+      <TemplateRegModal 
+        visibleRegModal={visibleRegModal} 
+        setVisibleRegModal={setVisibleRegModal}
+        clickRegMessageTemplate={clickRegMessageTemplate}
+        exampleToast={exampleToast}
+        addToast={addToast}
+      > </TemplateRegModal>
 
       <CCard className="m-4">
         <CCardHeader>
@@ -146,6 +173,7 @@ const handlePageChange = (selectedPage) => {
                   <CTableRow>
                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
                     <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">등록일</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -157,7 +185,8 @@ const handlePageChange = (selectedPage) => {
                           <CTableHeaderCell scope="row">
                           <CFormCheck id="flexCheckDefault"/>
                           </CTableHeaderCell>
-                          <CTableDataCell>템플릿1</CTableDataCell>
+                          <CTableDataCell>{data.title}</CTableDataCell>
+                          <CTableDataCell>{moment(new Date(data.regDt)).format('YYYY-MM-DD HH:MM:SS')}</CTableDataCell>
                     </CTableRow>
                     ))
                   : <ErrorComponent log={"검색한 결과가 없어요"}></ErrorComponent> }

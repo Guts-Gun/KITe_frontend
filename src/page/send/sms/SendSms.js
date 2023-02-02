@@ -26,6 +26,7 @@ import {
   CToastHeader,
   CToastBody,
   CToastClose,
+  CToaster,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import phoneImg from 'src/assets/images/phone.png';
@@ -85,7 +86,7 @@ const SendSms = () => {
   const messageToast = (text) => (
     <CToast>
       <CToastHeader closeButton>
-        <strong className="me-auto"></strong>
+      <strong className="me-auto">KIT:e</strong>
         {/* <small>7 min ago</small> */}
       </CToastHeader>
       <CToastBody>{ text }</CToastBody>
@@ -97,15 +98,16 @@ const SendSms = () => {
  function onclickSend(){
 
   if(receiverList.length<1){
-    alert("🐰 수신자를 선택해주세요.");
+    console.log("test");
+    addToast(messageToast("수신자를 선택해주세요."));
     return;
   }
   if(sender == null){
-    alert("🐰 발신번호를 선택해주세요.");
+    addToast(messageToast("발신번호를 선택해주세요."));
     return;
   }
   if(sending.contentLength <1){
-    alert("🐰 메시지 내용을 입력해주세요.");
+    addToast(messageToast("메시지 내용을 입력해주세요."));
     return;
   }
 
@@ -116,7 +118,7 @@ const SendSms = () => {
     });
     console.log(totalWeight);
     if(totalWeight != 100){
-      alert("🐰 중계사 비율을 정확하게 입력해주세요.");
+      addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
       return;
     }
   }
@@ -219,6 +221,7 @@ const SendSms = () => {
 
   return (
     <>
+    <CToaster ref={toaster} push={toast} placement="top-end" />
     { loading?  <Loading /> : <>
       <COffcanvas placement="end" visible={visible} onHide={() => setVisible(false)}>
         <COffcanvasHeader>
