@@ -44,7 +44,8 @@ import apiConfig from 'src/lib/apiConfig';
 import { useNavigate } from 'react-router-dom';
 import Loading from 'src/lib/Loading/Loading';
 import { auth } from 'src/modules/auth';
-
+import moment from 'moment';
+import "moment/locale/ko";
 
 
 const SendSms = () => {
@@ -102,6 +103,12 @@ const SendSms = () => {
     addToast(messageToast("수신자를 선택해주세요."));
     return;
   }
+
+  console.log(reservYn);
+  if(reservYn === "Y" && (sending.reservDate == "" || sending.reservTime == "" )){
+    addToast(messageToast("전송 시간을 입력해주세요."));
+    return;
+  }
   if(sender == null){
     addToast(messageToast("발신번호를 선택해주세요."));
     return;
@@ -110,6 +117,7 @@ const SendSms = () => {
     addToast(messageToast("메시지 내용을 입력해주세요."));
     return;
   }
+
 
   if(sending.sendingRuleType == "CUSTOM"){
     let totalWeight = 0;
@@ -122,7 +130,6 @@ const SendSms = () => {
       return;
     }
   }
-
 
   const body = {
     receiverList : receiverList,
@@ -153,13 +160,12 @@ const SendSms = () => {
 
   // 내용 수정
   function changeContent(e) {
-    const { value, name } = e.target;
-    dispatch(smsAction.editContent( { value, name }));
+    const value = e.target.value;
+    dispatch(smsAction.editContent( { value }));
   }
 
   // 수신자 추가
   function addReceiver(name, phone, email) {
-    console.log(name, phone, email);
     dispatch(smsAction.addReceiver( { name, phone, email }));
   }
 
@@ -184,6 +190,20 @@ const SendSms = () => {
     dispatch(smsAction.editReservation({checked}));
   };
   
+
+  // 날짜 수정
+  function changeReservDate(e){
+    const {name, value} = e.target;
+    dispatch(smsAction.editReservDate( { name, value }));
+  }
+
+  // 시간 수정
+  function changeReservTime(e){
+    const {name, value} = e.target;
+    dispatch(smsAction.editReservTime( { name, value }));
+  }
+
+
   // 발신번호
   const [senderPhoneList, setSenderPhoneList] = useState([]);
   useEffect(()=>{
@@ -207,8 +227,21 @@ const SendSms = () => {
   };
 
   // 템플릿
-  const [template, setTemplate] = useState("");
+  const [templateList, setTemplateList] = useState([]);
+  useEffect(()=>{
+    axios.get(apiConfig.messageTemplateList).then(function (response) {
+      setTemplateList(response.data.content);
+    }).catch(function (error) {
+    }).then(function() {
+    });
+  },[]);
   
+  // 템플릿 선택
+  function changeMessageTemplate(e){
+    const value = e.target.value;
+    dispatch(smsAction.editContent( { value }));
+  }
+
   // 중계사 비율 타입 수정
   function editSendingRuleType(value){
     dispatch(smsAction.editSendingRuleType({value}));
@@ -266,13 +299,15 @@ const SendSms = () => {
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">전송 시간</CFormLabel>
               <CCol xs={10}>
-                  <CFormSwitch label="예약 발송" id="reserv_send" onChange={changeSwitch}/>
+                  <CFormSwitch label={"예약 발송 " + (reservYn == "Y" ?
+                      (sending.reservDate=="" || sending.reservTime==""? "" : 
+                      moment(sending.reservationTime, "YYYY-MM-DD hh:mm:ss").fromNow('')): "") } id="reserv_send" onChange={changeSwitch}/>
                   {reservYn == "Y" ? (<> <CRow>
                       <CCol xs={6}>
-                        <CFormInput type="date"/>
+                        <CFormInput type="date" value={sending.reservDate}  onChange={(e) => changeReservDate(e)}/>
                     </CCol>
                     <CCol xs={6}>
-                        <CFormInput type="time" />
+                        <CFormInput type="time"  value={sending.reservTime} onChange={(e) => changeReservTime(e)}/>
                     </CCol>
                   </CRow></>):null}
               </CCol>
@@ -282,11 +317,11 @@ const SendSms = () => {
               <CCol xs={10}>
                  <CInputGroup className="mb-1">
                   <CFormSelect onChange={(e) => changeSenderPhone(e)}>
-                        <option value="">선택</option>
-                        { senderPhoneList.map((senderPhone)=>(
-                            <option key={senderPhone.id} value={senderPhone.phone}>{senderPhone.phone} </option>
-                        ))}
-                      </CFormSelect>
+                      <option value="">선택</option>
+                      { senderPhoneList.map((senderPhone)=>(
+                          <option key={senderPhone.id} value={senderPhone.phone}>{senderPhone.phone} </option>
+                      ))}
+                  </CFormSelect>
                 </CInputGroup>
               </CCol>
             </CRow>
@@ -317,11 +352,17 @@ const SendSms = () => {
               <CCol className="col-sm-10">
                 <CRow>
                   <CCol sm={12} md={7}>
-                    <p>전송상태 / <code>{ sending.contentLength >= 140? "단문메시지(SMS)" : "장문메세지(MMS)" }</code></p>
+                    <p>전송상태 / <code>{ sending.contentLength < 140? "단문메시지(SMS)" : "장문메세지(MMS)" }</code></p>
                   
                     <CRow className="mb-1">
-                      <CFormSelect onChange={(e) => setTemplate(e.target.value)}>
+                      <CFormSelect onChange={(e) => changeMessageTemplate(e)}>
                         <option value="" >내용 템플릿 선택</option>
+                        { templateList.map((messageTemplate)=>(
+                          <option key={"template_"+messageTemplate.id} value={messageTemplate.content}>
+                            {messageTemplate.title}
+                          </option>
+                        ))
+                      }
                       </CFormSelect>
                     </CRow>
                     <CRow>
@@ -329,7 +370,8 @@ const SendSms = () => {
                         rows="6"
                         text="140byte 초과 및 이미지나 동영상 첨부 시 MMS"
                         onChange={(e)=>{changeContent(e)}}
-                        />
+                        value={sending.content}
+                      />
                     </CRow>
                     <CRow className='mt-3'>
                       <CAccordion  activeItemKey={1}>

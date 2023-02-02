@@ -49,8 +49,8 @@ export const editReservDate = createAction(EDIT_RESERVDATE,({value, name}) => ({
 export const editReservTime = createAction(EDIT_RESERVTIME,({value, name}) => ({
     value, name
 }));
-export const editContent = createAction(EDIT_CONTENT,( { value, name }) => ({
-    value, name
+export const editContent = createAction(EDIT_CONTENT,( { value }) => ({
+    value
 }));
 export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({checked}) => ({
     checked
@@ -78,9 +78,9 @@ const initialState = {
     sendingDto : {
         content : "",                       // 내용 접속
         contentLength : 0,                  // 내용 길이
-        reservDate : null,                  // 예약 날짜
-        reservTime : null,                  // 예약 시간
-        reservationTime : null,             // 예약 날짜 시간
+        reservDate : "",                    // 예약 날짜
+        reservTime : "",                    // 예약 시간
+        reservationTime : "",             // 예약 날짜 시간
         sendingRuleType : "CUSTOM",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
@@ -212,6 +212,24 @@ const sms = handleActions({
 
     [EDIT_RESERVATION]: (state, { payload: pl }) => {
         state.reservYn =  pl.checked? "Y" : "N";
+        if(state.reservYn == "Y"){
+            state.sendingDto.reservDate = moment().add(7, 'days').format('YYYY-MM-DD');
+            state.sendingDto.reservTime = moment().format('HH:mm');
+            state.sendingDto.reservationTime = moment().add(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+        }
+        return { ...state} 
+    },
+
+    
+    [EDIT_RESERVDATE]: (state, { payload: pl }) => {
+        state.sendingDto.reservDate = pl.value;
+        state.sendingDto.reservationTime = state.sendingDto.reservDate +" "+ state.sendingDto.reservTime +":00";
+        return { ...state} 
+    },
+
+    [EDIT_RESERVTIME]: (state, { payload: pl }) => {
+        state.sendingDto.reservTime = pl.value;
+        state.sendingDto.reservationTime = state.sendingDto.reservDate +" "+ state.sendingDto.reservTime +":00";
         return { ...state} 
     },
 
