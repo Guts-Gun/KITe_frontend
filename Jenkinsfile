@@ -9,25 +9,6 @@ pipeline {
 
     stages {
 
-        // gradle build
-        stage('Bulid Gradle') {
-          agent any
-          steps {
-            echo 'Bulid Gradle'
-            dir ('.'){
-                sh """
-                chmod +x gradlew
-                ./gradlew clean build --exclude-task test
-                """
-            }
-          }
-          post {
-            failure {
-              error 'This pipeline stops here...'
-            }
-          }
-        }
-
         // docker build
         stage('Bulid Docker') {
           agent any
