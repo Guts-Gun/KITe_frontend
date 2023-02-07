@@ -84,7 +84,7 @@ const initialState = {
         sendingRuleType : "CUSTOM",         // 중계사 비율 타입
         sendingType : "SMS",                // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
-        totalSending : 0,                   // 총 메세지 개수
+        totalMessage : 0,                   // 총 메세지 개수
         title : "",                         // 제목
     },
     reservYn : "N",                         // 예약 여부
@@ -116,7 +116,7 @@ const sms = handleActions({
             })
         }
         console.log(state);
-        state.sendingDto.totalSending= state.receiverList.length;
+        state.sendingDto.totalMessage= state.receiverList.length;
         return { ...state}
     },
 
@@ -147,7 +147,7 @@ const sms = handleActions({
                 state.receiverList.push(receiver);
             }
         });
-        state.sendingDto.totalSending= state.receiverList.length;
+        state.sendingDto.totalMessage= state.receiverList.length;
         return { ...state}    
     },
 
@@ -155,13 +155,13 @@ const sms = handleActions({
         state.receiverList = state.receiverList.filter(function(value, index) {
             return value.receiver != pl.phone;
         });
-        state.sendingDto.totalSending= state.receiverList.length;
+        state.sendingDto.totalMessage= state.receiverList.length;
         return { ...state}    
     },
 
     [DELETE_ALLRECEIVER] : (state) => {
         state.receiverList = [];
-        state.sendingDto.totalSending= 0;
+        state.sendingDto.totalMessage= 0;
         return { ...state}    
     },
 
