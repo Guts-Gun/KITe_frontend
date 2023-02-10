@@ -18,86 +18,128 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 import FilterButton from "./FilterButton";
+import {useSelector} from "react-redux";
 
 function SendingInfoCardList() {
+  const {auth} = useSelector(({auth}) => ({auth: auth}));
+  var headers = null;
+  if (auth != null) {
+    const accessToken = auth.accesstoken;
+    headers = {'Authorization': 'Bearer ' + accessToken};
+  }
+
+
   const sendingListDummy = [
     {
-      id: 1,
-      userId: "solbitest",
-      sendingId: 1,
-      sendingType: "SMS",
-      sendingRuleType: "CUSTOM",
-      success: true,
-      totalMessage: 10,
-      failedMessage: 2,
-      avgSpeed: 0.1,
-      inputTime: 1,
-      scheduleTime: 3,
-      startTime: 4,
-      completeTime: 5,
-      logTime: 6,
-      sendingStatus: null
+      "id": 1,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "CUSTOM",
+      "sendingType": "SMS",
+      "totalMessage": 2,
+      "title": null,
+      "mediaLink": null,
+      "content": "테스트 내용",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 1,
+        "successCnt": 3,
+        "failCnt": 2
+      }
     },
     {
-      id: 2,
-      userId: "solbitest",
-      sendingId: 1,
-      sendingType: "e-Mail",
-      sendingRuleType: "CUSTOM",
-      success: true,
-      totalMessage: 10,
-      failedMessage: 2,
-      avgSpeed: 0.1,
-      inputTime: 1,
-      scheduleTime: 3,
-      startTime: 4,
-      completeTime: 5,
-      logTime: 6,
-      sendingStatus: null
+      "id": 2,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "SPEED",
+      "sendingType": "SMS",
+      "totalMessage": 3,
+      "title": null,
+      "mediaLink": null,
+      "content": "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 2,
+        "successCnt": 2,
+        "failCnt": 3
+      }
     },
     {
-      id: 3,
-      userId: "solbitest",
-      sendingId: 1,
-      sendingType: "Kakao",
-      sendingRuleType: "CUSTOM",
-      success: true,
-      totalMessage: 10,
-      failedMessage: 2,
-      avgSpeed: 0.1,
-      inputTime: 1,
-      scheduleTime: 3,
-      startTime: 4,
-      completeTime: 5,
-      logTime: 6,
-      sendingStatus: null
+      "id": 3,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "PRICE",
+      "sendingType": "SMS",
+      "totalMessage": 2,
+      "title": null,
+      "mediaLink": null,
+      "content": "%고객명% 안녕",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 3,
+        "successCnt": 1,
+        "failCnt": 0
+      }
     },
-    // {
-    //   id: 2,
-    //   title: "2023-01-07 15:00:00",
-    //   status: "대기",
-    //   sendingType: "e-Mail",
-    //   totalSending: 2000,
-    //   successRate: 0,
-    //   detailLink: "#"
-    // },
-    // {
-    //   id: 3,
-    //   title: "2023-01-08 15:00:00",
-    //   status: "완료",
-    //   sendingType: "Kakao",
-    //   totalSending: 1000,
-    //   successRate: 99,
-    //   detailLink: "#"
-    // }
+    {
+      "id": 5,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "CUSTOM",
+      "sendingType": "SMS",
+      "totalMessage": 2,
+      "title": null,
+      "mediaLink": null,
+      "content": "테스트 내용",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 5,
+        "successCnt": 0,
+        "failCnt": 0
+      }
+    },
+    {
+      "id": 6,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "CUSTOM",
+      "sendingType": "SMS",
+      "totalMessage": 2,
+      "title": null,
+      "mediaLink": null,
+      "content": "테스트 내용",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 6,
+        "successCnt": 0,
+        "failCnt": 0
+      }
+    },
+    {
+      "id": 7,
+      "sendingStatus": null,
+      "inputTime": null,
+      "sendingRuleType": "CUSTOM",
+      "sendingType": "SMS",
+      "totalMessage": 2,
+      "title": null,
+      "mediaLink": null,
+      "content": "테스트 내용살려줘살려줘살려줘살려줘",
+      "sender": "01040109537",
+      "resultTxSuccessDto": {
+        "sendingId": 7,
+        "successCnt": 0,
+        "failCnt": 0
+      }
+    }
   ]
 
-  const [totalSendingInfo, setTotalSendingInfo] = useState(sendingListDummy);
+  const [totalSendingInfo, setTotalSendingInfo] = useState([]);
   useEffect(() => {
-    axios.get(apiConfig.resultSendingResult)
+    axios.get(apiConfig.resultSending, {headers: headers})
       .then(function (response) {
-        console.log(response.data.content);
-        setTotalSendingInfo(response.data.content);
+        console.log(response.data);
+        setTotalSendingInfo(response.data);
       }).catch(function (error) {
       // 오류발생시 실행
       console.log('더미 삽입');
@@ -107,7 +149,7 @@ function SendingInfoCardList() {
     });
   }, []);
 
-  const filterList = ['ALL', 'SMS', 'e-Mail', 'Kakao'];
+  const filterList = ['ALL', 'MMS', 'SMS', ' EMAIL', 'KAKAO'];
   const [sendingFilter, setSendingFilter] = useState("ALL");
 
   return (
@@ -148,7 +190,7 @@ function SendingInfoCard({sendingInfo}) {
       <CCard>
         <CCardBody>
           <CCardTitle>
-            <span>{sendingInfo.inputTime} </span>
+            <span>{new Date(sendingInfo.inputTime).toLocaleString()} </span>
             <CBadge color="primary" shape="rounded-pill">{sendingInfo.sendingStatus}</CBadge>
           </CCardTitle>
         </CCardBody>
@@ -161,11 +203,14 @@ function SendingInfoCard({sendingInfo}) {
           <div className="progress-group-header">
             <CIcon className="me-2" icon={cilSend} size="lg"/>
             <span>{sendingInfo.sendingStatus}</span>
-            <span className="ms-auto fw-semibold">{(sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}%</span>
+            <span
+              className="ms-auto fw-semibold">{(sendingInfo.resultTxSuccessDto.successCnt / sendingInfo.totalMessage) * 100}%</span>
           </div>
           <CProgress className="mb-3">
-            <CProgressBar color="success" value={100 - (sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}/>
-            <CProgressBar color="danger" value={(sendingInfo.failedMessage / sendingInfo.totalMessage) * 100}/>
+            <CProgressBar color="success"
+                          value={(sendingInfo.resultTxSuccessDto.successCnt / sendingInfo.totalMessage) * 100}/>
+            <CProgressBar color="danger"
+                          value={(sendingInfo.resultTxSuccessDto.failCnt / sendingInfo.totalMessage) * 100}/>
           </CProgress>
           <CButton href={'/#/resultDetail'}>상세</CButton>
         </CCardBody>
@@ -176,18 +221,22 @@ function SendingInfoCard({sendingInfo}) {
 
 SendingInfoCard.propTypes = {
   sendingInfo: PropTypes.shape({
-    sendingId: PropTypes.number,
-    userId: PropTypes.string,
-    sendingType: PropTypes.string,
+    id: PropTypes.number,
+    sendingStatus: PropTypes.string,
     sendingRuleType: PropTypes.string,
-    success: PropTypes.bool,
+    sendingType: PropTypes.string,
     totalMessage: PropTypes.number,
-    failedMessage: PropTypes.number,
-    avgSpeed: PropTypes.number,
+    title: PropTypes.string,
+    mediaLink: PropTypes.string,
+    content: PropTypes.string,
+    sender: PropTypes.string,
     inputTime: PropTypes.number,
-    scheduleTime: PropTypes.number,
-    startTime: PropTypes.number,
-    completeTime: PropTypes.number,
-    sendingStatus: PropTypes.string
+    resultTxSuccessDto: PropTypes.shape(
+      {
+        sendingId: PropTypes.number,
+        successCnt: PropTypes.number,
+        failCnt: PropTypes.number,
+      }),
   })
 };
+

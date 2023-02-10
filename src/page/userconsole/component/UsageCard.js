@@ -16,28 +16,35 @@ function UsageCarousel() {
 
 
   const totalUsagesDummy = [
-    {
-      "type": "SMS",
-      "usageCap": 1000,
-      "usage": 0
-    },
-    {
-      "type": "KAKAO",
-      "usageCap": 1000,
-      "usage": 0
-    },
-    {
-      "type": "EMAIL",
-      "usageCap": 1000,
-      "usage": 0
-    },
+    [
+      {
+        "sendingType": "SMS",
+        "totalUsage": 1100,
+        "usageCap": 100
+      },
+      {
+        "sendingType": "MMS",
+        "totalUsage": 1100,
+        "usageCap": 100
+      },
+      {
+        "sendingType": "KAKAO",
+        "totalUsage": 1101340,
+        "usageCap": 100
+      },
+      {
+        "sendingType": "EMAIL",
+        "totalUsage": 100110,
+        "usageCap": 100
+      }
+    ]
 
 
   ];
 
   const [totalUsages, setTotalUsages] = useState([]);
   useEffect(() => {
-    axios.get(apiConfig.resultUsage, {headers : headers})
+    axios.get(apiConfig.resultUsage, {headers: headers})
       .then(function (response) {
         console.log('usage api');
         console.log(response.data);
@@ -62,7 +69,8 @@ function UsageCarousel() {
       {
         totalUsages.map((item, index) => (
             <CCarouselItem key={index}>
-              <UsageCard title={item.type} type={item.type} usage={item.usage} usageCap={item.usageCap}/>
+              <UsageCard title={item.sendingType} sendingType={item.sendingType} totalUsage={item.totalUsage}
+                         usageCap={item.usageCap}/>
             </CCarouselItem>
           )
         )
@@ -74,7 +82,7 @@ function UsageCarousel() {
 
 export default UsageCarousel;
 
-function UsageCard({title, type, usage, usageCap}) {
+function UsageCard({title, sendingType, totalUsage, usageCap}) {
   return (
     <CCard>
       <CCardBody>
@@ -82,9 +90,9 @@ function UsageCard({title, type, usage, usageCap}) {
           <span>{title} </span>
         </CCardTitle>
         <CListGroup flush>
-          <CListGroupItem>타입 : {type}</CListGroupItem>
+          <CListGroupItem>타입 : {sendingType}</CListGroupItem>
           <CListGroupItem>사용 한도 : {usageCap}</CListGroupItem>
-          <CListGroupItem>총 사용량 : {usage}</CListGroupItem>
+          <CListGroupItem>총 사용량 : {totalUsage}</CListGroupItem>
         </CListGroup>
       </CCardBody>
     </CCard>
@@ -94,8 +102,8 @@ function UsageCard({title, type, usage, usageCap}) {
 
 UsageCard.propTypes = {
   title: PropTypes.string,
-  type: PropTypes.string,
-  usage: PropTypes.number,
+  sendingType: PropTypes.string,
+  totalUsage: PropTypes.number,
   usageCap: PropTypes.number
 };
 

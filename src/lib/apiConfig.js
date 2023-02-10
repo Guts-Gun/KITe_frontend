@@ -24,14 +24,14 @@ const apiConfig = {
     groupSelectDetail :     service.user + "/group", //+groupId,            // GET 그룹에 해당하는 주소록 리스트 조회
     groupCreate :           service.user + "/group/create",                 // POST 그룹 생성
     groupCopy :             service.user + "/group/copy",                   // POST 그룹 복사
-    groupUpdate :           service.user + "/group",                        // PUT 
+    groupUpdate :           service.user + "/group",                        // PUT
     groupDeleteSingle :     service.user + "/group", //+groupId,            // DELETE
     groupDeleteMulti :      service.user + "/group/list",                   // DELETE
     groupPhoneCreate :      service.user + "/group/address",//+groupId      // POST
     groupPhoneDelete :      service.user + "/group/address",//+groupId      // DELETE
 
     // USER_PHONEBOOK
-    phoneBookSelectList :       service.user + "/address",                  // GET         
+    phoneBookSelectList :       service.user + "/address",                  // GET
     phoneBookSelectListFilter : service.user + "/address/filter",           // GET (name/phone/email)
     phoneBookSelectPage :       service.user + "/address/page",             // GET (page)
     phoneBookSelectPageFilter : service.user + "/address/page/filter",      // GET( name/phone/email, page)
