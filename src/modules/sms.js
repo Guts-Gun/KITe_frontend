@@ -65,7 +65,7 @@ export const editBrokerList = createAction(EDIT_BROKER);
 
 
 
-const brokerSaga = createRequestSaga(EDIT_BROKER, smsAPI.brokerList);
+const brokerSaga = createRequestSaga(EDIT_BROKER, smsAPI.smsBrokerList);
 export function* smsSaga() {
     yield takeLatest(EDIT_BROKER, brokerSaga);
 }
@@ -203,7 +203,8 @@ const sms = handleActions({
                 weight : 0,
                 name : data.name,
                 price : data.price,
-                speed : data.speed
+                latency: data.latency,
+                color: data.color
             });
         });
         state.brokerList = brokerList;

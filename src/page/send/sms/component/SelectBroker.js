@@ -28,9 +28,11 @@ const SelectBroker = (prop) => {
     // 중계사 비율 선택 그래프
     let ratioLabels = [];
     let ratioData = [];
+    let colorData = [];
     prop.brokerList.map(function(data) {
         ratioLabels.push(data.name);
         ratioData.push(data.weight);
+        colorData.push(data.color);
     });
     
     // 중계사 비율 라디오 클릭
@@ -68,7 +70,7 @@ const SelectBroker = (prop) => {
                         <CTableHeaderCell scope="col">#</CTableHeaderCell>
                         <CTableHeaderCell scope="col">중계사 이름</CTableHeaderCell>
                         <CTableHeaderCell scope="col">가격(원)</CTableHeaderCell>
-                        {/* <CTableHeaderCell scope="col">속도</CTableHeaderCell> */}
+                        <CTableHeaderCell scope="col">지연율</CTableHeaderCell>
                         <CTableHeaderCell scope="col">비율(%)</CTableHeaderCell>
                     </CTableRow>
                     </CTableHead>
@@ -79,14 +81,15 @@ const SelectBroker = (prop) => {
                                 <CTableHeaderCell scope="row">{broker.brokerId}</CTableHeaderCell>
                                 <CTableDataCell>{broker.name}</CTableDataCell>
                                 <CTableDataCell>{broker.price}</CTableDataCell>
-                                {/* <CTableDataCell>KT</CTableDataCell> */}
+                                <CTableDataCell>{broker.latency}</CTableDataCell>
+ 
                                 <CTableDataCell>
                                     <CFormInput 
                                     id ={"broker_ck_"+broker.brokerId}
                                     name={broker.brokerId}
                                     type="number" value={broker.weight} 
                                     onChange={(e) => changeBrokerRatio(e)} 
-                                    min={0}/>
+                                    min={0} max={100}/>
                                 </CTableDataCell>
                             </CTableRow>
                             </>
@@ -103,7 +106,7 @@ const SelectBroker = (prop) => {
                         labels: ratioLabels,
                         datasets: [
                         {
-                            backgroundColor: ['red', 'green', 'blue', 'pink', 'yellow'],
+                            backgroundColor: colorData,
                             data: ratioData,
                         },
                         ],
