@@ -61,7 +61,7 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem> */}
         <CDropdownHeader className="bg-light fw-semibold py-2">{ auth != null ? auth.username : null}</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="/#/mypage">
           <CIcon icon={cilUser} className="me-2" />
           마이페이지
         </CDropdownItem>
