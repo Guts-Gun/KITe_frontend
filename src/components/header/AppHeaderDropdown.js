@@ -23,7 +23,7 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import avatar8 from './../../assets/images/avatars/test_profile.jpeg';
+import avatar8 from './../../assets/images/avatars/test_profile.png';
 import { auth } from 'src/modules/auth';
 
 
