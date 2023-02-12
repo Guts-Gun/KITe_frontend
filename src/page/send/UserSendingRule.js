@@ -28,14 +28,13 @@ import {
   CToastClose,
   CToaster,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import apiConfig from 'src/lib/apiConfig';
-import { useNavigate } from 'react-router-dom';
 import { auth } from 'src/modules/auth';
 import BrokerRatioList from './component/BrokerRatioList';
+import email from 'src/modules/email';
 
 
 const UserSendingRule  = () => {
@@ -49,8 +48,18 @@ const UserSendingRule  = () => {
 
   const [loading, setLoading] = useState(false); // 대기
 
+  const [toast, addToast] = useState(0);
+  const toaster = useRef();
+  const messageToast = (text) => (
+    <CToast>
+      <CToastHeader closeButton>
+      <strong className="me-auto">🐰 KIT:e</strong>
+      </CToastHeader>
+      <CToastBody>{ text }</CToastBody>
+    </CToast>
+  );
+ 
 
-  
   // 메시지 중계사 리스트
   const [msgBrokerList, setmsgBrokerList] = useState([]);
   useEffect(()=>{
@@ -72,18 +81,79 @@ const UserSendingRule  = () => {
   },[]);
   
 
-  function changeBrokerRatio(e){
-    const value = e.target.value;
-    // prop.brokerList.map(function(broker) {
-    //   if(broker.id == brokerId){
-    //       broker.weight = e.target.value;
-    //   }
-  };
+  function changeMsgBrokerWeight(e){
+    const brokerId = e.target.id.replace("ck_","");
+      msgBrokerList.map(function(broker) {
+        if(broker.id == brokerId){
+            broker.weight = e.target.value;
+        }
+    });
+    setmsgBrokerList(msgBrokerList);
+  }
+
+  function changeEmailBrokerWeight(e){
+    const brokerId = e.target.id.replace("ck_","");
+    emailBrokerList.map(function(broker) {
+      if(broker.id == brokerId){
+          broker.weight = e.target.value;
+      }
+    });
+    setEmailBrokerList(emailBrokerList);
+  }
+
+  function saveMsgUserSendingRule(){
+    let userSendingRuleDtoList =[];
+    let totalWeight = 0;
+    msgBrokerList.map(function(broker) {
+      totalWeight += Number(broker.weight);
+      userSendingRuleDtoList.push({ 
+        id: broker.user_sending_rule_id == null? null:broker.user_sending_rule_id,
+        brokerId: broker.id,
+        weight: broker.weight == null? 0 : broker.weight
+      })
+    });
+    if(totalWeight != 100){
+      addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
+      return;
+    }
+
+    save(userSendingRuleDtoList);
+  }
+
+  function saveEmailUserSendingRule(){
+    let userSendingRuleDtoList =[];
+    let totalWeight = 0;
+    emailBrokerList.map(function(broker) {
+      totalWeight += Number(broker.weight);
+      userSendingRuleDtoList.push({ 
+        id: broker.user_sending_rule_id == null? null:broker.user_sending_rule_id,
+        brokerId: broker.id,
+        weight: broker.weight == null? 0 : broker.weight
+      })
+    });
+    if(totalWeight != 100){
+      addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
+      return;
+    }
+    save(userSendingRuleDtoList);
+  }
+
+  function save(userSendingRuleDtoList){
+    axios.post(apiConfig.userSendingRuleReg, userSendingRuleDtoList, {headers: headers})
+    .then((response) => {
+        addToast(messageToast("저장 완료"));
+    })
+    .catch(function (error) {
+    }).then(function() {
+      setLoading(false);
+    });
+  }
   
 
-
+  
   return (
     <>
+      <CToaster ref={toaster} push={toast} placement="top-end" />
       <CCard className="m-4">
         <CCardHeader>
           <CRow>
@@ -102,11 +172,12 @@ const UserSendingRule  = () => {
                     <BrokerRatioList 
                       sendingType={"MSG"} 
                       brokerList={msgBrokerList}
+                      changeBrokerRatio={changeMsgBrokerWeight}
                     ></BrokerRatioList>                
                   </CCol>
                 </CRow>
                 <CCol lg={12} className="text-end">
-              <CButton color="success" variant="outline">
+              <CButton name='msg' color="success" variant="outline" onClick={saveMsgUserSendingRule}>
                 저장 
               </CButton>
             </CCol>
@@ -120,11 +191,12 @@ const UserSendingRule  = () => {
                     <BrokerRatioList
                       sendingType={"EMAIL"}
                       brokerList={emailBrokerList}
-                    ></BrokerRatioList>                
+                      changeBrokerRatio={changeEmailBrokerWeight}
+                    ></BrokerRatioList>
                   </CCol>
                 </CRow>
                 <CCol lg={12} className="text-end">
-              <CButton color="success" variant="outline">
+              <CButton name='email' color="success" variant="outline" onClick={saveEmailUserSendingRule}>
                 저장 
               </CButton>
             </CCol>

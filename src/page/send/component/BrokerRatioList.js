@@ -30,18 +30,16 @@ const BrokerRatioList = (prop) => {
     let ratioData = [];
     let colorData = [];
 
-    console.log(prop.userSendingRule);
     prop.brokerList.map(function(data) {
         ratioLabels.push(data.name);
         ratioData.push(data.weight);
         colorData.push(data.color);
     });
 
-    
     function changeBrokerRatio(e){
-        prop.changeBrokerRatio(prop.sendingType, e.target.value)
-
+        prop.changeBrokerRatio(e);
     }
+
     return (
         <CCol className="col-sm-10">
             <CRow>
@@ -59,7 +57,7 @@ const BrokerRatioList = (prop) => {
                     <CTableBody>
                         {
                         prop.brokerList.map((broker, index)=>(<>
-                            <CTableRow key={ + "broker"+broker.id}>
+                            <CTableRow key={"broker"+broker.id}>
                                 <CTableHeaderCell scope="row">{broker.id}</CTableHeaderCell>
                                 <CTableDataCell>{broker.name}</CTableDataCell>
                                 <CTableDataCell>{broker.price}</CTableDataCell>
@@ -68,7 +66,7 @@ const BrokerRatioList = (prop) => {
                                     id ={"ck_"+broker.id}
                                     name={broker.id}
                                     type="number" 
-                                    value={broker.weight} 
+                                    value={broker.weight == null? 0 : broker.weight} 
                                     onChange={(e) => changeBrokerRatio(e)}
                                     min={0} max={100}/>
                                 </CTableDataCell>
