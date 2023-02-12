@@ -270,7 +270,7 @@ const SendEmail = () => {
 
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">전송 시간</CFormLabel>
-              <CCol xs={10}>
+              <CCol className="col-sm-10">
                   <CFormSwitch label={"예약 발송 " + (reservYn == "Y" ?
                       (sending.reservDate=="" || sending.reservTime==""? "" : 
                       moment(sending.reservationTime, "YYYY-MM-DD hh:mm:ss").fromNow('')): "") } id="reserv_send" onChange={changeSwitch}/>
@@ -286,61 +286,54 @@ const SendEmail = () => {
             </CRow>
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">발신 이메일</CFormLabel>
-              <CCol xs={10}>
-                 <CInputGroup className="mb-1">
+              <CCol className="col-sm-10 p-0">
                   <CFormSelect onChange={(e) => changeSenderEmail(e)}>
                       <option value="">선택</option>
                       { senderEmailList.map((senderEmail)=>(
                           <option key={senderEmail.id} value={senderEmail.email}>{senderEmail.email} </option>
                       ))}
                   </CFormSelect>
-                </CInputGroup>
               </CCol>
             </CRow>
             <CRow className="mb-3">
               <CFormLabel className="col-sm-2">전송 내용</CFormLabel>
               <CCol className="col-sm-10">
+              
                 <CRow>
-                  <CCol sm={12}>
-                    <CRow>
-                      <CInputGroup className="mb-1 p-0">
-                        <CFormInput placeholder="제목" value={sending.title} onChange={(e) => changeTitle(e)}/>
-                      </CInputGroup>                   
-                    </CRow>
-                    <CRow className="mb-1">
-                      <CFormSelect onChange={(e) => changeMessageTemplate(e)}>
-                        <option value="" >내용 템플릿 선택</option>
-                        { templateList.map((messageTemplate)=>(
-                          <option key={"template_"+messageTemplate.id} value={messageTemplate.content}>
-                            {messageTemplate.title}
-                          </option>
-                        ))
-                      }
-                      </CFormSelect>
-                    </CRow>
-                    <CRow>
-                      <CFormTextarea
-                        rows="6"
-                        onChange={(e)=>{changeContent(e)}}
-                        value={sending.content}
-                      />
-                    </CRow>
-                    <CRow className='mt-3'>
-                      <CAccordion  activeItemKey={1}>
-                        <CAccordionItem itemKey={1}>
-                          <CAccordionHeader>문자열 치환하기 (고객명 자동삽입기능)</CAccordionHeader>
-                          <CAccordionBody>
-                            <strong><code>%고객명%</code>을 입력하시면 고객명 항목에 있는 내용이 변환되어 입력됩니다.</strong>
-                            <p>주소록 성명(이름)항목에 있는 내용이 입력되며 단문은 한글기준 3자(6byte), 장문은 제한 없습니다.</p>
-                          </CAccordionBody>
-                        </CAccordionItem>
-                      </CAccordion>
-                    </CRow>
-                  </CCol>
-        
+                  <CInputGroup className="mb-1 p-0">
+                    <CFormInput placeholder="제목" value={sending.title} onChange={(e) => changeTitle(e)}/>
+                  </CInputGroup>                   
                 </CRow>
-             
-              </CCol>
+                <CRow className="mb-1">
+                  <CFormSelect onChange={(e) => changeMessageTemplate(e)}>
+                    <option value="" >내용 템플릿 선택</option>
+                    { templateList.map((messageTemplate)=>(
+                      <option key={"template_"+messageTemplate.id} value={messageTemplate.content}>
+                        {messageTemplate.title}
+                      </option>
+                    ))
+                  }
+                  </CFormSelect>
+                </CRow>
+                <CRow>
+                  <CFormTextarea
+                    rows="6"
+                    onChange={(e)=>{changeContent(e)}}
+                    value={sending.content}
+                  />
+                </CRow>
+                <CRow className='mt-3'>
+                  <CAccordion  activeItemKey={1}>
+                    <CAccordionItem itemKey={1}>
+                      <CAccordionHeader>문자열 치환하기 (고객명 자동삽입기능)</CAccordionHeader>
+                      <CAccordionBody>
+                        <strong><code>%고객명%</code>을 입력하시면 고객명 항목에 있는 내용이 변환되어 입력됩니다.</strong>
+                        <p>주소록 성명(이름)항목에 있는 내용이 입력되며 단문은 한글기준 3자(6byte), 장문은 제한 없습니다.</p>
+                      </CAccordionBody>
+                    </CAccordionItem>
+                  </CAccordion>
+                </CRow>
+          </CCol>
             </CRow>
             <SelectBroker 
             brokerList = {brokerList} 
