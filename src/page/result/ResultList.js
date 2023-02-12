@@ -5,63 +5,89 @@ import axios from "axios";
 import apiConfig from "../../lib/apiConfig";
 import MyPagination from "./component/MyPagination";
 import SendingResultSearchOption from "./component/SendingResultSearchOption";
+import {useSelector} from "react-redux";
 
 
 function ResultList() {
 
+  const {auth} = useSelector(({auth}) => ({auth: auth}));
+  let headers = null;
+  if (auth != null) {
+    const accessToken = auth.accesstoken;
+    headers = {'Authorization': 'Bearer ' + accessToken};
+  }
+
   const sendingResultPageDummy = {
-    content: [
+    "content": [
       {
-        id: 1,
-        userId: "1",
-        sendingId: 1,
-        sendingType: "SMS",
-        sendingRuleType: "CUSTOM",
-        success: true,
-        totalMessage: 10,
-        failedMessage: 2,
-        avgSpeed: 0.1,
-        inputTime: 2,
-        scheduleTime: 3,
-        startTime: 4,
-        completeTime: 5,
-        logTime: 6
+        "id": 1,
+        "userId": "solbitest",
+        "sendingId": 1,
+        "sendingType": "SMS",
+        "sendingRuleType": null,
+        "success": null,
+        "totalMessage": 5,
+        "failedMessage": null,
+        "avgLatency": null,
+        "inputTime": null,
+        "scheduleTime": null,
+        "startTime": null,
+        "completeTime": null,
+        "logTime": null,
+        "sendingStatus": null
+      },
+      {
+        "id": 2,
+        "userId": "solbitest",
+        "sendingId": 2,
+        "sendingType": "MMS",
+        "sendingRuleType": null,
+        "success": null,
+        "totalMessage": 1000,
+        "failedMessage": null,
+        "avgLatency": null,
+        "inputTime": null,
+        "scheduleTime": null,
+        "startTime": null,
+        "completeTime": null,
+        "logTime": null,
+        "sendingStatus": null
       }
     ],
-    pageable: {
-      sort: {
-        empty: true,
-        sorted: false,
-        unsorted: true
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
       },
-      offset: 0,
-      pageNumber: 0,
-      pageSize: 1,
-      unpaged: false,
-      paged: true
+      "offset": 0,
+      "pageSize": 2,
+      "pageNumber": 0,
+      "paged": true,
+      "unpaged": false
     },
-    last: true,
-    totalPages: 1,
-    totalElements: 1,
-    size: 1,
-    number: 0,
-    sort: {
-      empty: true,
-      sorted: false,
-      unsorted: true
+    "last": false,
+    "totalPages": 4,
+    "totalElements": 7,
+    "size": 2,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
     },
-    first: true,
-    numberOfElements: 1,
-    empty: false
+    "first": true,
+    "numberOfElements": 2,
+    "empty": false
   };
 
-  const [sendingResultPage, setSendingResultPage] = useState(sendingResultPageDummy);
+  const [sendingResultPage, setSendingResultPage] = useState({content: [],});
 
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    axios.get(apiConfig.resultSendingResult + "?page=" + page + "&size=" + limit)
+    axios.get(apiConfig.resultSendingResult + "?page=" + page + "&size=" + limit, {headers: headers})
       .then(function (response) {
         console.log('api 호출');
         setSendingResultPage(response.data);

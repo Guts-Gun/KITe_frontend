@@ -99,6 +99,7 @@ const routes = [
   // 발송 결과 확인
   { path: '/resultList', name: 'Result List', element: ResultList },
   { path: '/resultdetail', name: 'Result Detail', element: ResultDetail },
+  { path: '/resultdetail/:sending_id', name: 'Result Detail', element: ResultDetail },
 
 
   { path: '/', exact: true, name: 'Home' },

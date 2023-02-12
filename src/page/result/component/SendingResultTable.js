@@ -14,7 +14,7 @@ function SendingResultTable({sendingResultList}) {
           <CTableHeaderCell scope="col">개수(건)</CTableHeaderCell>
           <CTableHeaderCell scope="col">등록시각</CTableHeaderCell>
           <CTableHeaderCell scope="col">예약시각</CTableHeaderCell>
-          <CTableHeaderCell scope="col">성공여부</CTableHeaderCell>
+          <CTableHeaderCell scope="col">전송상태</CTableHeaderCell>
           <CTableHeaderCell scope="col">실패개수</CTableHeaderCell>
           <CTableHeaderCell scope="col">평균속도(초)</CTableHeaderCell>
           <CTableHeaderCell scope="col">완료시각</CTableHeaderCell>
