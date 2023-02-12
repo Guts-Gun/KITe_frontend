@@ -53,6 +53,8 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 //userconsole
 const UserConsole = React.lazy(() => import('./page/userconsole/UserConsole'));
+//mypage
+const MyPage = React.lazy(() => import('./page/mypage/MyPage'));
 
 //group
 const GroupList = React.lazy(() => import('./page/phonebook/group/List/GroupList'))
@@ -67,7 +69,10 @@ const SenderPhoneList = React.lazy(() => import('./page/sender/Phone/SenderPhone
 const SenderEmailList = React.lazy(() => import('./page/sender/Email/SenderEmailList'));
 
 //send
-const SendSMS = React.lazy(() => import('./page/send/sms/SendSms'));
+const SendSMS = React.lazy(() => import('./page/send/SendSms'));
+const SendEmail = React.lazy(() => import('./page/send/SendEmail'));
+const UserSendingRule = React.lazy(() => import('./page/send/UserSendingRule'));
+
 
 //setting
 const templateList = React.lazy(() => import('./page/template/TemplateList'));
@@ -77,28 +82,23 @@ const ResultList = React.lazy(() => import('./page/result/ResultList'));
 const ResultDetail = React.lazy(() => import('./page/result/ResultDetail'));
 
 const routes = [
-  //user console
-  { path: '/userConsole', name: 'UserConsole', element: UserConsole },
-  //그룹
-  { path: '/groupList', name: 'GroupList', element: GroupList },
-  { path: '/groupDetail', name: 'GroupDetail', element: GroupDetail },
-  //주소록(receiver)
-  { path: '/receiverList', name: 'ReceiverList', element: ReceiverList },
-  { path: '/receiverMake', name: 'ReceiverMake', element: ReceiverMake },
-  //발신번호(sender)
-  { path: '/senderPhoneList', name: 'SenderPhoneList', element: SenderPhoneList },
-  { path: '/senderEmailList', name: 'SenderEmailList', element: SenderEmailList },
-
-
-  //발송(send)
-  { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },
-
-  // 설정(setting)
-  { path: '/templateList', name: 'Template List', element: templateList },
-
-  //결과(result)
+  { path: '/mypage', name: 'My page', element: MyPage },                               // 마이페이지
+  { path: '/userConsole', name: 'User Console', element: UserConsole },                // 유저콘솔
+  // 발송
+  { path: '/sendSms', name: 'Send SMS/MMS', element: SendSMS },                        // 메시지발송
+  { path: '/sendEmail', name: 'Send Email', element: SendEmail },                      // 이메일발송
+  { path: '/userSendingRule', name: 'User Sending RUle', element: UserSendingRule },                        // 메시지발송
+  // 설정
+  { path: '/templateList', name: 'Template List', element: templateList },             // 템플릿 리스트
+  { path: '/groupList', name: 'Group List', element: GroupList },                      // 그룹 리스트
+  { path: '/groupDetail', name: 'Group Detail', element: GroupDetail },                // 그룹 상세
+  { path: '/receiverList', name: 'Receiver List', element: ReceiverList },             // 주소록
+  { path: '/receiverMake', name: 'Receiver Make', element: ReceiverMake },             // 주소록
+  { path: '/senderPhoneList', name: 'Sender Phone List', element: SenderPhoneList },
+  { path: '/senderEmailList', name: 'Sender Email List', element: SenderEmailList },
+  // 발송 결과 확인
   { path: '/resultList', name: 'Result List', element: ResultList },
-  { path: '/resultdetail', name: 'ResultDetail', element: ResultDetail },
+  { path: '/resultdetail', name: 'Result Detail', element: ResultDetail },
 
 
   { path: '/', exact: true, name: 'Home' },

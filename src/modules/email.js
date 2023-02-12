@@ -2,25 +2,26 @@ import { createAction, handleActions } from 'redux-actions';
 import createRequestSaga, { createRequestActionTypes} from '../lib/createRequestSaga';
 import { delay, put, takeLatest, select, throttle } from 'redux-saga/effects';
 import moment from 'moment';
-import * as smsAPI from '../lib/api/sendApi';
+import * as sendApi from '../lib/api/sendApi';
 import { detach } from 'redux-saga';
 
-const INITIALIZE_FORM = 'sms/initialize_form';          // 초기화
-const ADD_RECEIVER = 'sms/add_receiver';                // 수신자 추가
-const ADD_RECEIVERS = 'sms/add_receivers';              // 수신자 일괄 추가
-const DELETE_RECEIVER = 'sms/delete_receiver';          // 수신자 삭제
-const DELETE_ALLRECEIVER = 'sms/delete_allreceiver';    // 수신자 삭제
-const EDIT_SENDER = 'sms/edit_sender';                  // 발신번호 수정
-const EDIT_RESERVATION = 'sms/edit_reservation';        // 예약 여부 수정
-const EDIT_RESERVDATE = 'sms/edit_reservdate';          // 예약 날짜 수정
-const EDIT_RESERVTIME = 'sms/edit_reservtime';          // 예약 시간 수정 
-const EDIT_CONTENT = 'sms/edit_content';                // 발송 내용 수정
-const EDIT_SENDREPLACEMEMT = 'sms/eidt_sendreplace';    // 대채발송 여부 수정
-const EDIT_REPLACEADDR = 'sms/eidt_replaceArr';         // 대채발송 발신정보 수정
-const EDIT_SENDINGRULETYPE = 'sms/edit_sendingruletype';// 중계사 비율 타입 수정
-const EDIT_BROKERRATIO = 'sms/edit_brokerratio';        // 중계사 비율 설정
+const INITIALIZE_FORM = 'email/initialize_form';          // 초기화
+const ADD_RECEIVER = 'email/add_receiver';                // 수신자 추가
+const ADD_RECEIVERS = 'email/add_receivers';              // 수신자 일괄 추가
+const DELETE_RECEIVER = 'email/delete_receiver';          // 수신자 삭제
+const DELETE_ALLRECEIVER = 'email/delete_allreceiver';    // 수신자 삭제
+const EDIT_SENDER = 'email/edit_sender';                  // 발신번호 수정
+const EDIT_RESERVATION = 'email/edit_reservation';        // 예약 여부 수정
+const EDIT_RESERVDATE = 'email/edit_reservdate';          // 예약 날짜 수정
+const EDIT_RESERVTIME = 'semailms/edit_reservtime';       // 예약 시간 수정 
+const EDIT_CONTENT = 'email/edit_content';                // 발송 내용 수정
+const EDIT_TITLE = 'email/edit_title';                      // 발송 내용 수정
+const EDIT_SENDREPLACEMEMT = 'email/eidt_sendreplace';    // 대채발송 여부 수정
+const EDIT_REPLACEADDR = 'email/eidt_replaceArr';         // 대채발송 발신정보 수정
+const EDIT_SENDINGRULETYPE = 'email/edit_sendingruletype';// 중계사 비율 타입 수정
+const EDIT_BROKERRATIO = 'email/edit_brokerratio';        // 중계사 비율 설정
 
-const [EDIT_BROKER, BROKERLIST] = createRequestActionTypes('sms/edit_brokerlist');  // 중계사 리스트
+const [EDIT_BROKER, BROKERLIST] = createRequestActionTypes('email/edit_brokerlist');  // 중계사 리스트
 
   
 
@@ -53,6 +54,9 @@ export const editReservTime = createAction(EDIT_RESERVTIME,({value, name}) => ({
 export const editContent = createAction(EDIT_CONTENT,( { value }) => ({
     value
 }));
+export const editTitle = createAction(EDIT_TITLE,( { value }) => ({
+    value
+}));
 export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({checked}) => ({
     checked
 }));
@@ -69,9 +73,9 @@ export const editBrokerList = createAction(EDIT_BROKER);
 
 
 
-const brokerSaga = createRequestSaga(EDIT_BROKER, smsAPI.smsBrokerList);
-export function* smsSaga() {
-    yield takeLatest(EDIT_BROKER, brokerSaga);
+const emailBrokerSaga = createRequestSaga(EDIT_BROKER, sendApi.emailBrokerList);
+export function* emailSaga() {
+    yield takeLatest(EDIT_BROKER, emailBrokerSaga);
 }
 
 
@@ -86,7 +90,7 @@ const initialState = {
         reservTime : "",                    // 예약 시간
         reservationTime : null,             // 예약 날짜 시간
         sendingRuleType : "CUSTOM",         // 중계사 비율 타입
-        sendingType : "SMS",                // 발송 타입
+        sendingType : "EMAIL",              // 발송 타입
         replaceYn :"N",                     // 대체 발송 여부
         totalMessage : 0,                   // 총 메세지 개수
         title : "",                         // 제목
@@ -98,7 +102,7 @@ const initialState = {
                                             // weight 가중치
     };
 
-const sms = handleActions({
+const email = handleActions({
     [INITIALIZE_FORM]: (state) => {
         return initialState;
     },
@@ -168,7 +172,10 @@ const sms = handleActions({
         return { ...state}    
     },
 
-
+    [EDIT_TITLE] : (state, {payload: pl }) => {
+        state.sendingDto.title = pl.value;
+        return { ...state}    
+    },
 
     [EDIT_CONTENT] : (state, {payload: pl }) => {
 
@@ -240,19 +247,7 @@ const sms = handleActions({
         return { ...state} 
     },
 
-    [EDIT_SENDREPLACEMEMT]: (state, { payload: pl }) => {
-        state.sendingDto.replaceYn = pl.checked? "Y" : "N";
-        return { ...state} 
-    },
 
-    [EDIT_SENDER]: (state, { payload: pl }) => {
-        state.sender = pl.value;
-        return { ...state} 
-    },
-    [EDIT_REPLACEADDR]: (state, { payload: pl }) => {
-        state.replaceSender = pl.value;
-        return { ...state} 
-    },
     [EDIT_SENDINGRULETYPE] : (state, { payload: pl }) => {
         state.sendingDto.sendingRuleType = pl.value;
         return { ...state} 
@@ -272,4 +267,4 @@ const sms = handleActions({
   initialState
 );
 
-export default sms;
+export default email;

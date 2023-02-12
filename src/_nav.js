@@ -21,12 +21,11 @@ import {
   cilBookmark,
   cilChatBubble,
   cilChart,
-  cilChartLine
+  cilListNumberedRtl
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
-
   {
     component: CNavItem,
     name: 'User Console',
@@ -44,22 +43,22 @@ const _nav = [
 
   {
     component: CNavItem,
-    name: 'SMS/MMS',
+    name: '문자메시지 전송',
     to: '/sendSms',
     icon: <CIcon icon={cilScreenSmartphone} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'e-mail',
-  //   to: '/',
-  //   icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
-  // },
-  // {
-  //   component: CNavItem,
-  //   name: '카카오톡',
-  //   to: '/',
-  //   icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
-  // },
+  {
+    component: CNavItem,
+    name: '이메일 전송',
+    to: '/sendEMail',
+    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: '기본 분배 비율 설정',
+    to: '/UserSendingRule',
+    icon: <CIcon icon={cilListNumberedRtl} customClassName="nav-icon" />,
+  },
   // {
   //   component: CNavGroup,
   //   name: '팩스',
