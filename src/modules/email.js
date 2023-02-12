@@ -97,7 +97,6 @@ const initialState = {
     },
     reservYn : "N",                         // 예약 여부
     sender : null,                          // 발신자 정보
-    replaceSender : null,                   // 대체발송 발신자 정보
     brokerList : []                         // brokerId 브로커 아이디
                                             // weight 가중치
     };
@@ -139,8 +138,7 @@ const email = handleActions({
             }
             const receiver = {
                 name : data.name,
-                receiver : data.phone,
-                replace_receiver : data.email,
+                receiver : data.email,
                 phone : phoneTxt,
                 email : data.email
             }
@@ -247,7 +245,10 @@ const email = handleActions({
         return { ...state} 
     },
 
-
+    [EDIT_SENDER]: (state, { payload: pl }) => {
+        state.sender = pl.value;
+        return { ...state} 
+    },
     [EDIT_SENDINGRULETYPE] : (state, { payload: pl }) => {
         state.sendingDto.sendingRuleType = pl.value;
         return { ...state} 

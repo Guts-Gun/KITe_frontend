@@ -63,7 +63,6 @@ const SendEmail = () => {
     sending : email.sendingDto,
     reservYn : email.reservYn,
     sender : email.sender,
-    replaceSender : email.replaceSender,
     brokerList : email.brokerList,
   }));
   
@@ -91,64 +90,69 @@ const SendEmail = () => {
   // 발송 요청
   function onclickSend(){
 
-    // if(receiverList.length<1){
-    //   console.log("test");
-    //   addToast(messageToast("수신자를 선택해주세요."));
-    //   return;
-    // }
-
-    // console.log(reservYn);
-    // if(reservYn === "Y" && (sending.reservDate == "" || sending.reservTime == "" )){
-    //   addToast(messageToast("전송 시간을 입력해주세요."));
-    //   return;
-    // }
-    // if(sender == null){
-    //   addToast(messageToast("발신번호를 선택해주세요."));
-    //   return;
-    // }
-    // if(sending.contentLength <1){
-    //   addToast(messageToast("메시지 내용을 입력해주세요."));
-    //   return;
-    // }
+    console.log(receiverList);
+    console.log(sending);
+    console.log(reservYn);
+    console.log(sender);
+    console.log(brokerList);
 
 
-    // if(sending.sendingRuleType == "CUSTOM"){
-    //   let totalWeight = 0;
-    //   brokerList.map(function(broker) {
-    //     totalWeight += Number(broker.weight);
-    //   });
-    //   console.log(totalWeight);
-    //   if(totalWeight != 100){
-    //     addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
-    //     return;
-    //   }
-    // }
+    if(receiverList.length<1){
+      console.log("test");
+      addToast(messageToast("수신자를 선택해주세요."));
+      return;
+    }
 
-    // const body = {
-    //   receiverList : receiverList,
-    //   sendingDTO : sending,
-    //   reservYn : reservYn,
-    //   sender : sender,
-    //   replaceSender :replaceSender,
-    //   brokerList : brokerList,
-    // };
-    // console.log(body);
+    console.log(reservYn);
+    if(reservYn === "Y" && (sending.reservDate == "" || sending.reservTime == "" )){
+      addToast(messageToast("전송 시간을 입력해주세요."));
+      return;
+    }
+    if(sender == null){
+      addToast(messageToast("발신이메일을 선택해주세요."));
+      return;
+    }
+    if(sending.contentLength <1){
+      addToast(messageToast("메시지 내용을 입력해주세요."));
+      return;
+    }
+
+    if(sending.sendingRuleType == "CUSTOM"){
+      let totalWeight = 0;
+      brokerList.map(function(broker) {
+        totalWeight += Number(broker.weight);
+      });
+      console.log(totalWeight);
+      if(totalWeight != 100){
+        addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
+        return;
+      }
+    }
+
+    const body = {
+      receiverList : receiverList,
+      sendingDTO : sending,
+      reservYn : reservYn,
+      sender : sender,
+      replaceSender :replaceSender,
+      brokerList : brokerList,
+    };
+    console.log(body);
     
     setLoading(true);
-  //   try {
-  //     axios.post(apiConfig.sendRequest, body, {headers: headers})
-  //       .then((response) => {
-  //         addToast(messageToast("발송 요청 완료"));
-  //         alert("발송 요청 완료");
-  //         navigate('/#/userConsole');
-  //       })
-  //     .catch(function (error) {
-  //     }).then(function() {
-  //       setLoading(false);
-  //     });
-  //   } catch (e){
-  //     setLoading(false);
-  //   }
+    try {
+      axios.post(apiConfig.sendRequest, body, {headers: headers})
+        .then((response) => {
+          alert("발송 요청 완료");
+          navigate('/userConsole');
+        })
+      .catch(function (error) {
+      }).then(function() {
+        setLoading(false);
+      });
+    } catch (e){
+      setLoading(false);
+    }
   };
 
    // 제목 수정
@@ -336,12 +340,12 @@ const SendEmail = () => {
           </CCol>
             </CRow>
             <SelectBroker 
+            sendingType={"EMAIL"}
             brokerList = {brokerList} 
             sendingRuleType={sending.sendingRuleType}
             editSendingRuleType = {editSendingRuleType}
             editBrokerRatio ={editBrokerRatio}
             />
-            
           </CForm>
         </CCardBody>
 

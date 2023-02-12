@@ -145,9 +145,8 @@ const SendSms = () => {
     try {
       axios.post(apiConfig.sendRequest, body, {headers: headers})
         .then((response) => {
-          addToast(messageToast("발송 요청 완료"));
           alert("발송 요청 완료");
-          navigate('/#/userConsole');
+          navigate('/userConsole');
         })
       .catch(function (error) {
       }).then(function() {
@@ -422,7 +421,8 @@ const SendSms = () => {
              
               </CCol>
             </CRow>
-            <SelectBroker 
+            <SelectBroker
+            sendingType={"MSG"}
             brokerList = {brokerList} 
             sendingRuleType={sending.sendingRuleType}
             editSendingRuleType = {editSendingRuleType}
