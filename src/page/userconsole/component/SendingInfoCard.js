@@ -212,7 +212,7 @@ function SendingInfoCard({sendingInfo}) {
             <CProgressBar color="danger"
                           value={(sendingInfo.resultTxSuccessDto.failCnt / sendingInfo.totalMessage) * 100}/>
           </CProgress>
-          <CButton href={'/#/resultDetail'}>상세</CButton>
+          <CButton href={'/#/resultDetail/'+ sendingInfo.id}>상세</CButton>
         </CCardBody>
       </CCard>
     </CCol>

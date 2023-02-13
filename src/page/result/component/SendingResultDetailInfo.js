@@ -7,20 +7,26 @@ import PropTypes from "prop-types";
 function SendingResultDetailInfo({sendingId}) {
 
   const sendingResultDetailInfoDummy = {
-    id: 1,
-    userId: "1",
-    sendingId: 1,
-    sendingType: "SMS",
-    sendingRuleType: "CUSTOM",
-    success: true,
-    totalMessage: 10,
-    failedMessage: 2,
-    avgSpeed: 0.1,
-    inputTime: 1,
-    scheduleTime: 3,
-    startTime: 4,
-    completeTime: 5,
-    logTime: 6
+    "id": 1,
+    "userId": "solbitest",
+    "sendingId": 1,
+    "sendingType": "SMS",
+    "sendingRuleType": "CUSTOM",
+    "success": true,
+    "totalMessage": 5,
+    "failedMessage": null,
+    "avgLatency": 3335,
+    "inputTime": 1,
+    "scheduleTime": 3,
+    "startTime": 5,
+    "completeTime": 2,
+    "logTime": 2,
+    "sendingStatus": "COMPLETE",
+    "resultTxSuccessDto": {
+      "sendingId": 1,
+      "successCnt": 3,
+      "failCnt": 2
+    }
   }
   const [sendingResultDetailInfo, setSendingResultDetailInfo] = useState(sendingResultDetailInfoDummy);
   useEffect(() => {
@@ -47,9 +53,9 @@ function SendingResultDetailInfo({sendingId}) {
           <p>개수(건) : {sendingResultDetailInfo.totalMessage}</p>
           <p>등록 시간 : {sendingResultDetailInfo.inputTime}</p>
           <p>예약 시간 : {sendingResultDetailInfo.scheduleTime}</p>
-          <p>성공 여부 : {sendingResultDetailInfo.success}</p>
-          <p>실패 개수 : {sendingResultDetailInfo.failedMessage}</p>
-          <p>평균 속도(초): {sendingResultDetailInfo.avgSpeed}</p>
+          <p>발송 상태 : {sendingResultDetailInfo.sendingStatus}</p>
+          <p>실패 개수 : {sendingResultDetailInfo.resultTxSuccessDto.failCnt}</p>
+          <p>평균 속도(ms): {sendingResultDetailInfo.avgLatency}</p>
           <p>완료 시간 : {sendingResultDetailInfo.completeTime}</p>
         </CCol>
       </CRow>
