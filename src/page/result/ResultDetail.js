@@ -9,7 +9,7 @@ function ResultDetail() {
 
 
   let {sending_id} = useParams();
-  console.log(Number(sending_id.tonu));
+  console.log(Number(sending_id));
 
 
   return (

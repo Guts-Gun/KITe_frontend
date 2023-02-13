@@ -97,6 +97,7 @@ function ResultList() {
       setSendingResultPage(sendingResultPageDummy);
     }).then(function () {
       // 항상 실행
+      setSendingResultPage(sendingResultPageDummy);
     });
   }, [page]);
 
