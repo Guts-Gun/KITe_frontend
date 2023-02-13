@@ -19,9 +19,9 @@ function ResultDetail() {
           <strong>발송 결과 상세 페이지</strong>
         </CCardHeader>
         <CCardBody>
-          <SendingResultDetailInfo sendingId={(sending_id)}/>
-          <SendingResultBrokerGraph sendingId={sending_id}/>
-          <ResultTxResultTable sendingId={sending_id}/>
+          <SendingResultDetailInfo sendingId={Number(sending_id)}/>
+          <SendingResultBrokerGraph sendingId={Number(sending_id)}/>
+          <ResultTxResultTable sendingId={Number(sending_id)}/>
         </CCardBody>
       </CCard>
     </div>

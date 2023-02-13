@@ -2,6 +2,8 @@ import {CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow} from "@core
 import React from "react";
 import SendingResultRow from "./SendingResultRow";
 import PropTypes from "prop-types";
+import ErrorComponent from 'src/component/error/ErrorComponent';
+
 
 function SendingResultTable({sendingResultList}) {
 
@@ -15,18 +17,20 @@ function SendingResultTable({sendingResultList}) {
           <CTableHeaderCell scope="col">등록시각</CTableHeaderCell>
           <CTableHeaderCell scope="col">예약시각</CTableHeaderCell>
           <CTableHeaderCell scope="col">전송상태</CTableHeaderCell>
+          <CTableHeaderCell scope="col">성공개수</CTableHeaderCell>
           <CTableHeaderCell scope="col">실패개수</CTableHeaderCell>
-          <CTableHeaderCell scope="col">평균속도(초)</CTableHeaderCell>
+          <CTableHeaderCell scope="col">소요시간(ms)</CTableHeaderCell>
           <CTableHeaderCell scope="col">완료시각</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
       <CTableBody>
-        {
-          sendingResultList.map((sendingResult, index) =>(
 
-            <SendingResultRow key = {index} rowIndex={index} sendingResult={sendingResult}/>
-          ))
+        { sendingResultList.length > 0 ? ( sendingResultList.map((sendingResult, index) =>(
+          <SendingResultRow key = {index} rowIndex={index} sendingResult={sendingResult}/>
+          )))
+          : <ErrorComponent log={"검색한 결과가 없어요"}></ErrorComponent> 
         }
+
       </CTableBody>
     </CTable>
   );

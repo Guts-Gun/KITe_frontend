@@ -10,44 +10,50 @@ function SendingResultBrokerGraph({sendingId}) {
     "id": 1,
     "brokerCount": {
       "name": [
-        "SK",
-        "LG",
-        "SKT"
+        "SKT",
+        "KT"
+      ],
+      "color": [
+        "#FF0000",
+        "#1AFF00"
       ],
       "data": [
         2,
-        2,
-        2
+        1
       ]
     },
     "brokerSuccessFail": {
       "name": [
-        "SK-false",
-        "SK-true",
-        "LG-false",
-        "LG-true",
-        "SKT-false",
-        "SKT-true"
+        "SKT- 성공",
+        "SKT- 실패",
+        "KT- 성공",
+        "KT- 실패"
+      ],
+      "color": [
+        "#FF0000",
+        "#FF0000",
+        "#1AFF00",
+        "#1AFF00"
       ],
       "data": [
         1,
         1,
         1,
-        1,
-        1,
-        1
+        0
       ]
     },
     "brokerSpeed": {
       "name": [
-        "SK",
-        "LG",
-        "SKT"
+        "SKT",
+        "KT"
+      ],
+      "color": [
+        "#FF0000",
+        "#1AFF00"
       ],
       "data": [
-        1.0,
-        1.0,
-        1.0
+        4.0,
+        9998.0
       ]
     }
   }
@@ -85,7 +91,7 @@ function SendingResultBrokerGraph({sendingId}) {
                     datasets: [
                       {
                         // 색 어칼지 생각해보기
-                        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                        backgroundColor: sendingResultBroker.brokerCount.color,
                         data: sendingResultBroker.brokerCount.data,
                       },
                     ],
@@ -108,7 +114,7 @@ function SendingResultBrokerGraph({sendingId}) {
                   datasets: [
                     {
                       label: 'Count',
-                      backgroundColor: '#f87979',
+                      backgroundColor: sendingResultBroker.brokerSuccessFail.color,
                       data: sendingResultBroker.brokerSuccessFail.data,
                     },
                   ],
@@ -129,7 +135,7 @@ function SendingResultBrokerGraph({sendingId}) {
                   datasets: [
                     {
                       label: 'SPEED',
-                      backgroundColor: '#f87979',
+                      backgroundColor: sendingResultBroker.brokerSpeed.color,
                       data: sendingResultBroker.brokerSpeed.data,
                     },
                   ],

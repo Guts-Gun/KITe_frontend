@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import {CCard, CCardBody, CCardHeader, CRow,} from '@coreui/react'
+import {CCard, CCardBody, CCardHeader, CRow, CButton, CCol, CFormInput, CFormLabel, CFormSelect, CInputGroup, CInputGroupText} from '@coreui/react'
 import SendingResultTable from "./component/SendingResultTable";
 import axios from "axios";
 import apiConfig from "../../lib/apiConfig";
-import MyPagination from "./component/MyPagination";
 import SendingResultSearchOption from "./component/SendingResultSearchOption";
 import {useSelector} from "react-redux";
-
+import Loading from 'src/lib/Loading/Loading';
+import Pagination from "react-js-pagination";
+import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment';
 
 function ResultList() {
 
@@ -17,89 +19,79 @@ function ResultList() {
     headers = {'Authorization': 'Bearer ' + accessToken};
   }
 
-  const sendingResultPageDummy = {
-    "content": [
-      {
-        "id": 1,
-        "userId": "solbitest",
-        "sendingId": 1,
-        "sendingType": "SMS",
-        "sendingRuleType": null,
-        "success": null,
-        "totalMessage": 5,
-        "failedMessage": null,
-        "avgLatency": null,
-        "inputTime": null,
-        "scheduleTime": null,
-        "startTime": null,
-        "completeTime": null,
-        "logTime": null,
-        "sendingStatus": null
-      },
-      {
-        "id": 2,
-        "userId": "solbitest",
-        "sendingId": 2,
-        "sendingType": "MMS",
-        "sendingRuleType": null,
-        "success": null,
-        "totalMessage": 1000,
-        "failedMessage": null,
-        "avgLatency": null,
-        "inputTime": null,
-        "scheduleTime": null,
-        "startTime": null,
-        "completeTime": null,
-        "logTime": null,
-        "sendingStatus": null
-      }
-    ],
-    "pageable": {
-      "sort": {
-        "empty": true,
-        "sorted": false,
-        "unsorted": true
-      },
-      "offset": 0,
-      "pageSize": 2,
-      "pageNumber": 0,
-      "paged": true,
-      "unpaged": false
-    },
-    "last": false,
-    "totalPages": 4,
-    "totalElements": 7,
-    "size": 2,
-    "number": 0,
-    "sort": {
-      "empty": true,
-      "sorted": false,
-      "unsorted": true
-    },
-    "first": true,
-    "numberOfElements": 2,
-    "empty": false
-  };
 
-  const [sendingResultPage, setSendingResultPage] = useState({content: [],});
+  const [loading, setLoading] = useState(false);
 
-  const [limit, setLimit] = useState(5);
-  const [page, setPage] = useState(0);
+  const [resultList , setResultList] = useState([]);
+
+  const [pageData, setPageData] = useState({
+    totalPage: 0,
+    page: 1,
+    size: 0,
+    start: 0,
+    end: 0,
+    prev: false,
+    next: false,
+    totalElements : 1
+  })
+
 
   useEffect(() => {
-    axios.get(apiConfig.resultSendingResult + "?page=" + page + "&size=" + limit, {headers: headers})
-      .then(function (response) {
-        console.log('api 호출');
-        setSendingResultPage(response.data);
-      }).catch(function (error) {
-      // 오류발생시 실행
-      console.log('더미 삽입');
-      setSendingResultPage(sendingResultPageDummy);
-    }).then(function () {
-      // 항상 실행
-      setSendingResultPage(sendingResultPageDummy);
-    });
-  }, [page]);
+    setLoading(false);
+    handleFetch(1);
+  }, []);
+
+
+  const [sendingType, setSendingType] = useState();
+  const [sendingStatus, setSendingStatus] = useState(null);
+
+  let defaultStartDt = new Date();
+  defaultStartDt = defaultStartDt.setMonth(defaultStartDt.getMonth()-3);
+
+  const [startDt, setStartDt] = useState(defaultStartDt);
+  const [endDt, setEndDt] = useState(new Date());
+
+
+  const handleFetch = (selectedPage) => {
+    setLoading(true);
+    let filter = "?page="+ selectedPage;
+    if( sendingType != null){
+      filter += "&sendingType=" + sendingType
+    }
+    if( sendingStatus != null){
+      filter += "&sendingStatus=" + sendingStatus
+    }
+    const format1 = "YYYY-MM-DD HH:mm:ss";
+    if( startDt != null){
+      filter += "&startDt=" + moment(startDt).format(format1);
+    }
+    if( endDt != null){
+      filter += "&endDt=" + moment(endDt).format(format1);
+    }
+    axios.get(apiConfig.resultSendingList + filter, {headers: headers})
+    .then(response => {
+      const data = response.data;
+      setResultList(data.content);
+
+      setPageData({
+      totalPage: 0,
+      page: data.number+1,
+      size: data.size,
+      start: 1,
+      end: data.totalPages,
+      prev: data.first? false: true,
+      next: data.last? false: true,
+      totalElements : data.totalElements
+    }); 
+      setLoading(false);
+    })
+    .catch(error => console.error('Error', error));
+  };
+
+  // 페이지 클릭
+  const handlePageChange = (selectedPage) => {
+    handleFetch(selectedPage);
+  };
 
   return (
     <>
@@ -109,15 +101,77 @@ function ResultList() {
             <strong>발송 리스트</strong>
           </CRow>
         </CCardHeader>
-
         <CCardBody>
-          <SendingResultSearchOption/>
-          <CCard className="mt-4 mb-4">
-            <SendingResultTable sendingResultList={sendingResultPage.content}/>
-          </CCard>
+          
+          <CRow className='mt-1'>
+            <CCol className="col-sm-3">
+              <CFormLabel>발송타입</CFormLabel>
+            </CCol>
+            <CCol className="col-sm-9">
+              <CInputGroup>
+                <CFormSelect onChange={setSendingType}>
+                  <option value="">선택</option>
+                  <option value="SMS">SMS</option>
+                  <option value="MMS">MMS</option>
+                  <option value="EMAIL">EMAIL</option>
+                </CFormSelect>
+              </CInputGroup>
+            </CCol>
+            <CCol className="col-sm-3">
+              <CFormLabel>상태</CFormLabel>
+            </CCol>
+            <CCol className="col-sm-9">
+              <CInputGroup>
+                <CFormSelect onChange={setSendingStatus}>
+                  <option value="">선택</option>
+                  <option value="SUCCESS">성공</option>
+                  <option value="PENDING">대기</option>
+                  <option value="FAIL">실패</option>
+                  <option value="SENDING">진행중</option>
+                </CFormSelect>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+          <CRow className='mt-1'>
+            <CCol className="col-sm-3">
+              <CFormLabel>등록 시각</CFormLabel>
+            </CCol>
+            <CCol className="col-sm-9">
+              <CRow>
+                <CInputGroup>
+                  <DateTimePicker  onChange={setStartDt} value={startDt} />
+                  <CInputGroupText>~</CInputGroupText>
+                  <DateTimePicker onChange={setEndDt} value={endDt} />
+                </CInputGroup>
 
-          <MyPagination pagable={sendingResultPage.pageable} totalPages={sendingResultPage.totalPages} page={page}
-                        setPage={setPage} first={sendingResultPage.first} last={sendingResultPage.last}/>
+              </CRow>
+            </CCol>
+          </CRow>
+
+          <CRow className='mt-1'>
+            <CCol lg={12} className="text-end">
+              <CButton color="primary" variant="outline" onClick={()=>handleFetch(1)}>
+                검색
+              </CButton>
+            </CCol>
+          </CRow>
+
+
+          <CCard className="mt-4 mb-4">
+          { loading ? <Loading /> : <SendingResultTable sendingResultList={resultList}/>}
+         
+            {
+              resultList.length > 0 ? (<Pagination key={pageData.page}
+                activePage={pageData.page}
+                itemsCountPerPage={pageData.size}
+                totalItemsCount={pageData.totalElements}
+                pageRangeDisplayed={10}
+                prevPageText={"‹"}
+                nextPageText={"›"}
+                onChange={handlePageChange}
+              />) : ''
+            }
+          </CCard>
         </CCardBody>
       </CCard>
 
