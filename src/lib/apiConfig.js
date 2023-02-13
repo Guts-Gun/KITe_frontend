@@ -68,6 +68,7 @@ const apiConfig = {
     // RESULT
     resultUsage :                 service.result + "/usage",
     resultSending :               service.result + "/sending",
+    resultSendingList :           service.result + "/sending/filteredResultList",
     resultSendingResult :         service.result + "/sending/result",
     resultSendingBrokerResult :   service.result + "/sending/result",
     resultSendingTxResult :       service.result + "/sending/result",

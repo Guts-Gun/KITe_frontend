@@ -3,10 +3,10 @@ import {CCard, CCardBody, CCardHeader, CRow,} from '@coreui/react'
 import SendingResultTable from "./component/SendingResultTable";
 import axios from "axios";
 import apiConfig from "../../lib/apiConfig";
-import MyPagination from "./component/MyPagination";
 import SendingResultSearchOption from "./component/SendingResultSearchOption";
 import {useSelector} from "react-redux";
-
+import Loading from 'src/lib/Loading/Loading';
+import Pagination from "react-js-pagination";
 
 function ResultList() {
 
@@ -17,88 +17,56 @@ function ResultList() {
     headers = {'Authorization': 'Bearer ' + accessToken};
   }
 
-  const sendingResultPageDummy = {
-    "content": [
-      {
-        "id": 1,
-        "userId": "solbitest",
-        "sendingId": 1,
-        "sendingType": "SMS",
-        "sendingRuleType": null,
-        "success": null,
-        "totalMessage": 5,
-        "failedMessage": null,
-        "avgLatency": null,
-        "inputTime": null,
-        "scheduleTime": null,
-        "startTime": null,
-        "completeTime": null,
-        "logTime": null,
-        "sendingStatus": null
-      },
-      {
-        "id": 2,
-        "userId": "solbitest",
-        "sendingId": 2,
-        "sendingType": "MMS",
-        "sendingRuleType": null,
-        "success": null,
-        "totalMessage": 1000,
-        "failedMessage": null,
-        "avgLatency": null,
-        "inputTime": null,
-        "scheduleTime": null,
-        "startTime": null,
-        "completeTime": null,
-        "logTime": null,
-        "sendingStatus": null
-      }
-    ],
-    "pageable": {
-      "sort": {
-        "empty": true,
-        "sorted": false,
-        "unsorted": true
-      },
-      "offset": 0,
-      "pageSize": 2,
-      "pageNumber": 0,
-      "paged": true,
-      "unpaged": false
-    },
-    "last": false,
-    "totalPages": 4,
-    "totalElements": 7,
-    "size": 2,
-    "number": 0,
-    "sort": {
-      "empty": true,
-      "sorted": false,
-      "unsorted": true
-    },
-    "first": true,
-    "numberOfElements": 2,
-    "empty": false
-  };
 
-  const [sendingResultPage, setSendingResultPage] = useState({content: [],});
+  const [loading, setLoading] = useState(false);
 
-  const [limit, setLimit] = useState(5);
-  const [page, setPage] = useState(0);
+  const [resultList , setResultList] = useState([]);
+
+  const [pageData, setPageData] = useState({
+    totalPage: 0,
+    page: 1,
+    size: 0,
+    start: 0,
+    end: 0,
+    prev: false,
+    next: false,
+    totalElements : 1
+  })
+
 
   useEffect(() => {
-    axios.get(apiConfig.resultSendingResult + "?page=" + page + "&size=" + limit, {headers: headers})
-      .then(function (response) {
-        console.log('api 호출');
-        setSendingResultPage(response.data);
-      }).catch(function (error) {
-      // 오류발생시 실행
-      console.log('더미 삽입');
-      setSendingResultPage(sendingResultPageDummy);
-    }).then(function () {
-      // 항상 실행
-    });
-  }, [page]);
+    setLoading(false);
+    handleFetch(1);
+  }, []);
+
+
+  // 메세지 템플릿 리스트 조회
+  const handleFetch = (selectedPage) => {
+  setLoading(true);
+  axios.get(apiConfig.resultSendingList+"?page="+ selectedPage,{headers: headers})
+  .then(response => {
+    const data = response.data;
+    setResultList(data.content);
+
+    setPageData({
+    totalPage: 0,
+    page: data.number+1,
+    size: data.size,
+    start: 1,
+    end: data.totalPages,
+    prev: data.first? false: true,
+    next: data.last? false: true,
+    totalElements : data.totalElements
+  }); 
+    setLoading(false);
+  })
+  .catch(error => console.error('Error', error));
+};
+
+  // 페이지 클릭
+  const handlePageChange = (selectedPage) => {
+    handleFetch(selectedPage);
+  };
 
   return (
     <>
@@ -112,11 +80,20 @@ function ResultList() {
         <CCardBody>
           <SendingResultSearchOption/>
           <CCard className="mt-4 mb-4">
-            <SendingResultTable sendingResultList={sendingResultPage.content}/>
+          { loading ? <Loading /> : <SendingResultTable sendingResultList={resultList}/>}
+         
+            {
+              resultList.length > 0 ? (<Pagination key={pageData.page}
+                activePage={pageData.page}
+                itemsCountPerPage={pageData.size}
+                totalItemsCount={pageData.totalElements}
+                pageRangeDisplayed={10}
+                prevPageText={"‹"}
+                nextPageText={"›"}
+                onChange={handlePageChange}
+              />) : ''
+            }
           </CCard>
-
-          <MyPagination pagable={sendingResultPage.pageable} totalPages={sendingResultPage.totalPages} page={page}
-                        setPage={setPage} first={sendingResultPage.first} last={sendingResultPage.last}/>
         </CCardBody>
       </CCard>
 
