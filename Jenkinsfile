@@ -45,6 +45,7 @@ pipeline {
         }
 
         stage('Deploy to dev') {
+	      agent { label 'argocd' }
           steps {
 
               git credentialsId: 'github',
