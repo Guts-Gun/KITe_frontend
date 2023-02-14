@@ -38,25 +38,18 @@ axios.interceptors.response.use(
       
         const accessToken = localStorage.getItem("accesstoken");
         const refreshToken = localStorage.getItem("refreshtoken");
-        console.log(accessToken);
-         axios.post(apiConfig.authRefreshToken,{ refresh_token: refreshToken, access_token: accessToken })
+        
+        
+        axios.post(apiConfig.authRefreshToken,{ refresh_token: refreshToken, access_token: accessToken })
         .then((res) => {
-            // 새로 받은 token들의 정보 저장
+          localStorage.setItem("accesstoken", res.data.token.access_token);
+          localStorage.setItem("refreshtoken", res.data.token.refresh_token);
 
-            console.log(res);
-
-            // refresh
-            localStorage.setItem("accesstoken", res.data.token.access_token);
-            localStorage.setItem("refreshtoken", res.data.token.refresh_token);
-
-            return axios(originalReq);
-
+          return axios(originalReq);
+        
         }).catch(() => {
-          // access token을 받아오지 못하는 오류 발생시 logout 처리
           localStorage.clear();
-          window.location.reload();
           window.location.href = "/"; 
-
           return false;
         });
       }
@@ -65,5 +58,3 @@ axios.interceptors.response.use(
     });
   }
 );
-
-  
