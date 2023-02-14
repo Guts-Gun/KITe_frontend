@@ -4,35 +4,35 @@ module.exports = function(app) {
   app.use(
     '/user',
     createProxyMiddleware( {
-      target: 'http://localhost:8001',
+      target: 'https://gutsandgun.kro.kr:30000',
       changeOrigin: true,
     })
   );
   app.use(
     '/result',
     createProxyMiddleware( {
-      target: 'http://localhost:8002',
+      target: 'https://gutsandgun.kro.kr:30000',
       changeOrigin: true,
     })
   );
   app.use(
     '/auth',
     createProxyMiddleware( {
-      target: 'http://localhost:8007',
+      target: 'https://gutsandgun.kro.kr:30000',
       changeOrigin: true,
     })
   );
   app.use(
     '/request',
     createProxyMiddleware( {
-      target: 'http://localhost:8011',
+      target: 'https://gutsandgun.kro.kr:30000',
       changeOrigin: true,
     })
   );
   app.use(
     '/brokermanager',
     createProxyMiddleware( {
-      target: 'http://localhost:8005',
+      target: 'https://gutsandgun.kro.kr:30000',
       changeOrigin: true,
     })
   );
