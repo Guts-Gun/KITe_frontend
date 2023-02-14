@@ -51,6 +51,7 @@ pipeline {
                       url: 'https://github.com/Guts-Gun/KITe_ArgoCD.git',
                       branch: 'main'
 
+              sh "git pull origin main"
               sh "sed -i 's/kite_frontend:.*\$/kite_frontend:${currentBuild.number}/g' service/frontend-deployment.yaml"
               sh "cat service/frontend-deployment.yaml"
               sh "git config user.name 'Lab00700'"

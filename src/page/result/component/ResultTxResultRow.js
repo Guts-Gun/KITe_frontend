@@ -1,6 +1,7 @@
-import {CTableDataCell, CTableHeaderCell, CTableRow} from "@coreui/react";
+import {CTableDataCell, CTableHeaderCell, CTableRow,CButton} from "@coreui/react";
 import React from "react";
 import PropTypes from "prop-types";
+import { ResultTxDetailModal } from "./TxDetail/ResultTxDetailModal";
 
 function ResultTxResultRow({rowIndex, txResult}) {
   // 상세 페이지 링크
@@ -18,6 +19,7 @@ function ResultTxResultRow({rowIndex, txResult}) {
       <CTableDataCell>{txResult.failReason}</CTableDataCell>
       <CTableDataCell>{txResult.title}</CTableDataCell>
       <CTableDataCell>{txResult.content.toString()}</CTableDataCell>
+      <CTableDataCell><ResultTxDetailModal key={rowIndex} txId={txResult.txId} txResult={txResult}/></CTableDataCell>
     </CTableRow>
 
 
@@ -29,17 +31,28 @@ ResultTxResultRow.propTypes = {
   rowIndex: PropTypes.number.isRequired,
   txResult: PropTypes.shape({
     sendingId: PropTypes.number,
-    sendingType: PropTypes.string,
-    receiver: PropTypes.string,
-    failReason: PropTypes.string,
+    txId:PropTypes.number,
+    
+    //default 정보
     title: PropTypes.string,
     content: PropTypes.string,
+    media_link : PropTypes.string,
+
+    sender: PropTypes.string,
+    receiver: PropTypes.string,
+  
+    //broker 전송 여부에 따라 다름
+    brokerId : PropTypes.number,
+    sendingType: PropTypes.string,
+
     inputTime: PropTypes.number,
+    startTime : PropTypes.number,
     scheduleTime: PropTypes.number,
-    success: PropTypes.bool,
-    failedMessage: PropTypes.number,
-    avgSpeed: PropTypes.number,
+    sendTime: PropTypes.number,
     completeTime: PropTypes.number,
+
+    success: PropTypes.bool,
+    failReason: PropTypes.string,
   }),
 }
 

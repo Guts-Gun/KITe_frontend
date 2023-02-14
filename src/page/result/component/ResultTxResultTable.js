@@ -172,6 +172,7 @@ export function ResultTxResultTable({sendingId}) {
                   <CTableHeaderCell scope="col">상세사유</CTableHeaderCell>
                   <CTableHeaderCell scope="col">전송제목</CTableHeaderCell>
                   <CTableHeaderCell scope="col">전송내용</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">상세정보</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
