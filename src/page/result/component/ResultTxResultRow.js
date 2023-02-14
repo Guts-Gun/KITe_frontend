@@ -19,7 +19,7 @@ function ResultTxResultRow({rowIndex, txResult}) {
       <CTableDataCell>{txResult.failReason}</CTableDataCell>
       <CTableDataCell>{txResult.title}</CTableDataCell>
       <CTableDataCell>{txResult.content.toString()}</CTableDataCell>
-      <CTableDataCell><ResultTxDetailModal key={rowIndex} txId={txResult.txId} txResult={txResult}/></CTableDataCell>
+      <CTableDataCell><ResultTxDetailModal key={rowIndex} sendingId={txResult.sendingId} txId={txResult.txId}/></CTableDataCell>
     </CTableRow>
 
 

@@ -2,17 +2,15 @@ import {CTableDataCell, CTableHeaderCell, CTableRow,CButton} from "@coreui/react
 import React from "react";
 import PropTypes from "prop-types";
 
-export function ResultTxDetailTableRow({rowIndex, txResult}) {
-  console.log(txResult);
+export function ResultTxDetailTableRow({rowIndex, resultTxTransfer}) {
   return (
     <CTableRow>
-        <CTableDataCell>{txResult.brokerId} </CTableDataCell>
-        <CTableDataCell>{txResult.sendingType}</CTableDataCell>
-        <CTableDataCell>{txResult.scheduleTime}</CTableDataCell>
-        <CTableDataCell>{txResult.sendTime}</CTableDataCell>
-        <CTableDataCell>{txResult.completeTime}</CTableDataCell>
-        <CTableDataCell>{txResult.success}</CTableDataCell>
-        <CTableDataCell>{txResult.failReason}</CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.brokerId} </CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.sendingType}</CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.sendTime}</CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.completeTime}</CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.success}</CTableDataCell>
+        <CTableDataCell>{resultTxTransfer.failReason}</CTableDataCell>
     </CTableRow>
 
 
@@ -22,29 +20,16 @@ export function ResultTxDetailTableRow({rowIndex, txResult}) {
 
 ResultTxDetailTableRow.propTypes = {
     rowIndex: PropTypes.number.isRequired,
-    txResult: PropTypes.shape({
-        sendingId: PropTypes.number,
-        txId:PropTypes.number,
-        
-        //default 정보
-        title: PropTypes.string,
-        content: PropTypes.string,
-        media_link : PropTypes.string,
-    
-        sender: PropTypes.string,
-        receiver: PropTypes.string,
-      
-        //broker 전송 여부에 따라 다름
+    resultTxTransfer: PropTypes.shape({
+        id: PropTypes.number,
+        txId: PropTypes.number,
         brokerId : PropTypes.number,
-        sendingType: PropTypes.string,
-    
-        inputTime: PropTypes.number,
-        startTime : PropTypes.number,
-        scheduleTime: PropTypes.number,
-        sendTime: PropTypes.number,
-        completeTime: PropTypes.number,
-    
-        success: PropTypes.bool,
-        failReason: PropTypes.string,
+        success: PropTypes.string,
+        failReason: PropTypes.string, 
+        sendTime : PropTypes.number,
+        completeTime : PropTypes.number,
+
+        //추후 추가할것
+        sendingType : PropTypes.string,
       }),
   }
