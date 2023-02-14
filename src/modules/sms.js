@@ -175,25 +175,14 @@ const sms = handleActions({
         const text = pl.value;
         state.sendingDto.content = text;
 
-        var returnVal = '';
-        var currentLength = 0;
-        var codeByte = 0;
-        
+        var len = 0;
         for (var i = 0; i < text.length; i++) {
-          var oneChar = escape(text.charAt(i));
-          
-          if(oneChar.length > 4) {
-              codeByte += 2;
-          }else{
-              codeByte++;
-          }
-    
-          if(codeByte <= 140){
-              currentLength = i + 1;
-          }
-
+            if (escape(text.charAt(i)).length == 6) {
+                len++;
+            }
+            len++;
         }
-        state.sendingDto.contentLength = codeByte;
+        state.sendingDto.contentLength = len;
         return { ...state}    
     },
 
