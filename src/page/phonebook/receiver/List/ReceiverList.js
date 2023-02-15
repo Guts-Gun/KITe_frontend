@@ -26,6 +26,7 @@ import { PhoneBookDeleteModal } from './Component/PhoneBookDeleteModal';
 import { PhoneBookNotDeleteModal } from './Component/PhoneBookNotDeleteModal';
 
 import ErrorComponent from 'src/component/error/ErrorComponent';
+import Loading from 'src/lib/Loading/Loading';
 
 
 
@@ -40,58 +41,75 @@ function ReceiverList() {
   const navigate = useNavigate();
 
 
+  const [loading, setLoading] = useState(false);
   //group get
   const [phoneBookData,setPhoneBookData] = useState([]);
 
   //get data
   useEffect(()=>{
     if(name===null && email ==null && phone==null){
+      setLoading(true);
       paramUrl = "/receiverList?"+"page=";
       axios.get(apiConfig.phoneBookSelectPage,{params :{page:page}})
       .then(function (response) {
           console.log(response.data);
+          setLoading(false);
           setPhoneBookData(response.data);
       }).catch(function (error) {
           // 오류발생시 실행
+          setLoading(false);
       }).then(function() {
           // 항상 실행
+          setLoading(false);
       });
     }
     else{
       if(name!=null){
         paramUrl = "/receiverList?"+"name="+name+"&page=";
+        setLoading(true);
         axios.get(apiConfig.phoneBookSelectPageFilter,{params :{name:name,page:page}})
         .then(function (response) {
             console.log(response.data);
+            setLoading(false);
             setPhoneBookData(response.data);
         }).catch(function (error) {
             // 오류발생시 실행
+            setLoading(false);
         }).then(function() {
             // 항상 실행
+            setLoading(false);
         });
       }
       if(phone!=null){
         paramUrl = "/receiverList?"+"phone="+phone+"&page=";
+        setLoading(true);
         axios.get(apiConfig.phoneBookSelectPageFilter,{params :{phone:phone,page:page}})
         .then(function (response) {
             console.log(response.data);
+            setLoading(false);
             setPhoneBookData(response.data);
         }).catch(function (error) {
             // 오류발생시 실행
+            setLoading(false);
         }).then(function() {
             // 항상 실행
+            setLoading(false);
         });
       }
       if(email!=null){
         paramUrl = "/receiverList?"+"email="+email+"&page=";
+        setLoading(true);
         axios.get(apiConfig.phoneBookSelectPageFilter,{params :{email:email,page:page}})
         .then(function (response) {
             console.log(response.data);
+            setLoading(false);
             setPhoneBookData(response.data);
         }).catch(function (error) {
             // 오류발생시 실행
+            setLoading(false);
         }).then(function() {
             // 항상 실행
+            setLoading(false);
         });
       }
     }
@@ -175,26 +193,47 @@ function ReceiverList() {
             </CRow>
           </CRow>
           <CRow className="mt-3 mb-3">
-            <CFormLabel className="mt-3 mb-3">주소록</CFormLabel>
-            <CRow className="mb-3">
-            <CTable>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col"></CTableHeaderCell>
-                  <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {phoneBookData.length===0 
-                  ?<ErrorComponent log={"데이터가 없어요"}/>
-                  :phoneBookData.map(d=> <PhoneTableRow key={d.userAddressId} id={d.userAddressId} name={d.name} email={d.email} phone={d.phone} groupList={d.groupList} onSelect={onSelect}/> ) 
-                } 
-              </CTableBody>
-            </CTable>
-            </CRow>
+          {loading?
+              <div>
+              <Loading/>
+              <CFormLabel className="mt-3 mb-3">주소록</CFormLabel>
+              <CRow className="mb-3">
+              <CTable>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col"></CTableHeaderCell>
+                    <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+              </CTable>
+              </CRow>
+            </div>
+            :<div>
+              <CFormLabel className="mt-3 mb-3">주소록</CFormLabel>
+              <CRow className="mb-3">
+              <CTable>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col"></CTableHeaderCell>
+                    <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">그룹</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {phoneBookData.length===0 
+                    ?<ErrorComponent log={"데이터가 없어요"}/>
+                    :phoneBookData.map(d=> <PhoneTableRow key={d.userAddressId} id={d.userAddressId} name={d.name} email={d.email} phone={d.phone} groupList={d.groupList} onSelect={onSelect}/> ) 
+                  } 
+                </CTableBody>
+              </CTable>
+              </CRow>
+            </div>
+          }
           </CRow>
           <CRow className="mb-3 justify-content-center">
             <CCol lg={12}>

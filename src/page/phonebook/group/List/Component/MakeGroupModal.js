@@ -16,7 +16,7 @@ export function MakeGroupModal() {
   const [visible, setVisible] = useState(false);
 
   //form
-  const [form, setForm] = useState({ userId: 1, groupName: "" });
+  const [form, setForm] = useState({ groupName: "" });
   const onChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     console.log(form);

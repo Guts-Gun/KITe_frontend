@@ -72,8 +72,8 @@ function GroupCard({id,groupName,groupDescription,regDt,modDt,addressCount,onSel
               </CCardBody>
               <CListGroup flush>  
                 <CListGroupItem>인원 수 : {addressCount}</CListGroupItem>
-                <CListGroupItem>생성일 : {onlyDate(regDt)}</CListGroupItem>
-                <CListGroupItem>수정일 : {onlyDate(modDt)}</CListGroupItem>
+                <CListGroupItem>생성일 : {regDt=== undefined? null : onlyDate(regDt)}</CListGroupItem>
+                <CListGroupItem>수정일 : {regDt=== undefined? null : onlyDate(modDt)}</CListGroupItem>
               </CListGroup>
               <CCardBody>
                 <CRow>

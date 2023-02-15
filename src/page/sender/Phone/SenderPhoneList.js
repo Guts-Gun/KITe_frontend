@@ -17,22 +17,29 @@ import { PhoneDeleteModal } from './Component/PhoneDeleteModal';
 import { PhoneUpdateModal } from './Component/PhoneUpdateModal';
 import { PhoneNotUpdateModal } from './Component/PhoneNotUpdateModal';
 import { PhoneNotDeleteModal } from './Component/PhoneNotDeleteModal';
+import Loading from 'src/lib/Loading/Loading';
 
 function SenderPhoneList() {
   //data
   const [phoneData,setPhoneData] = useState([]);
   const [phoneDataFiltering,setPhoneDataFiltering] = useState([]);
+
+  const [loading, setLoading] = useState(false);
   //GET DATA
   useEffect(()=>{
+    setLoading(true);
     axios.get(apiConfig.phoneSelect)
     .then(function (response) {
         console.log(response.data);
+        setLoading(false);
         setPhoneData(response.data);
         setPhoneDataFiltering(response.data);
     }).catch(function (error) {
         // 오류발생시 실행
+        setLoading(false);
     }).then(function() {
         // 항상 실행
+        setLoading(false);
     });
   },[]);
   
@@ -109,22 +116,35 @@ function SenderPhoneList() {
           </CRow>
           <CRow className="mt-3 mb-3">
             <CRow className="mb-3">
-               {phoneData.length===0 
-                  ?<ErrorComponent log={"데이터가 없어요"}/>
-                  : phoneDataFiltering.length === 0
-                    ?<ErrorComponent log={"검색한 결과가 없어요"}/> 
-                    :<CTable>
-                        <CTableHead>
-                          <CTableRow>
-                            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                            <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-                            <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
-                          </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                          {phoneDataFiltering.map(d=>(<PhoneTableRow key={d.id} id={d.id} name={d.name} phone={d.phone} onSelect={onSelect}/>))}
-                        </CTableBody>
+               {loading?
+                  <div>
+                    <Loading />
+                    <CTable>
+                          <CTableHead>
+                            <CTableRow>
+                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
                     </CTable>
+                  </div>
+                  :phoneData.length===0 ?
+                    <ErrorComponent log={"데이터가 없어요"}/>
+                    : phoneDataFiltering.length === 0?
+                      <ErrorComponent log={"검색한 결과가 없어요"}/> 
+                      :<CTable>
+                          <CTableHead>
+                            <CTableRow>
+                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">전화번호</CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
+                          <CTableBody>
+                            {phoneDataFiltering.map(d=>(<PhoneTableRow key={d.id} id={d.id} name={d.name} phone={d.phone} onSelect={onSelect}/>))}
+                          </CTableBody>
+                      </CTable>
                 }
               </CRow>
               <CRow className="mb-3 justify-content-end">
