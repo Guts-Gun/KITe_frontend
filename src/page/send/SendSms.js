@@ -134,7 +134,7 @@ const SendSms = () => {
   const body = {
     receiverList : receiverList,
     sendingDTO : sending,
-    reservYn : reservYn,
+    reservationYn : reservYn,
     sender : sender,
     replaceSender :replaceSender,
     brokerList : brokerList,

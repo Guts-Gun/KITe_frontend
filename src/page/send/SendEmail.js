@@ -61,7 +61,7 @@ const SendEmail = () => {
   const { receiverList, sending, reservYn, sender, replaceSender, brokerList } = useSelector(({ email }) => ({
     receiverList : email.receiverList,
     sending : email.sendingDto,
-    reservYn : email.reservYn,
+    reservationYn : email.reservYn,
     sender : email.sender,
     brokerList : email.brokerList,
   }));
