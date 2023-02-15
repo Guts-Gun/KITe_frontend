@@ -42,7 +42,7 @@ function ResultList() {
   }, []);
 
 
-  const [sendingType, setSendingType] = useState();
+  const [sendingType, setSendingType] = useState(null);
   const [sendingStatus, setSendingStatus] = useState(null);
 
   let defaultStartDt = new Date();
@@ -53,13 +53,14 @@ function ResultList() {
 
 
   const handleFetch = (selectedPage) => {
+
     setLoading(true);
     let filter = "?page="+ selectedPage;
     if( sendingType != null){
-      filter += "&sendingType=" + sendingType
+      filter += "&sendingType=" + sendingType.target.value;
     }
     if( sendingStatus != null){
-      filter += "&sendingStatus=" + sendingStatus
+      filter += "&sendingStatus=" + sendingStatus.target.value;
     }
     const format1 = "YYYY-MM-DD HH:mm:ss";
     if( startDt != null){
