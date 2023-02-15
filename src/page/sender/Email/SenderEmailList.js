@@ -17,22 +17,29 @@ import { EmailDeleteModal } from './Component/EmailDeleteModal';
 import { EmailUpdateModal } from './Component/EmailUpdateModal';
 import { EmailNotUpdateModal } from './Component/EmailNotUpdateModal';
 import { EmailNotDeleteModal } from './Component/EmailNotDeleteModal';
+import Loading from 'src/lib/Loading/Loading';
 
 function SenderEmailList() {
   //data
   const [emailData,setEmailData] = useState([]);
   const [emailDataFiltering,setEmailDataFiltering] = useState([]);
+
+  const [loading, setLoading] = useState(false);
   //GET DATA
   useEffect(()=>{
+    setLoading(true);
     axios.get(apiConfig.emailSelect)
     .then(function (response) {
         console.log(response.data);
+        setLoading(false);
         setEmailData(response.data);
         setEmailDataFiltering(response.data);
     }).catch(function (error) {
         // 오류발생시 실행
+        setLoading(false);
     }).then(function() {
         // 항상 실행
+        setLoading(false);
     });
   },[]);
   
@@ -109,22 +116,35 @@ function SenderEmailList() {
           </CRow>
           <CRow className="mt-3 mb-3">
             <CRow className="mb-3">
-               {emailData.length===0 
-                  ?<ErrorComponent log={"데이터가 없어요"}/>
-                  : emailDataFiltering.length === 0
-                    ?<ErrorComponent log={"검색한 결과가 없어요"}/> 
-                    :<CTable>
-                        <CTableHead>
-                          <CTableRow>
-                            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                            <CTableHeaderCell scope="col">이름</CTableHeaderCell>
-                            <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
-                          </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                          {emailDataFiltering.map(d=>(<EmailTableRow key={d.id} id={d.id} name={d.name} email={d.email} onSelect={onSelect}/>))}
-                        </CTableBody>
+               {loading?
+                  <div>
+                    <Loading />
+                    <CTable>
+                          <CTableHead>
+                            <CTableRow>
+                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
                     </CTable>
+                  </div>
+                  :emailData.length===0 ?
+                    <ErrorComponent log={"데이터가 없어요"}/>
+                    : emailDataFiltering.length === 0?
+                      <ErrorComponent log={"검색한 결과가 없어요"}/> 
+                      :<CTable>
+                          <CTableHead>
+                            <CTableRow>
+                              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이름</CTableHeaderCell>
+                              <CTableHeaderCell scope="col">이메일</CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
+                          <CTableBody>
+                            {emailDataFiltering.map(d=>(<EmailTableRow key={d.id} id={d.id} name={d.name} email={d.email} onSelect={onSelect}/>))}
+                          </CTableBody>
+                      </CTable>
                 }
               </CRow>
               <CRow className="mb-3 justify-content-end">

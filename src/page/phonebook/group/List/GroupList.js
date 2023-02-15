@@ -19,6 +19,7 @@ import { MakeGroupModal } from './Component/MakeGroupModal';
 import ErrorComponent from 'src/component/error/ErrorComponent';
 import { DeleteBulkNotGroupModal } from './Component/DeleteBulkNotGroupModal';
 import { DeleteBulkGroupModal } from './Component/DeleteBulkGroupModal';
+import Loading from 'src/lib/Loading/Loading';
 
 
 
@@ -28,17 +29,23 @@ function GroupList() {
   //group filter
   const [groupDataFiltering,setGroupDataFiltering] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+
   //get data
   useEffect(()=>{
+    setLoading(true);
     axios.get(apiConfig.groupSelectList)
     .then(function (response) {
         console.log(response.data);
+        setLoading(false);
         setGroupData(response.data);
         setGroupDataFiltering(response.data);
     }).catch(function (error) {
-        // 오류발생시 실행
+      // 오류발생시 실행
+      setLoading(false);
     }).then(function() {
-        // 항상 실행
+      // 항상 실행
+      setLoading(false);
     });
   },[]);
 
@@ -97,22 +104,28 @@ function GroupList() {
             </CCol>
           </CForm>
         </CCol>
-
-        <CRow>
-          <CCard className="mb-4">
-            <CCardBody>
-              <CRow className = 'mt-3'>
-                {groupData.length===0 
-                  ?<ErrorComponent log={"데이터가 없어요"}/>
-                  //백 연결 안했을 떄 테스트용  
-                  //<GroupCard key={1} groupName={"데이터 못 갖고오는중~"} groupDescription={"아직없어"}/>
-                  : groupDataFiltering.length === 0
-                    ?<ErrorComponent log={"검색한 결과가 없어요"}/> 
-                    :groupDataFiltering.map((d)=>(<GroupCard key={d.id} id={d.id} groupName={d.groupName} groupDescription={d.description} regDt={d.regDt} modDt={d.regDt} addressCount={d.addressCount} onSelect={onSelect}/>))} 
-              </CRow>
-            </CCardBody>
-          </CCard>
-      </CRow>
+        
+        {loading?
+        <div><Loading /><GroupCard/></div>:
+          <CRow>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow className = 'mt-3'>
+                  {loading?
+                    <div>
+                      <Loading />
+                      <GroupCard/>
+                    </div>
+                    //백 연결 안했을 떄 테스트용  
+                    //<GroupCard key={1} groupName={"데이터 못 갖고오는중~"} groupDescription={"아직없어"}/>
+                    : groupDataFiltering.length === 0
+                      ?<ErrorComponent log={"검색한 결과가 없어요"}/> 
+                      :groupDataFiltering.map((d)=>(<GroupCard key={d.id} id={d.id} groupName={d.groupName} groupDescription={d.description} regDt={d.regDt} modDt={d.regDt} addressCount={d.addressCount} onSelect={onSelect}/>))} 
+                </CRow>
+              </CCardBody>
+            </CCard>
+        </CRow>
+        }
       </CCardBody>
     </CCard>
 

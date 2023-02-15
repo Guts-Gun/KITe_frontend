@@ -33,6 +33,8 @@ export function PhoneUpdateModal({prev}) {
         // 항상 실행
       });
   };
+
+  
   return (
     <>
       <CButton color="info" variant="outline" onClick={() => setVisible(!visible)}>수정</CButton>
