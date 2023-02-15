@@ -66,7 +66,7 @@ const SendSms = () => {
   const { receiverList, sending, reservYn, sender, replaceSender, brokerList } = useSelector(({ sms }) => ({
     receiverList : sms.receiverList,
     sending : sms.sendingDto,
-    reservYn : sms.reservYn,
+    reservYn : sms.reservationYn,
     sender : sms.sender,
     replaceSender : sms.replaceSender,
     brokerList : sms.brokerList,

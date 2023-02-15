@@ -91,7 +91,7 @@ const initialState = {
         totalMessage : 0,                   // 총 메세지 개수
         title : "",                         // 제목
     },
-    reservYn : "N",                         // 예약 여부
+    reservationYn : "N",                         // 예약 여부
     sender : null,                          // 발신자 정보
     replaceSender : null,                   // 대체발송 발신자 정보
     brokerList : []                         // brokerId 브로커 아이디
@@ -204,8 +204,8 @@ const sms = handleActions({
     },
 
     [EDIT_RESERVATION]: (state, { payload: pl }) => {
-        state.reservYn =  pl.checked? "Y" : "N";
-        if(state.reservYn == "Y"){
+        state.reservationYn =  pl.checked? "Y" : "N";
+        if(state.reservationYn == "Y"){
             state.sendingDto.reservDate = moment().add(7, 'days').format('YYYY-MM-DD');
             state.sendingDto.reservTime = moment().format('HH:mm');
             state.sendingDto.reservationTime = moment().add(7, 'days').format('YYYY-MM-DD HH:mm:ss');
