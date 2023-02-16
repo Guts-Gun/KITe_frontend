@@ -48,7 +48,7 @@ function ResultList() {
   let defaultStartDt = new Date();
   defaultStartDt = defaultStartDt.setMonth(defaultStartDt.getMonth()-3);
 
-  const [startDt, setStartDt] = useState(defaultStartDt);
+  const [startDt, setStartDt] = useState(new Date(defaultStartDt));
   const [endDt, setEndDt] = useState(new Date());
 
 
