@@ -138,12 +138,9 @@ function SendingInfoCardList() {
   useEffect(() => {
     axios.get(apiConfig.resultSending, {headers: headers})
       .then(function (response) {
-        console.log(response.data);
         setTotalSendingInfo(response.data);
       }).catch(function (error) {
       // 오류발생시 실행
-      console.log('더미 삽입');
-      setTotalSendingInfo(sendingListDummy)
     }).then(function () {
       // 항상 실행
     });

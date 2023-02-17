@@ -53,21 +53,18 @@ function SendingResultBrokerGraph({sendingId}) {
       ],
       "data": [
         4.0,
-        9998.0
+        95.0
       ]
     }
   }
   const [sendingResultBroker, setSendingResultBroker] = useState(sendingResultBrokerDummy);
 
   useEffect(() => {
-    axios.get(apiConfig.resultSendingBrokerResult + "/" + sendingId + "/broker")
+    axios.get(apiConfig.resultSendingBrokerResult.replace("{sendingId}", sendingId))
       .then(function (response) {
-        console.log(response.data);
         setSendingResultBroker(response.data);
       }).catch(function (error) {
       // 오류발생시 실행
-      console.log('더미 삽입');
-      setSendingResultBroker(sendingResultBrokerDummy);
     }).then(function () {
       // 항상 실행
     });

@@ -19,41 +19,32 @@ function UsageCarousel() {
     [
       {
         "sendingType": "SMS",
-        "totalUsage": 1100,
+        "totalUsage": 0,
         "usageCap": 100
       },
       {
         "sendingType": "MMS",
-        "totalUsage": 1100,
+        "totalUsage": 0,
         "usageCap": 100
       },
       {
         "sendingType": "KAKAO",
-        "totalUsage": 1101340,
+        "totalUsage": 0,
         "usageCap": 100
       },
       {
         "sendingType": "EMAIL",
-        "totalUsage": 100110,
+        "totalUsage": 0,
         "usageCap": 100
       }
     ]
-
-
   ];
 
-  const [totalUsages, setTotalUsages] = useState([]);
+  const [totalUsages, setTotalUsages] = useState(totalUsagesDummy);
   useEffect(() => {
     axios.get(apiConfig.resultUsage, {headers: headers})
       .then(function (response) {
-        console.log('usage api');
-        console.log(response.data);
-        if (response.data.length > 0) {
-          setTotalUsages(response.data);
-        } else {
-          console.log('place holder 삽입');
-          setTotalUsages(totalUsagesDummy);
-        }
+        setTotalUsages(response.data);
       }).catch(function (error) {
       // 오류발생시 실행
       console.log('더미 삽입');
@@ -91,8 +82,9 @@ function UsageCard({title, sendingType, totalUsage, usageCap}) {
         </CCardTitle>
         <CListGroup flush>
           <CListGroupItem>타입 : {sendingType}</CListGroupItem>
-          <CListGroupItem>사용 한도 : {usageCap}</CListGroupItem>
           <CListGroupItem>총 사용량 : {totalUsage}</CListGroupItem>
+          <CListGroupItem>사용 한도 : {usageCap}</CListGroupItem>
+
         </CListGroup>
       </CCardBody>
     </CCard>

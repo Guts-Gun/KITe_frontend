@@ -67,11 +67,14 @@ const apiConfig = {
 
     // RESULT
     resultUsage :                 service.result + "/usage",
-    resultSending :               service.result + "/sending",
+    resultSending :               service.result + "/sending/card",
     resultSendingList :           service.result + "/filteredResultList",
-    resultSendingResult :         service.result + "/sending/result",
-    resultSendingBrokerResult :   service.result + "/sending/result",
-    resultSendingTxResult :       service.result + "/sending/result",
+    resultSendingResult :         service.result + "/sending/{sendingId}",
+    resultSendingBrokerResult :   service.result + "/sending/{sendingId}/broker",
+    resultSendingTxResult :       service.result + "/sending/{sendingId}/tx",
+    resultSendingTxResultDetail : service.result + "/sending/{sendingId}/tx/{txId}",
+
+
 
 }
 export default apiConfig;
