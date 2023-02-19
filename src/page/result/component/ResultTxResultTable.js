@@ -57,7 +57,7 @@ export function ResultTxResultTable({sendingId}) {
     "empty": false
   }
   const [txResultList, setTxResultList] = useState(txResultListDummy);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(0);
 
   useEffect(() => {

@@ -1,34 +1,44 @@
-import React, {useState} from "react";
-import {CPagination, CPaginationItem} from "@coreui/react";
+import React, { useState } from "react";
+import { CPagination, CPaginationItem } from "@coreui/react";
 import PropTypes from "prop-types";
 
-function MyPagination({pagable, page, totalPages, first, last, setPage}) {
+function MyPagination({ pagable, page, totalPages, first, last, setPage }) {
   const onIncrease = () => {
-    setPage(page + 1)
-    console.log(page)
-  }
+    setPage(page + 1);
+  };
   const onDecrease = () => {
-    setPage(page - 1)
-    console.log(page)
-  }
+    setPage(page - 1);
+  };
+
+  // Calculate the start and end of the page range to display
+  const startPage = Math.max(1, page - 2);
+  const endPage = Math.min(totalPages, page + 4);
 
   return (
     <CPagination align="center" aria-label="Page navigation example">
-      <CPaginationItem aria-label="Previous" onClick={onDecrease} disabled={first}>
+      <CPaginationItem
+        aria-label="Previous"
+        onClick={onDecrease}
+        disabled={first}
+      >
         <span aria-hidden="true">&laquo;</span>
       </CPaginationItem>
-      {Array(totalPages)
+      {Array(endPage - startPage + 1)
         .fill()
         .map((_, i) => (
           <CPaginationItem
-            key={i + 1}
-            onClick={() => setPage(i)}
-            active={i  === page}
+            key={startPage + i}
+            onClick={() => setPage(startPage + i - 1)}
+            active={startPage + i - 1 === page}
           >
-            {i + 1}
+            {startPage + i}
           </CPaginationItem>
         ))}
-      <CPaginationItem aria-label="Next" onClick={onIncrease} disabled={last}>
+      <CPaginationItem
+        aria-label="Next"
+        onClick={onIncrease}
+        disabled={last}
+      >
         <span aria-hidden="true">&raquo;</span>
       </CPaginationItem>
     </CPagination>
@@ -42,5 +52,5 @@ MyPagination.propTypes = {
   first: PropTypes.bool,
   last: PropTypes.bool,
   setPage: PropTypes.func,
-}
+};
 export default MyPagination;
