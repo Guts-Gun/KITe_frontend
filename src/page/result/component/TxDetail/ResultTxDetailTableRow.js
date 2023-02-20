@@ -7,8 +7,8 @@ function ResultTxDetailTableRow({rowIndex, resultTxTransfer}) {
   return (
     <CTableRow>
       <CTableDataCell>{resultTxTransfer.brokerName} </CTableDataCell>
-      <CTableDataCell>{new Date(resultTxTransfer.sendTime).toLocaleString()}</CTableDataCell>
-      <CTableDataCell>{new Date(resultTxTransfer.completeTime).toLocaleString()}</CTableDataCell>
+      <CTableDataCell>{new Date(resultTxTransfer.sendTime).toLocaleString()+ " " + new Date(resultTxTransfer.sendTime).getMilliseconds()}</CTableDataCell>
+      <CTableDataCell>{new Date(resultTxTransfer.completeTime).toLocaleString()+ " " + new Date(resultTxTransfer.completeTime).getMilliseconds()}</CTableDataCell>
       <CTableDataCell>{resultTxTransfer.success ? <p>성공</p> : <p>실패</p>}</CTableDataCell>
       <CTableDataCell>{resultTxTransfer.failReason}</CTableDataCell>
     </CTableRow>

@@ -50,19 +50,21 @@ function SendingResultDetailInfo({sendingId}) {
         <CCol xs={4}>
           <p>발송타입 : {sendingResultDetailInfo.sendingType}</p>
           <p>개수(건) : {sendingResultDetailInfo.totalMessage}</p>
-          <p>등록 시간 : {new Date(sendingResultDetailInfo.inputTime).toLocaleString()}</p>
+          <p>등록 시간 : {new Date(sendingResultDetailInfo.inputTime).toLocaleString()+ " " + new Date(sendingResultDetailInfo.inputTime).getMilliseconds()}</p>
           {
             sendingResultDetailInfo.scheduleTime === null
               ? <p>예약 시간 : {"예약발송이 아닙니다."}</p>
-              : <p>예약 시간 : {new Date(sendingResultDetailInfo.scheduleTime).toLocaleString()}</p>
+              : <p>예약 시간 : {new Date(sendingResultDetailInfo.scheduleTime).toLocaleString()+ " " + new Date(sendingResultDetailInfo.scheduleTime).getMilliseconds()}</p>
           }
           <p>발송 상태 : {sendingResultDetailInfo.sendingStatus}</p>
           <p>실패 개수 : {sendingResultDetailInfo.resultTxSuccessDto.failCnt}</p>
-          <p>평균 latency (ms): {sendingResultDetailInfo.avgLatency} </p>
+          <p>평균 latency (ms): {sendingResultDetailInfo.avgLatency + " ms"} </p>
+          <p>발송 시작 시간 : {new Date(sendingResultDetailInfo.startTime).toLocaleString()+ " " + new Date(sendingResultDetailInfo.startTime).getMilliseconds()} </p>
+
           {
             sendingResultDetailInfo.completeTime === null
-              ? <p>완료 시간 : {"아직 완료가 아닙니다."}</p>
-              : <p>완료 시간 : {new Date(sendingResultDetailInfo.completeTime).toLocaleString()}</p>
+              ? <p>발송 완료 시간 : {"아직 완료가 아닙니다."}</p>
+              : <p>발송 완료 시간 : {new Date(sendingResultDetailInfo.completeTime).toLocaleString()+ " " + new Date(sendingResultDetailInfo.completeTime).getMilliseconds()}</p>
           }
         </CCol>
       </CRow>

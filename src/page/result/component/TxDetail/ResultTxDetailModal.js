@@ -97,12 +97,12 @@ export function ResultTxDetailModal({sendingId, txId}) {
               <p><b>설정 중계사</b> : {txDetailData.brokerName}</p>
               <p><b>설정 전송 타입</b> : {txDetailData.sendingType}</p>
               <hr></hr>
-              <p><b>사용자 입력 시간</b> : {new Date(txDetailData.startTime).toLocaleString()}</p>
+              <p><b>사용자 입력 시간</b> : {new Date(txDetailData.startTime).toLocaleString() + " " + new Date(txDetailData.startTime).getMilliseconds()} </p>
               <p><b>스케쥴 시간</b> : {txDetailData.scheduleTime === null ? <b>{"예약발송이 아닙니다."}</b> :
-                <b>{new Date(txDetailData.scheduleTime).toLocaleString()}</b>}</p>
-              <p><b>전체 메시지 전송 시간</b> : {new Date(txDetailData.startTime).toLocaleString()}</p>
-              <p><b>메세지 전송 시작 시간</b> : {new Date(txDetailData.sendTime).toLocaleString()}</p>
-              <p><b>메세지 전송 완료 시간</b> : {new Date(txDetailData.completeTime).toLocaleString()}</p>
+                <b>{new Date(txDetailData.scheduleTime + " " + new Date(txDetailData.scheduleTime).getMilliseconds()).toLocaleString()}</b>}</p>
+              <p><b>전체 메시지 전송 시간</b> : {new Date(txDetailData.startTime).toLocaleString() + " " + new Date(txDetailData.startTime).getMilliseconds()}</p>
+              <p><b>메세지 전송 시작 시간</b> : {new Date(txDetailData.sendTime).toLocaleString() + " " + new Date(txDetailData.sendTime).getMilliseconds()}</p>
+              <p><b>메세지 전송 완료 시간</b> : {new Date(txDetailData.completeTime).toLocaleString() + " " + new Date(txDetailData.completeTime).getMilliseconds()}</p>
             </CCol>
             <CCol sm={4}>
               <CRow><h2>전송 내용</h2></CRow>
