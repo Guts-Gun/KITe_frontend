@@ -7,24 +7,25 @@ import PropTypes from "prop-types";
 function SendingResultDetailInfo({sendingId}) {
 
   const sendingResultDetailInfoDummy = {
-    "id": 0,
-    "sendingId": 0,
-    "sendingType": "SMS",
-    "sendingRuleType": "CUSTOM",
-    "success": null,
-    "totalMessage": 10,
-    "failedMessage": null,
-    "avgLatency": 0,
-    "inputTime": 1676512454720,
-    "scheduleTime": null,
-    "startTime": null,
-    "completeTime": null,
-    "logTime": null,
-    "sendingStatus": null,
-    "resultTxSuccessDto": {
-      "sendingId": 0,
-      "successCnt": 0,
-      "failCnt": 0
+    id: 80,
+    userId: "lee",
+    sendingId: 80,
+    sendingType: "SMS",
+    sendingRuleType: "CUSTOM",
+    success: true,
+    totalMessage: 10,
+    failedMessage: 0,
+    avgLatency: 189,
+    inputTime: 1676865560282,
+    scheduleTime: null,
+    startTime: 1676865560890,
+    completeTime: 1676865561247,
+    logTime: null,
+    sendingStatus: "COMPLETE",
+    resultTxSuccessDto: {
+      sendingId: 80,
+      successCnt: 10,
+      failCnt: 0
     }
   }
   const [sendingResultDetailInfo, setSendingResultDetailInfo] = useState(sendingResultDetailInfoDummy);
@@ -36,6 +37,7 @@ function SendingResultDetailInfo({sendingId}) {
       // 오류발생시 실행
     }).then(function () {
       // 항상 실행
+      console.log(sendingResultDetailInfo);
     });
   }, []);
 
@@ -56,8 +58,12 @@ function SendingResultDetailInfo({sendingId}) {
           }
           <p>발송 상태 : {sendingResultDetailInfo.sendingStatus}</p>
           <p>실패 개수 : {sendingResultDetailInfo.resultTxSuccessDto.failCnt}</p>
-          <p>평균 속도(ms): {sendingResultDetailInfo.avgLatency}</p>
-          <p>완료 시간 : {sendingResultDetailInfo.completeTime}</p>
+          <p>평균 latency (ms): {sendingResultDetailInfo.avgLatency} </p>
+          {
+            sendingResultDetailInfo.completeTime === null
+              ? <p>완료 시간 : {"아직 완료가 아닙니다."}</p>
+              : <p>완료 시간 : {new Date(sendingResultDetailInfo.completeTime).toLocaleString()}</p>
+          }
         </CCol>
       </CRow>
     </CRow>

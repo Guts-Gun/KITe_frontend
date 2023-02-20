@@ -40,15 +40,13 @@ function UsageCarousel() {
     ]
   ];
 
-  const [totalUsages, setTotalUsages] = useState(totalUsagesDummy);
+  const [totalUsages, setTotalUsages] = useState([]);
   useEffect(() => {
     axios.get(apiConfig.resultUsage, {headers: headers})
       .then(function (response) {
         setTotalUsages(response.data);
       }).catch(function (error) {
       // 오류발생시 실행
-      console.log('더미 삽입');
-      setTotalUsages(totalUsagesDummy);
     }).then(function () {
       // 항상 실행
     });
@@ -56,7 +54,7 @@ function UsageCarousel() {
 
 
   return (
-    <CCarousel controls indicators dark>
+    <CCarousel  controls indicators dark>
       {
         totalUsages.map((item, index) => (
             <CCarouselItem key={index}>

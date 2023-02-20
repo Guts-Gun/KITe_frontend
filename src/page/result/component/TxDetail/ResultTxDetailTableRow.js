@@ -1,35 +1,40 @@
-import {CTableDataCell, CTableHeaderCell, CTableRow,CButton} from "@coreui/react";
+import {CTableDataCell, CTableRow} from "@coreui/react";
 import React from "react";
 import PropTypes from "prop-types";
 
-export function ResultTxDetailTableRow({rowIndex, resultTxTransfer}) {
+function ResultTxDetailTableRow({rowIndex, resultTxTransfer}) {
+
   return (
     <CTableRow>
-        <CTableDataCell>{resultTxTransfer.brokerId} </CTableDataCell>
-        <CTableDataCell>{resultTxTransfer.sendingType}</CTableDataCell>
-        <CTableDataCell>{resultTxTransfer.sendTime}</CTableDataCell>
-        <CTableDataCell>{resultTxTransfer.completeTime}</CTableDataCell>
-        <CTableDataCell>{resultTxTransfer.success}</CTableDataCell>
-        <CTableDataCell>{resultTxTransfer.failReason}</CTableDataCell>
+      <CTableDataCell>{resultTxTransfer.brokerName} </CTableDataCell>
+      <CTableDataCell>{new Date(resultTxTransfer.sendTime).toLocaleString()}</CTableDataCell>
+      <CTableDataCell>{new Date(resultTxTransfer.completeTime).toLocaleString()}</CTableDataCell>
+      <CTableDataCell>{resultTxTransfer.success ? <p>성공</p> : <p>실패</p>}</CTableDataCell>
+      <CTableDataCell>{resultTxTransfer.failReason}</CTableDataCell>
     </CTableRow>
-
-
   );
 
 }
 
-ResultTxDetailTableRow.propTypes = {
-    rowIndex: PropTypes.number.isRequired,
-    resultTxTransfer: PropTypes.shape({
-        id: PropTypes.number,
-        txId: PropTypes.number,
-        brokerId : PropTypes.number,
-        success: PropTypes.string,
-        failReason: PropTypes.string, 
-        sendTime : PropTypes.number,
-        completeTime : PropTypes.number,
 
-        //추후 추가할것
-        sendingType : PropTypes.string,
-      }),
-  }
+ResultTxDetailTableRow.propTypes = {
+  rowIndex: PropTypes.number.isRequired,
+  resultTxTransfer: PropTypes.shape({
+    id: PropTypes.number,
+    brokerName: PropTypes.string,
+    resultTxId: PropTypes.number,
+    sendingType: PropTypes.string,
+    sender: PropTypes.string,
+    receiver: PropTypes.string,
+    success: PropTypes.bool,
+    failReason: PropTypes.string,
+    mediaLink: PropTypes.string,
+    content: PropTypes.string,
+    inputTime: PropTypes.number,
+    sendTime: PropTypes.number,
+    completeTime: PropTypes.number,
+  })
+}
+
+export default ResultTxDetailTableRow;
+

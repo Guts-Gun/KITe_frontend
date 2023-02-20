@@ -7,54 +7,21 @@ import apiConfig from "../../../lib/apiConfig";
 
 function SendingResultBrokerGraph({sendingId}) {
   const sendingResultBrokerDummy = {
-    "id": 1,
-    "brokerCount": {
-      "name": [
-        "SKT",
-        "KT"
-      ],
-      "color": [
-        "#FF0000",
-        "#1AFF00"
-      ],
-      "data": [
-        2,
-        1
-      ]
+    id: 81,
+    brokerCount: {
+      name: ["SKT"],
+      color: ["#FF0000"],
+      data: [10]
     },
-    "brokerSuccessFail": {
-      "name": [
-        "SKT- 성공",
-        "SKT- 실패",
-        "KT- 성공",
-        "KT- 실패"
-      ],
-      "color": [
-        "#FF0000",
-        "#FF0000",
-        "#1AFF00",
-        "#1AFF00"
-      ],
-      "data": [
-        1,
-        1,
-        1,
-        0
-      ]
+    brokerSuccessFail: {
+      name: ["SKT- 성공", "SKT- 실패"],
+      color: ["#FF0000", "#FF0000"],
+      data: [10, 0]
     },
-    "brokerSpeed": {
-      "name": [
-        "SKT",
-        "KT"
-      ],
-      "color": [
-        "#FF0000",
-        "#1AFF00"
-      ],
-      "data": [
-        4.0,
-        95.0
-      ]
+    brokerSpeed: {
+      name: ["SKT"],
+      color: ["#FF0000"],
+      data: [133.3]
     }
   }
   const [sendingResultBroker, setSendingResultBroker] = useState(sendingResultBrokerDummy);

@@ -4,20 +4,15 @@ import PropTypes from "prop-types";
 import {ResultTxDetailModal} from "./TxDetail/ResultTxDetailModal";
 
 function ResultTxResultRow({rowIndex, sendingId, txResult}) {
-  // 상세 페이지 링크
-  const tableRowClick = (e, id) => {
-    // window.location.href = "/#/resultDetail/"+id;
-    // window.location.href = "/#/resultDetail/";
-  }
 
   return (
     <CTableRow>
       <CTableHeaderCell scope="row">{(rowIndex + 1).toString()}</CTableHeaderCell>
       <CTableDataCell>{txResult.receiver}</CTableDataCell>
-      <CTableDataCell>{txResult.success}</CTableDataCell>
+      <CTableDataCell>{txResult.success ? <p>성공</p> : <p>실패</p>}</CTableDataCell>
       <CTableDataCell>{txResult.failReason}</CTableDataCell>
-      <CTableDataCell>{txResult.title}</CTableDataCell>
       <CTableDataCell>{txResult.content}</CTableDataCell>
+      <CTableDataCell>{txResult.brokerName}</CTableDataCell>
       <CTableDataCell><ResultTxDetailModal key={rowIndex} sendingId={sendingId} txId={txResult.txId}/></CTableDataCell>
     </CTableRow>
 
@@ -26,33 +21,29 @@ function ResultTxResultRow({rowIndex, sendingId, txResult}) {
 
 }
 
+
 ResultTxResultRow.propTypes = {
   rowIndex: PropTypes.number.isRequired,
   sendingId: PropTypes.number,
   txResult: PropTypes.shape({
-    sendingId: PropTypes.number,
+    id: PropTypes.number,
+    userId: PropTypes.string,
+    resultSendingId: PropTypes.number,
     txId: PropTypes.number,
-
-    //default 정보
-    title: PropTypes.string,
-    content: PropTypes.string,
-    media_link: PropTypes.string,
-
+    brokerName: PropTypes.string,
+    sendingType: PropTypes.string,
     sender: PropTypes.string,
     receiver: PropTypes.string,
-
-    //broker 전송 여부에 따라 다름
-    brokerId: PropTypes.number,
-    sendingType: PropTypes.string,
-
-    inputTime: PropTypes.number,
-    startTime: PropTypes.number,
-    scheduleTime: PropTypes.number,
-    sendTime: PropTypes.number,
-    completeTime: PropTypes.number,
-
     success: PropTypes.bool,
     failReason: PropTypes.string,
+    title: PropTypes.string,
+    mediaLink: PropTypes.string,
+    content: PropTypes.string,
+    inputTime: PropTypes.number,
+    scheduleTime: PropTypes.number,
+    startTime: PropTypes.number,
+    sendTime: PropTypes.number,
+    completeTime: PropTypes.number,
   }),
 }
 

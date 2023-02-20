@@ -19,6 +19,7 @@ import axios from "axios";
 import apiConfig from "../../../lib/apiConfig";
 import FilterButton from "./FilterButton";
 import {useSelector} from "react-redux";
+import SendingStatusBadge from "./SendingStatusBadge";
 
 function SendingInfoCardList() {
   const {auth} = useSelector(({auth}) => ({auth: auth}));
@@ -31,104 +32,36 @@ function SendingInfoCardList() {
 
   const sendingListDummy = [
     {
-      "id": 1,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "CUSTOM",
-      "sendingType": "SMS",
-      "totalMessage": 2,
-      "title": null,
-      "mediaLink": null,
-      "content": "테스트 내용",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 1,
-        "successCnt": 3,
-        "failCnt": 2
-      }
-    },
-    {
-      "id": 2,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "SPEED",
-      "sendingType": "SMS",
-      "totalMessage": 3,
-      "title": null,
-      "mediaLink": null,
-      "content": "테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용테스트 내용",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 2,
-        "successCnt": 2,
-        "failCnt": 3
-      }
-    },
-    {
-      "id": 3,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "PRICE",
-      "sendingType": "SMS",
-      "totalMessage": 2,
-      "title": null,
-      "mediaLink": null,
-      "content": "%고객명% 안녕",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 3,
-        "successCnt": 1,
+      id: 80,
+      sendingStatus: "COMPLETE",
+      inputTime: 1676865560282,
+      sendingRuleType: "CUSTOM",
+      sendingType: "SMS",
+      totalMessage: 10,
+      title: "",
+      mediaLink: null,
+      content: "대충 문자",
+      sender: "01000001111",
+      resultTxSuccessDto: {
+        "sendingId": 80,
+        "successCnt": 10,
         "failCnt": 0
       }
     },
     {
-      "id": 5,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "CUSTOM",
-      "sendingType": "SMS",
-      "totalMessage": 2,
-      "title": null,
-      "mediaLink": null,
-      "content": "테스트 내용",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 5,
-        "successCnt": 0,
-        "failCnt": 0
-      }
-    },
-    {
-      "id": 6,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "CUSTOM",
-      "sendingType": "SMS",
-      "totalMessage": 2,
-      "title": null,
-      "mediaLink": null,
-      "content": "테스트 내용",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 6,
-        "successCnt": 0,
-        "failCnt": 0
-      }
-    },
-    {
-      "id": 7,
-      "sendingStatus": null,
-      "inputTime": null,
-      "sendingRuleType": "CUSTOM",
-      "sendingType": "SMS",
-      "totalMessage": 2,
-      "title": null,
-      "mediaLink": null,
-      "content": "테스트 내용살려줘살려줘살려줘살려줘",
-      "sender": "01040109537",
-      "resultTxSuccessDto": {
-        "sendingId": 7,
-        "successCnt": 0,
+      id: 81,
+      sendingStatus: "PENDING",
+      inputTime: 1676865646119,
+      sendingRuleType: "SPEED",
+      sendingType: "SMS",
+      totalMessage: 10,
+      title: "",
+      mediaLink: null,
+      content: "좀더 대충 문자",
+      sender: "01000001111",
+      resultTxSuccessDto: {
+        "sendingId": 81,
+        "successCnt": 10,
         "failCnt": 0
       }
     }
@@ -188,7 +121,7 @@ function SendingInfoCard({sendingInfo}) {
         <CCardBody>
           <CCardTitle>
             <span>{new Date(sendingInfo.inputTime).toLocaleString()} </span>
-            <CBadge color="primary" shape="rounded-pill">{sendingInfo.sendingStatus}</CBadge>
+            <SendingStatusBadge status={sendingInfo.sendingStatus}/>
           </CCardTitle>
         </CCardBody>
         <CListGroup flush>
@@ -209,7 +142,7 @@ function SendingInfoCard({sendingInfo}) {
             <CProgressBar color="danger"
                           value={(sendingInfo.resultTxSuccessDto.failCnt / sendingInfo.totalMessage) * 100}/>
           </CProgress>
-          <CButton href={'/#/resultDetail/'+ sendingInfo.id}>상세</CButton>
+          <CButton href={'/#/resultDetail/' + sendingInfo.id}>상세</CButton>
         </CCardBody>
       </CCard>
     </CCol>

@@ -9,60 +9,53 @@ import {
   CRow,
   CTable,
   CTableBody,
-  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow
 } from '@coreui/react';
-
-import PropTypes from "prop-types";
-import {ResultTxDetailTableRow} from './ResultTxDetailTableRow';
 import axios from "axios";
 import apiConfig from "../../../../lib/apiConfig";
+import PropTypes from "prop-types";
+import ResultTxDetailTableRow from "./ResultTxDetailTableRow";
+
 
 export function ResultTxDetailModal({sendingId, txId}) {
   const [visible, setVisible] = useState(false);
 
   const TxDetailDataDummy = {
-    "id": 1,
-    "userId": "solbitest",
-    "resultSendingId": 1,
-    "txId": 1,
-    "brokerId": 1,
-    "sendingType": "SMS",
-    "sender": "01040109537",
-    "receiver": "01011112222",
-    "success": true,
-    "failReason": null,
-    "title": null,
-    "mediaLink": null,
-    "content": "몰?루",
-    "inputTime": 1676258520737,
-    "scheduleTime": null,
-    "startTime": null,
-    "sendTime": null,
-    "completeTime": null,
-    "resultTxTransferList": [
+    id: 7398,
+    userId: "lee",
+    resultSendingId: 33,
+    txId: 7398,
+    brokerName: "SKT",
+    sendingType: "SMS",
+    sender: "01000001111",
+    receiver: "01062924527",
+    success: true,
+    failReason: null,
+    title: "",
+    mediaLink: "null",
+    content: "대충 문자",
+    inputTime: 1676865560282,
+    scheduleTime: null,
+    startTime: 1676865561006,
+    sendTime: 1676865561023,
+    completeTime: 1676865561153,
+    resultTxTransferList: [
       {
-        "id": 1,
-        "txId": 1,
-        "brokerId": 1,
-        "success": true,
-        "failReason": null,
-        "sendTime": 1,
-        "completeTime": 5
-      },
-      {
-        "id": 2,
-        "txId": 1,
-        "brokerId": 1,
-        "success": false,
-        "failReason": null,
-        "sendTime": 1,
-        "completeTime": 5
+        id: 2618,
+        resultTxId: 3257,
+        brokerId: 1,
+        sendingType: "SMS",
+        sender: "01000001111",
+        receiver: "01062924527",
+        success: true,
+        failReason: null,
+        sendTime: 1676865561023,
+        completeTime: 1676865561153
       }
     ]
-  };
+  }
   //txDetailData get
   const [txDetailData, setTxDetailData] = useState(TxDetailDataDummy);
 
@@ -75,10 +68,12 @@ export function ResultTxDetailModal({sendingId, txId}) {
       axios.get(apiConfig.resultSendingTxResultDetail.replace('{sendingId}', sendingId).replace('{txId}', txId))
         .then(function (response) {
           setTxDetailData(response.data);
+          console.log(txDetailData);
         }).catch(function (error) {
         // 오류발생시 실행
       }).then(function () {
         // 항상 실행
+
       });
     }
   }, [visible]);
@@ -97,15 +92,17 @@ export function ResultTxDetailModal({sendingId, txId}) {
               <h2>전송 내용</h2>
               <p><b>수신 번호</b> : {txDetailData.receiver} </p>
               <p><b>제목</b> : {txDetailData.title}</p>
-              <p><b>미디어링크</b> : {txDetailData.media_link}</p>
-              <p><b>설정 중계사</b> : {txDetailData.brokerId}</p>
+              <p><b>미디어링크</b> : {txDetailData.mediaLink === "null" ? <b> 미디어 첨부 안함 </b> :
+                <b>{txDetailData.mediaLink}</b>} </p>
+              <p><b>설정 중계사</b> : {txDetailData.brokerName}</p>
               <p><b>설정 전송 타입</b> : {txDetailData.sendingType}</p>
               <hr></hr>
-              <p><b>사용자 입력 시간</b> : {txDetailData.startTime}</p>
-              <p><b>스케쥴 시간</b> : {txDetailData.scheduleTime}</p>
-              <p><b>큐 삽입 시간 ??</b> : {txDetailData.startTime}</p>
-              <p><b>메세지 전송 시작 시간</b> : {txDetailData.sendTime}</p>
-              <p><b>메세지 전송 완료 시간</b> : {txDetailData.completeTime}</p>
+              <p><b>사용자 입력 시간</b> : {new Date(txDetailData.startTime).toLocaleString()}</p>
+              <p><b>스케쥴 시간</b> : {txDetailData.scheduleTime === null ? <b>{"예약발송이 아닙니다."}</b> :
+                <b>{new Date(txDetailData.scheduleTime).toLocaleString()}</b>}</p>
+              <p><b>전체 메시지 전송 시간</b> : {new Date(txDetailData.startTime).toLocaleString()}</p>
+              <p><b>메세지 전송 시작 시간</b> : {new Date(txDetailData.sendTime).toLocaleString()}</p>
+              <p><b>메세지 전송 완료 시간</b> : {new Date(txDetailData.completeTime).toLocaleString()}</p>
             </CCol>
             <CCol sm={4}>
               <CRow><h2>전송 내용</h2></CRow>
@@ -133,16 +130,10 @@ export function ResultTxDetailModal({sendingId, txId}) {
                     </CTableRow>
                   </CTableHead>
                   <CTableBody>
-                    <CTableRow>
-                      <CTableDataCell>브로커 이름 </CTableDataCell>
-                      <CTableDataCell>대체 발송</CTableDataCell>
-                      <CTableDataCell>2023.02.14</CTableDataCell>
-                      <CTableDataCell>2023.02.14</CTableDataCell>
-                      <CTableDataCell>실패</CTableDataCell>
-                      <CTableDataCell>브로커 장애</CTableDataCell>
-                    </CTableRow>
-                    {txDetailData ? null : txDetailData.resultTxTransferList.map((d, i) => <ResultTxDetailTableRow
-                      key={i} rowIndex={i} resultTx={txDetailData} resultTxTransfer={d}/>)}
+                    {txDetailData.resultTxTransferList != null
+                      ? txDetailData.resultTxTransferList.map((d, i) =>
+                        <ResultTxDetailTableRow key={i} rowIndex={i} resultTxTransfer={d}/>)
+                      : <d></d>}
                   </CTableBody>
                 </CTable>
               </CRow>
