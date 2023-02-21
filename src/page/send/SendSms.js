@@ -108,7 +108,6 @@ const SendSms = () => {
     return;
   }
 
-  console.log(reservYn);
   if(reservYn === "Y" && (sending.reservDate == "" || sending.reservTime == "" )){
     addToast(messageToast("전송 시간을 입력해주세요."));
     return;
@@ -128,7 +127,6 @@ const SendSms = () => {
     brokerList.map(function(broker) {
       totalWeight += Number(broker.weight);
     });
-    console.log(totalWeight);
     if(totalWeight != 100){
       addToast(messageToast("중계사 비율을 정확하게 입력해주세요."));
       return;

@@ -56,8 +56,8 @@ export const editContent = createAction(EDIT_CONTENT,( { value }) => ({
 export const editSenderReplace = createAction(EDIT_SENDREPLACEMEMT,({checked}) => ({
     checked
 }));
-export const editReplaceAddr = createAction(EDIT_REPLACEADDR,({checked}) => ({
-    checked
+export const editReplaceAddr = createAction(EDIT_REPLACEADDR,({value}) => ({
+    value
 }));
 export const editSendingRuleType = createAction(EDIT_SENDINGRULETYPE,({value}) => ({
     value
@@ -91,7 +91,7 @@ const initialState = {
         totalMessage : 0,                   // 총 메세지 개수
         title : "",                         // 제목
     },
-    reservationYn : "N",                         // 예약 여부
+    reservationYn : "N",                    // 예약 여부
     sender : null,                          // 발신자 정보
     replaceSender : null,                   // 대체발송 발신자 정보
     brokerList : []                         // brokerId 브로커 아이디
