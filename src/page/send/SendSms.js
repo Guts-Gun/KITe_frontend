@@ -49,15 +49,20 @@ import "moment/locale/ko";
 
 
 const SendSms = () => {
-  
+  const navigate = useNavigate();
+
   const { auth } = useSelector(({auth})=> ({auth:auth}));
   var headers =null;
-  if (auth != null) {
+
+
+  if ((auth.accesstoken != null) && (auth.accesstoken != '')){
     const accessToken = auth.accesstoken;
     headers = {'Authorization': 'Bearer ' + accessToken };
+  }else{
+    alert("로그인이 필요합니다.");
+    window.location.href ="/"
   }
 
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false); // 대기
 
@@ -99,7 +104,6 @@ const SendSms = () => {
  function onclickSend(){
 
   if(receiverList.length<1){
-    console.log("test");
     addToast(messageToast("수신자를 선택해주세요."));
     return;
   }
@@ -139,7 +143,6 @@ const SendSms = () => {
     replaceSender :replaceSender,
     brokerList : brokerList,
   };
-  console.log(body);
   
   setLoading(true);
     try {

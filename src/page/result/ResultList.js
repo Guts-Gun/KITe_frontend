@@ -74,6 +74,7 @@ function ResultList() {
       const data = response.data;
       setResultList(data.content);
 
+
       setPageData({
       totalPage: 0,
       page: data.number+1,
@@ -82,7 +83,7 @@ function ResultList() {
       end: data.totalPages,
       prev: data.first? false: true,
       next: data.last? false: true,
-      totalElements : data.totalElements
+      totalElements : data.numberOfElements
     }); 
       setLoading(false);
     })
