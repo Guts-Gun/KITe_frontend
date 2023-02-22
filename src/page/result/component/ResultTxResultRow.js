@@ -2,6 +2,7 @@ import {CTableDataCell, CTableHeaderCell, CTableRow} from "@coreui/react";
 import React from "react";
 import PropTypes from "prop-types";
 import {ResultTxDetailModal} from "./TxDetail/ResultTxDetailModal";
+import SendingStatusBadge from "../../userconsole/component/SendingStatusBadge";
 
 function ResultTxResultRow({rowIndex, sendingId, txResult}) {
 
@@ -9,7 +10,7 @@ function ResultTxResultRow({rowIndex, sendingId, txResult}) {
     <CTableRow>
       <CTableHeaderCell scope="row">{(rowIndex + 1).toString()}</CTableHeaderCell>
       <CTableDataCell>{txResult.receiver}</CTableDataCell>
-      <CTableDataCell>{txResult.success ? <p>성공</p> : <p>실패</p>}</CTableDataCell>
+      <CTableDataCell><SendingStatusBadge status={txResult.status}/></CTableDataCell>
       <CTableDataCell>{txResult.failReason}</CTableDataCell>
       <CTableDataCell>{txResult.content}</CTableDataCell>
       <CTableDataCell>{txResult.brokerName}</CTableDataCell>
@@ -33,6 +34,7 @@ ResultTxResultRow.propTypes = {
     brokerName: PropTypes.string,
     sendingType: PropTypes.string,
     sender: PropTypes.string,
+    status: PropTypes.string,
     receiver: PropTypes.string,
     success: PropTypes.bool,
     failReason: PropTypes.string,
@@ -46,5 +48,6 @@ ResultTxResultRow.propTypes = {
     completeTime: PropTypes.number,
   }),
 }
+
 
 export default ResultTxResultRow;

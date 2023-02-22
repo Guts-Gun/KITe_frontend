@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-  CBadge,
   CButton,
   CCard,
   CCardBody,
@@ -32,36 +31,19 @@ function SendingInfoCardList() {
 
   const sendingListDummy = [
     {
-      id: 80,
+      id: 0,
       sendingStatus: "COMPLETE",
-      inputTime: 1676865560282,
+      inputTime: 0,
       sendingRuleType: "CUSTOM",
       sendingType: "SMS",
-      totalMessage: 10,
+      totalMessage: 0,
       title: "",
       mediaLink: null,
-      content: "대충 문자",
-      sender: "01000001111",
+      content: "",
+      sender: "",
       resultTxSuccessDto: {
-        "sendingId": 80,
-        "successCnt": 10,
-        "failCnt": 0
-      }
-    },
-    {
-      id: 81,
-      sendingStatus: "PENDING",
-      inputTime: 1676865646119,
-      sendingRuleType: "SPEED",
-      sendingType: "SMS",
-      totalMessage: 10,
-      title: "",
-      mediaLink: null,
-      content: "좀더 대충 문자",
-      sender: "01000001111",
-      resultTxSuccessDto: {
-        "sendingId": 81,
-        "successCnt": 10,
+        "sendingId": 0,
+        "successCnt": 0,
         "failCnt": 0
       }
     }

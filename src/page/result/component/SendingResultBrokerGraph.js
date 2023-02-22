@@ -7,21 +7,21 @@ import apiConfig from "../../../lib/apiConfig";
 
 function SendingResultBrokerGraph({sendingId}) {
   const sendingResultBrokerDummy = {
-    id: 81,
+    id: 0,
     brokerCount: {
-      name: ["SKT"],
-      color: ["#FF0000"],
-      data: [10]
+      name: [],
+      color: [],
+      data: []
     },
     brokerSuccessFail: {
-      name: ["SKT- 성공", "SKT- 실패"],
-      color: ["#FF0000", "#FF0000"],
-      data: [10, 0]
+      name: [],
+      color: [],
+      data: []
     },
     brokerSpeed: {
-      name: ["SKT"],
-      color: ["#FF0000"],
-      data: [133.3]
+      name: [],
+      color: [],
+      data: []
     }
   }
   const [sendingResultBroker, setSendingResultBroker] = useState(sendingResultBrokerDummy);

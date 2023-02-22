@@ -7,24 +7,24 @@ import PropTypes from "prop-types";
 function SendingResultDetailInfo({sendingId}) {
 
   const sendingResultDetailInfoDummy = {
-    id: 80,
-    userId: "lee",
-    sendingId: 80,
+    id: 0,
+    userId: "",
+    sendingId: 0,
     sendingType: "SMS",
     sendingRuleType: "CUSTOM",
     success: true,
-    totalMessage: 10,
+    totalMessage: 0,
     failedMessage: 0,
-    avgLatency: 189,
-    inputTime: 1676865560282,
+    avgLatency: 0,
+    inputTime: 0,
     scheduleTime: null,
-    startTime: 1676865560890,
-    completeTime: 1676865561247,
+    startTime: 0,
+    completeTime: 0,
     logTime: null,
     sendingStatus: "COMPLETE",
     resultTxSuccessDto: {
-      sendingId: 80,
-      successCnt: 10,
+      sendingId: 0,
+      successCnt: 0,
       failCnt: 0
     }
   }
